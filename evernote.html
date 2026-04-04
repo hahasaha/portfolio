@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Evernote — Sahand Hajizadeh</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{--cream:#f5f0e2;--cream-2:#ede8d8;--ink:#1a1a14;--ink-60:rgba(26,26,20,0.6);--ink-35:rgba(26,26,20,0.35);--ink-15:rgba(26,26,20,0.12);--green:#1a3d2e;--lavender:#c4aff0;--lavender-bg:#d8ccf8;--lavender-dark:#8b70d0;--rule:rgba(26,26,20,0.1);--radius-card:24px;--radius-btn:50px;}
+html{scroll-behavior:smooth;background:var(--cream);}
+body{font-family:'DM Sans',system-ui,sans-serif;background:var(--cream);color:var(--ink);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased;cursor:none;}
+a{color:inherit;text-decoration:none;}
+.cursor{width:10px;height:10px;border-radius:50%;background:var(--ink);position:fixed;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:background 0.25s;}
+.cursor-ring{width:36px;height:36px;border-radius:50%;border:1.5px solid rgba(26,26,20,0.25);position:fixed;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width 0.25s,height 0.25s,border-color 0.25s;}
+.cursor-ring.big{width:52px;height:52px;border-color:var(--lavender-dark);}
+.cursor.on-dark{background:white;}.cursor-ring.on-dark{border-color:rgba(255,255,255,0.35);}
+@media(max-width:720px){.cursor,.cursor-ring{display:none;}body{cursor:auto;}}
+.container{max-width:900px;margin:0 auto;padding:0 24px;}
+nav{background:var(--cream);border-bottom:1px solid var(--rule);padding:0 24px;height:60px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;backdrop-filter:blur(12px);}
+.nav-logo{font-family:'DM Serif Display',serif;font-size:20px;color:var(--ink);letter-spacing:-0.02em;}
+.nav-logo em{color:var(--green);font-style:italic;}
+.nav-links{display:flex;gap:6px;align-items:center;}
+.nav-links a{font-size:13px;font-weight:500;color:var(--ink-60);padding:8px 14px;border-radius:var(--radius-btn);transition:all 0.15s;}
+.nav-links a:hover{color:var(--ink);background:var(--ink-15);}
+.nav-cta{background:var(--lavender-bg)!important;color:var(--ink)!important;font-weight:600!important;border:1.5px solid rgba(139,112,208,0.3)!important;}
+.nav-cta:hover{background:var(--lavender)!important;}
+.cs-hero{padding:64px 0 48px;}
+.cs-back{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:500;color:var(--ink-35);margin-bottom:32px;transition:color 0.15s;}
+.cs-back:hover{color:var(--ink);}
+.cs-label{font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-35);margin-bottom:12px;}
+.cs-title{font-family:'DM Serif Display',serif;font-size:clamp(36px,7vw,72px);line-height:1.06;letter-spacing:-0.02em;color:var(--ink);margin-bottom:16px;}
+.cs-title em{font-style:italic;color:var(--lavender-dark);}
+.cs-sub{font-size:18px;color:var(--ink-60);max-width:580px;line-height:1.65;margin-bottom:32px;}
+.cs-meta{display:flex;gap:32px;flex-wrap:wrap;padding-top:24px;border-top:1px solid var(--rule);}
+.cs-meta-label{font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-35);margin-bottom:4px;}
+.cs-meta-value{font-size:14px;color:var(--ink);font-weight:500;}
+.cs-cover{width:100%;height:380px;border-radius:var(--radius-card);display:flex;align-items:center;justify-content:center;margin:40px 0;}
+.cs-cover-label{font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.3);}
+.cs-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:0;background:var(--ink);border-radius:var(--radius-card);overflow:hidden;margin:48px 0;}
+.cs-metric{background:var(--ink);padding:32px 24px;text-align:center;border-right:1px solid rgba(255,255,255,0.06);}
+.cs-metric:last-child{border-right:none;}
+.cs-metric-num{font-family:'DM Serif Display',serif;font-size:clamp(36px,6vw,56px);color:var(--lavender);line-height:1;letter-spacing:-0.02em;margin-bottom:6px;}
+.cs-metric-label{font-size:12px;color:rgba(255,255,255,0.4);}
+.cs-body{max-width:680px;margin:0 auto;padding:0 24px 80px;}
+.cs-body h2{font-family:'DM Serif Display',serif;font-size:clamp(24px,4vw,36px);letter-spacing:-0.02em;color:var(--ink);margin:48px 0 16px;}
+.cs-body p{font-size:16px;color:var(--ink-60);line-height:1.8;margin-bottom:20px;}
+.cs-callout{background:var(--cream-2);border-left:3px solid var(--lavender-dark);border-radius:0 12px 12px 0;padding:20px 24px;margin:24px 0;}
+.cs-callout p{font-family:'DM Serif Display',serif;font-size:20px;font-style:italic;color:var(--ink);margin:0;line-height:1.4;}
+.cs-img{width:100%;height:320px;background:var(--cream-2);border-radius:16px;display:flex;align-items:center;justify-content:center;margin:24px 0;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-35);}
+.chip-grid{display:flex;flex-wrap:wrap;gap:8px;margin:20px 0;}
+.chip{font-size:12px;font-weight:500;color:var(--lavender-dark);background:rgba(139,112,208,0.1);border:1px solid rgba(139,112,208,0.2);padding:6px 14px;border-radius:var(--radius-btn);}
+.cs-cta-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:48px;padding-top:32px;border-top:1px solid var(--rule);}
+.btn-filled{display:inline-flex;align-items:center;gap:8px;background:var(--lavender-bg);color:var(--ink);font-size:15px;font-weight:600;padding:14px 32px;border-radius:var(--radius-btn);border:1.5px solid rgba(139,112,208,0.3);transition:all 0.15s;}
+.btn-filled:hover{background:var(--lavender);}
+.btn-outline{display:inline-flex;align-items:center;gap:8px;background:transparent;color:var(--ink);font-size:15px;font-weight:600;padding:14px 32px;border-radius:var(--radius-btn);border:1.5px solid rgba(26,26,20,0.2);transition:all 0.15s;}
+.btn-outline:hover{border-color:var(--ink-60);}
+footer{background:var(--ink);border-radius:var(--radius-card) var(--radius-card) 0 0;padding:48px 32px;text-align:center;margin-top:80px;}
+.foot-logo{font-family:'DM Serif Display',serif;font-size:18px;color:rgba(255,255,255,0.3);margin-bottom:16px;}
+.foot-logo em{color:rgba(196,175,240,0.4);font-style:italic;}
+.foot-links{display:flex;justify-content:center;gap:24px;}
+.foot-links a{font-size:13px;color:rgba(255,255,255,0.3);transition:color 0.15s;font-weight:500;}
+.foot-links a:hover{color:rgba(255,255,255,0.7);}
+@media(max-width:720px){.cs-metrics{grid-template-columns:1fr 1fr;}.cs-metric{border-right:none;border-bottom:1px solid rgba(255,255,255,0.06);}.cs-meta{gap:20px;}.nav-links a:not(.nav-cta){display:none;}}
+</style>
+</head>
+<body>
+<div class="cursor" id="cur"></div>
+<div class="cursor-ring" id="ring"></div>
+<nav>
+  <a href="index.html" class="nav-logo">Sahand<em>.</em></a>
+  <div class="nav-links">
+    <a href="index.html#work">Work</a>
+    <a href="about.html">About</a>
+    <a href="mailto:sahandhajizadeh@gmail.com" class="nav-cta">Get in touch</a>
+  </div>
+</nav>
+<section class="cs-hero">
+  <div class="container">
+    <a href="index.html" class="cs-back">← Back to work</a>
+    <div class="cs-label">Mobile Design · Design Systems · iOS & Android</div>
+    <h1 class="cs-title">Redesigning mobile for <em>250M+ users</em> — and building the system to sustain it.</h1>
+    <p class="cs-sub">Nearly 5 years at Evernote, leading the mobile experience from product designer to senior — shipping dozens of features, building the design system, and mentoring the team.</p>
+    <div class="cs-meta">
+      <div class="cs-meta-item"><div class="cs-meta-label">Company</div><div class="cs-meta-value">Evernote</div></div>
+      <div class="cs-meta-item"><div class="cs-meta-label">Role</div><div class="cs-meta-value">Product Designer → Senior PD</div></div>
+      <div class="cs-meta-item"><div class="cs-meta-label">Timeline</div><div class="cs-meta-value">Jul 2018 — Feb 2023 · 5 years</div></div>
+      <div class="cs-meta-item"><div class="cs-meta-label">Platform</div><div class="cs-meta-value">iOS, Android, Tablet</div></div>
+    </div>
+  </div>
+</section>
+<div class="container">
+  <div class="cs-cover" style="background:#2D2B7A;">
+    <div class="cs-cover-label">Evernote iOS — mobile redesign</div>
+  </div>
+  <div class="cs-metrics">
+    <div class="cs-metric"><div class="cs-metric-num">250M+</div><div class="cs-metric-label">Users impacted</div></div>
+    <div class="cs-metric"><div class="cs-metric-num">5yr</div><div class="cs-metric-label">Tenure at Evernote</div></div>
+    <div class="cs-metric"><div class="cs-metric-num">2</div><div class="cs-metric-label">Platforms: iOS + Android</div></div>
+  </div>
+</div>
+<div class="cs-body">
+  <h2>Context</h2>
+  <p>I joined Evernote in 2018 as a product designer on the mobile team and grew into a senior role over five years. My focus was the iOS and Android experience — at a time when Evernote had accumulated years of feature debt and user expectations for mobile had fundamentally shifted.</p>
+  <p>I partnered closely with the mobile PM, engineering, and UX research — shipping incrementally, running weekly design reviews, and mentoring junior designers throughout.</p>
+
+  <div class="cs-callout"><p>"Our mobile experience needed to feel like a product from 2022, not 2014."</p></div>
+
+  <h2>The mobile redesign</h2>
+  <p>I led the full redesign of the iOS and Android apps — touching navigation, the note editor, search, tags, notebooks, and the home screen. We validated every major decision with user research and shipped incrementally, never a big-bang release.</p>
+
+  <div class="cs-img">[ Before / After — Evernote iOS navigation and home screen ]</div>
+
+  <h2>Building the design system</h2>
+  <p>As the mobile team grew, I built the mobile design system from scratch — components, tokens, documentation, and guidelines for both iOS and Android. It became the foundation every subsequent feature was built on, accelerating design-to-dev handoff and consistency across platforms.</p>
+
+  <div class="chip-grid">
+    <span class="chip">Typography system</span><span class="chip">Color tokens</span>
+    <span class="chip">Component library</span><span class="chip">Motion principles</span>
+    <span class="chip">Dark mode</span><span class="chip">iOS + Android</span>
+    <span class="chip">Figma variables</span><span class="chip">Dev handoff</span>
+  </div>
+
+  <div class="cs-img">[ Mobile design system — component library overview ]</div>
+
+  <h2>What I shipped</h2>
+  <p>Over five years: dozens of shipped features, a full mobile redesign, a mobile design system built from scratch, mentorship of junior designers, weekly stand-ups and design reviews, and direct partnership with engineering and product leadership.</p>
+
+  <div class="cs-cta-row">
+    <a href="index.html" class="btn-outline">← Back to work</a>
+    <a href="mailto:sahandhajizadeh@gmail.com" class="btn-filled">Get in touch</a>
+  </div>
+</div>
+<div class="container">
+  <footer>
+    <div class="foot-logo">Sahand<em>.</em></div>
+    <div class="foot-links">
+      <a href="index.html">Work</a><a href="about.html">About</a>
+      <a href="https://linkedin.com/in/sahandh" target="_blank">LinkedIn</a>
+      <a href="mailto:sahandhajizadeh@gmail.com">Email</a>
+    </div>
+  </footer>
+</div>
+<script>
+const cur=document.getElementById('cur'),ring=document.getElementById('ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
+(function raf(){rx+=(mx-rx)*0.1;ry+=(my-ry)*0.1;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(raf);})();
+document.querySelectorAll('a,button').forEach(el=>{el.addEventListener('mouseenter',()=>{ring.classList.add('big');cur.classList.add('on-dark');});el.addEventListener('mouseleave',()=>{ring.classList.remove('big');cur.classList.remove('on-dark');});});
+document.querySelectorAll('.cs-metrics,.cs-cover,footer').forEach(el=>{el.addEventListener('mouseenter',()=>{cur.classList.add('on-dark');ring.classList.add('on-dark');});el.addEventListener('mouseleave',()=>{cur.classList.remove('on-dark');ring.classList.remove('on-dark');});});
+</script>
+</body>
+</html>

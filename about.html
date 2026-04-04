@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About — Sahand Hajizadeh</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{--cream:#f5f0e2;--cream-2:#ede8d8;--ink:#1a1a14;--ink-60:rgba(26,26,20,0.6);--ink-35:rgba(26,26,20,0.35);--ink-15:rgba(26,26,20,0.12);--green:#1a3d2e;--lavender:#c4aff0;--lavender-bg:#d8ccf8;--lavender-dark:#8b70d0;--rule:rgba(26,26,20,0.1);--radius-card:24px;--radius-btn:50px;}
+html{scroll-behavior:smooth;background:var(--cream);}
+body{font-family:'DM Sans',system-ui,sans-serif;background:var(--cream);color:var(--ink);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased;cursor:none;}
+a{color:inherit;text-decoration:none;}
+.cursor{width:10px;height:10px;border-radius:50%;background:var(--ink);position:fixed;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:background 0.25s;}
+.cursor-ring{width:36px;height:36px;border-radius:50%;border:1.5px solid rgba(26,26,20,0.25);position:fixed;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width 0.25s,height 0.25s;}
+.cursor-ring.big{width:52px;height:52px;border-color:var(--lavender-dark);}
+.cursor.on-dark{background:white;}.cursor-ring.on-dark{border-color:rgba(255,255,255,0.35);}
+@media(max-width:720px){.cursor,.cursor-ring{display:none;}body{cursor:auto;}}
+.container{max-width:900px;margin:0 auto;padding:0 24px;}
+nav{background:var(--cream);border-bottom:1px solid var(--rule);padding:0 24px;height:60px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;backdrop-filter:blur(12px);}
+.nav-logo{font-family:'DM Serif Display',serif;font-size:20px;color:var(--ink);letter-spacing:-0.02em;}
+.nav-logo em{color:var(--green);font-style:italic;}
+.nav-links{display:flex;gap:6px;align-items:center;}
+.nav-links a{font-size:13px;font-weight:500;color:var(--ink-60);padding:8px 14px;border-radius:var(--radius-btn);transition:all 0.15s;}
+.nav-links a:hover{color:var(--ink);background:var(--ink-15);}
+.nav-cta{background:var(--lavender-bg)!important;color:var(--ink)!important;font-weight:600!important;border:1.5px solid rgba(139,112,208,0.3)!important;}
+.nav-cta:hover{background:var(--lavender)!important;}
+
+/* Hero */
+.about-hero{padding:72px 0 48px;}
+.about-label{font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-35);margin-bottom:16px;}
+.about-name{font-family:'DM Serif Display',serif;font-size:clamp(48px,9vw,96px);line-height:1.0;letter-spacing:-0.02em;color:var(--ink);margin-bottom:24px;}
+.about-name em{font-style:italic;color:var(--lavender-dark);}
+.about-intro{font-size:18px;color:var(--ink-60);max-width:620px;line-height:1.75;margin-bottom:32px;}
+.about-intro strong{color:var(--ink);font-weight:600;}
+.about-actions{display:flex;gap:12px;flex-wrap:wrap;}
+.btn-filled{display:inline-flex;align-items:center;gap:8px;background:var(--lavender-bg);color:var(--ink);font-size:15px;font-weight:600;padding:14px 32px;border-radius:var(--radius-btn);border:1.5px solid rgba(139,112,208,0.3);transition:all 0.15s;}
+.btn-filled:hover{background:var(--lavender);}
+.btn-outline{display:inline-flex;align-items:center;gap:8px;background:transparent;color:var(--ink);font-size:15px;font-weight:600;padding:14px 32px;border-radius:var(--radius-btn);border:1.5px solid rgba(26,26,20,0.2);transition:all 0.15s;}
+.btn-outline:hover{border-color:var(--ink-60);}
+
+/* Experience */
+.exp-section{padding:64px 0;}
+.section-eyebrow{font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-35);margin-bottom:24px;}
+.exp-list{display:flex;flex-direction:column;gap:2px;}
+.exp-item{background:var(--cream-2);border-radius:16px;padding:24px 28px;display:grid;grid-template-columns:1fr auto;gap:16px;align-items:start;transition:background 0.15s;}
+.exp-item:hover{background:white;}
+.exp-role{font-size:16px;font-weight:600;color:var(--ink);margin-bottom:2px;}
+.exp-company{font-size:14px;color:var(--lavender-dark);font-weight:500;margin-bottom:8px;}
+.exp-desc{font-size:13px;color:var(--ink-60);line-height:1.6;}
+.exp-date{font-size:12px;color:var(--ink-35);white-space:nowrap;padding-top:2px;}
+
+/* Skills */
+.skills-section{padding:0 0 64px;}
+.skills-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.skill-card{background:var(--ink);border-radius:var(--radius-card);padding:28px;}
+.skill-card-label{font-size:10px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.25);margin-bottom:16px;}
+.skill-pills{display:flex;flex-wrap:wrap;gap:8px;}
+.skill-pill{font-size:12px;color:rgba(255,255,255,0.5);background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08);padding:6px 12px;border-radius:var(--radius-btn);}
+
+/* Education */
+.edu-section{padding:0 0 64px;}
+.edu-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;}
+.edu-card{background:var(--cream-2);border-radius:16px;padding:24px;}
+.edu-school{font-family:'DM Serif Display',serif;font-size:18px;color:var(--ink);margin-bottom:4px;letter-spacing:-0.01em;}
+.edu-degree{font-size:13px;color:var(--ink-60);}
+
+/* CTA */
+.cta-dark{background:var(--ink);border-radius:var(--radius-card) var(--radius-card) 0 0;padding:72px 32px 80px;text-align:center;margin-top:32px;}
+.cta-dark .section-eyebrow{color:rgba(255,255,255,0.25);margin-bottom:16px;}
+.cta-dark h2{font-family:'DM Serif Display',serif;font-size:clamp(36px,6vw,60px);line-height:1.05;letter-spacing:-0.02em;color:white;margin-bottom:16px;}
+.cta-dark h2 em{font-style:italic;color:var(--lavender);}
+.cta-dark p{font-size:16px;color:rgba(255,255,255,0.45);max-width:400px;margin:0 auto 36px;line-height:1.65;}
+.cta-footer{background:var(--ink);border-top:1px solid rgba(255,255,255,0.06);padding:24px 32px;display:flex;justify-content:space-between;align-items:center;max-width:900px;margin:0 auto;}
+.foot-logo{font-family:'DM Serif Display',serif;font-size:16px;color:rgba(255,255,255,0.25);}
+.foot-logo em{color:rgba(196,175,240,0.4);font-style:italic;}
+.foot-links-row{display:flex;gap:20px;}
+.foot-links-row a{font-size:12px;color:rgba(255,255,255,0.25);transition:color 0.15s;font-weight:500;}
+.foot-links-row a:hover{color:rgba(255,255,255,0.6);}
+.foot-note{font-size:11px;color:rgba(255,255,255,0.15);}
+
+.btn-dark-filled{display:inline-flex;align-items:center;gap:8px;background:var(--lavender-bg);color:var(--ink);font-size:15px;font-weight:600;padding:14px 32px;border-radius:var(--radius-btn);border:1.5px solid transparent;transition:all 0.15s;}
+.btn-dark-filled:hover{background:var(--lavender);}
+.btn-dark-outline{display:inline-flex;align-items:center;gap:8px;background:transparent;color:rgba(255,255,255,0.5);font-size:15px;font-weight:600;padding:14px 32px;border-radius:var(--radius-btn);border:1.5px solid rgba(255,255,255,0.12);transition:all 0.15s;}
+.btn-dark-outline:hover{border-color:rgba(255,255,255,0.3);color:white;}
+
+@media(max-width:720px){.skills-grid{grid-template-columns:1fr;}.edu-grid{grid-template-columns:1fr;}.exp-item{grid-template-columns:1fr;}.cta-footer{flex-direction:column;gap:12px;text-align:center;}.nav-links a:not(.nav-cta){display:none;}}
+</style>
+</head>
+<body>
+<div class="cursor" id="cur"></div><div class="cursor-ring" id="ring"></div>
+<nav>
+  <a href="index.html" class="nav-logo">Sahand<em>.</em></a>
+  <div class="nav-links"><a href="index.html#work">Work</a><a href="about.html">About</a><a href="mailto:sahandhajizadeh@gmail.com" class="nav-cta">Get in touch</a></div>
+</nav>
+
+<section class="about-hero">
+  <div class="container">
+    <div class="about-label">About</div>
+    <h1 class="about-name">Sahand<br><em>Hajizadeh.</em></h1>
+    <p class="about-intro">I spent five years at Evernote designing the mobile experience for <strong>250M+ users</strong>. Before that, eBay — where the intranet I worked on made Nielsen Norman's Top 10 list. These days I'm designing enterprise workflow tools through Inkwell and doing conversion-focused UX for Golf Ranch.</p>
+    <p class="about-intro" style="margin-top:-8px;">I make complex things feel simple — the research, the system, the edge cases, and the moment a user realizes they didn't have to think.</p>
+    <div class="about-actions">
+      <a href="mailto:sahandhajizadeh@gmail.com" class="btn-filled">Get in touch →</a>
+      <a href="https://linkedin.com/in/sahandh" target="_blank" class="btn-outline">LinkedIn ↗</a>
+    </div>
+  </div>
+</section>
+
+<section class="exp-section">
+  <div class="container">
+    <div class="section-eyebrow">Experience</div>
+    <div class="exp-list">
+      <div class="exp-item">
+        <div>
+          <div class="exp-role">Product Designer</div>
+          <div class="exp-company">Inkwell · Contract</div>
+          <div class="exp-desc">Designing enterprise workflow tools and dashboards for a major entertainment company through Inkwell. Full design process — research, information architecture, high-fidelity UI.</div>
+        </div>
+        <div class="exp-date">Feb 2026 — Present</div>
+      </div>
+      <div class="exp-item">
+        <div>
+          <div class="exp-role">Web Designer & Developer</div>
+          <div class="exp-company">Golf Ranch · Contract</div>
+          <div class="exp-desc">Designed and launched golfranch.com — lead-gen platform for a fast-growing golf franchise. Drove 4× membership growth and 25% organic traffic lift. Built on Webflow with GA4 + GTM.</div>
+        </div>
+        <div class="exp-date">Dec 2024 — Present</div>
+      </div>
+      <div class="exp-item">
+        <div>
+          <div class="exp-role">Product Designer</div>
+          <div class="exp-company">Flo Recruit · Contract</div>
+          <div class="exp-desc">Designed the candidate dashboard and onboarding experience for the leading legal recruiting platform. Launched across top law firms, contributing to $1M in revenue generation.</div>
+        </div>
+        <div class="exp-date">Feb — Jun 2023</div>
+      </div>
+      <div class="exp-item">
+        <div>
+          <div class="exp-role">Senior Product Designer</div>
+          <div class="exp-company">Evernote</div>
+          <div class="exp-desc">Led the mobile redesign for iOS and Android. Built the mobile design system from scratch. Partnered with research and engineering to ship dozens of features. Mentored junior designers.</div>
+        </div>
+        <div class="exp-date">Mar 2020 — Feb 2023</div>
+      </div>
+      <div class="exp-item">
+        <div>
+          <div class="exp-role">Product Designer</div>
+          <div class="exp-company">Evernote</div>
+          <div class="exp-desc">Led mobile product design for iOS and Android. Contributed to full mobile and tablet redesign that improved retention and daily active use across 250M+ users.</div>
+        </div>
+        <div class="exp-date">Jul 2018 — Mar 2020</div>
+      </div>
+      <div class="exp-item">
+        <div>
+          <div class="exp-role">Product Designer</div>
+          <div class="exp-company">eBay</div>
+          <div class="exp-desc">Designed internal web tools and eBay's first internal mobile app for 10K+ employees. Contributed to a redesign recognized in Nielsen Norman Group's Top 10 Intranets.</div>
+        </div>
+        <div class="exp-date">Sep 2016 — Jul 2018</div>
+      </div>
+      <div class="exp-item">
+        <div>
+          <div class="exp-role">Interaction Designer</div>
+          <div class="exp-company">Mperpetuo</div>
+          <div class="exp-desc">Designed the touchscreen interface and UX for a smart professional camera. Created intuitive interaction patterns for on-device controls and real-time photo feedback.</div>
+        </div>
+        <div class="exp-date">Nov 2015 — Sep 2016</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="skills-section">
+  <div class="container">
+    <div class="section-eyebrow">Skills & tools</div>
+    <div class="skills-grid">
+      <div class="skill-card">
+        <div class="skill-card-label">Product & UX</div>
+        <div class="skill-pills">
+          <span class="skill-pill">Interaction Design</span>
+          <span class="skill-pill">User Flows</span>
+          <span class="skill-pill">Wireframing</span>
+          <span class="skill-pill">Prototyping</span>
+          <span class="skill-pill">UX Research</span>
+          <span class="skill-pill">Usability Testing</span>
+          <span class="skill-pill">A/B Testing</span>
+          <span class="skill-pill">Conversion Optimization</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-label">UI & Systems</div>
+        <div class="skill-pills">
+          <span class="skill-pill">Visual Design</span>
+          <span class="skill-pill">Mobile Design (iOS/Android)</span>
+          <span class="skill-pill">Design Systems</span>
+          <span class="skill-pill">Component Libraries</span>
+          <span class="skill-pill">Product Strategy</span>
+          <span class="skill-pill">Information Architecture</span>
+        </div>
+      </div>
+      <div class="skill-card" style="grid-column:1/-1;">
+        <div class="skill-card-label">Tools</div>
+        <div class="skill-pills">
+          <span class="skill-pill">Figma</span>
+          <span class="skill-pill">FigJam</span>
+          <span class="skill-pill">Webflow</span>
+          <span class="skill-pill">GA4</span>
+          <span class="skill-pill">GTM</span>
+          <span class="skill-pill">Cursor</span>
+          <span class="skill-pill">Claude</span>
+          <span class="skill-pill">HTML / CSS / JS</span>
+          <span class="skill-pill">React Native</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="edu-section">
+  <div class="container">
+    <div class="section-eyebrow">Education</div>
+    <div class="edu-grid">
+      <div class="edu-card">
+        <div class="edu-school">Trinity College</div>
+        <div class="edu-degree">Bachelor of Arts, History</div>
+      </div>
+      <div class="edu-card">
+        <div class="edu-school">SMFA at Tufts</div>
+        <div class="edu-degree">Graphic Design, Typography, Design Fundamentals</div>
+      </div>
+      <div class="edu-card">
+        <div class="edu-school">General Assembly</div>
+        <div class="edu-degree">UX Design, Visual Design, Front-End Development</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="container">
+  <div class="cta-dark">
+    <div class="section-eyebrow">Let's work together</div>
+    <h2>Ready to build something <em>great?</em></h2>
+    <p>Looking for a senior IC role where design has a real seat at the table. Open to remote or San Francisco.</p>
+    <div style="display:flex;justify-content:center;gap:12px;flex-wrap:wrap;">
+      <a href="mailto:sahandhajizadeh@gmail.com" class="btn-dark-filled">sahandhajizadeh@gmail.com</a>
+      <a href="https://linkedin.com/in/sahandh" target="_blank" class="btn-dark-outline">LinkedIn ↗</a>
+    </div>
+    <div style="margin-top:16px;font-size:12px;color:rgba(255,255,255,0.2);">Resume available on request · Response within 24 hours</div>
+  </div>
+  <div class="cta-footer">
+    <div class="foot-logo">Sahand<em>.</em></div>
+    <div class="foot-links-row"><a href="index.html">Work</a><a href="about.html">About</a><a href="https://linkedin.com/in/sahandh" target="_blank">LinkedIn</a><a href="mailto:sahandhajizadeh@gmail.com">Email</a></div>
+    <div class="foot-note">© 2026 Sahand Hajizadeh</div>
+  </div>
+</div>
+
+<script>
+const cur=document.getElementById('cur'),ring=document.getElementById('ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
+(function raf(){rx+=(mx-rx)*0.1;ry+=(my-ry)*0.1;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(raf);})();
+document.querySelectorAll('a,button').forEach(el=>{el.addEventListener('mouseenter',()=>{ring.classList.add('big');cur.classList.add('on-dark');});el.addEventListener('mouseleave',()=>{ring.classList.remove('big');cur.classList.remove('on-dark');});});
+document.querySelectorAll('.skill-card,.cta-dark').forEach(el=>{el.addEventListener('mouseenter',()=>{cur.classList.add('on-dark');ring.classList.add('on-dark');});el.addEventListener('mouseleave',()=>{cur.classList.remove('on-dark');ring.classList.remove('on-dark');});});
+</script>
+</body>
+</html>
