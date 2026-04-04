@@ -377,6 +377,8 @@ h2.display em{font-style:italic;color:var(--ink-60);}
 .cursor { width: 10px; height: 10px; border-radius: 50%; background: var(--ink); position: fixed; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); transition: background 0.25s; }
 .cursor-ring { width: 36px; height: 36px; border-radius: 50%; border: 1.5px solid rgba(26,26,20,0.25); position: fixed; pointer-events: none; z-index: 9998; transform: translate(-50%, -50%); transition: width 0.25s, height 0.25s, border-color 0.25s; }
 .cursor-ring.big { width: 52px; height: 52px; border-color: var(--lavender-dark); }
+.cursor.on-dark { background: white; }
+.cursor-ring.on-dark { border-color: rgba(255,255,255,0.35); }
 @media(max-width:720px) { .cursor, .cursor-ring { display: none; } body { cursor: auto; } }
 </style>
 </head>
@@ -701,6 +703,19 @@ let mx=0, my=0, rx=0, ry=0;
 document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; cur.style.left=mx+'px'; cur.style.top=my+'px'; });
 (function raf(){ rx+=(mx-rx)*0.1; ry+=(my-ry)*0.1; ring.style.left=rx+'px'; ring.style.top=ry+'px'; requestAnimationFrame(raf); })();
 document.querySelectorAll('a, button, .mini-card, .proj-card, .nav-cta').forEach(el => { el.addEventListener('mouseenter', () => ring.classList.add('big')); el.addEventListener('mouseleave', () => ring.classList.remove('big')); });
+
+const darkSections = document.querySelectorAll('.proj-card, .stats-card, .about-dark, .cta-dark, .recog-card');
+document.addEventListener('mousemove', e => {
+  let onDark = false;
+  darkSections.forEach(el => {
+    const r = el.getBoundingClientRect();
+    if (e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom) {
+      onDark = true;
+    }
+  });
+  cur.classList.toggle('on-dark', onDark);
+  ring.classList.toggle('on-dark', onDark);
+});
 </script>
 </body>
 </html>
