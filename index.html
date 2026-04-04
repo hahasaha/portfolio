@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sahand Hajizadeh — Senior Product Designer</title>
 <meta name="description" content="Senior product designer. Ex-Evernote, eBay. Making complex things feel simple.">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%231a1a14'/><text x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' font-family='Georgia,serif' font-style='italic' font-size='20' fill='%23c4aff0'>S</text></svg>">
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
@@ -338,19 +339,25 @@ h2.display em{font-style:italic;color:var(--ink-60);}
 .cta-footer{
   background:var(--ink);
   border-top:1px solid rgba(255,255,255,0.06);
-  padding:24px 32px;
+  padding:28px 32px;
   display:flex;justify-content:space-between;align-items:center;
   max-width:900px;margin:0 auto;
 }
 .foot-logo{
-  font-family:'DM Serif Display',serif;font-size:16px;
-  letter-spacing:-0.01em;color:rgba(255,255,255,0.25);
+  font-family:'DM Serif Display',serif;font-size:18px;
+  letter-spacing:-0.01em;color:rgba(255,255,255,0.4);
+  transition:color 0.2s;
 }
-.foot-logo em{color:rgba(196,175,240,0.4);font-style:italic;}
-.foot-links{display:flex;gap:20px;}
-.foot-links a{font-size:12px;color:rgba(255,255,255,0.2);transition:color 0.15s;font-weight:500;letter-spacing:0.04em;}
-.foot-links a:hover{color:rgba(255,255,255,0.6);}
-.foot-note{font-size:11px;color:rgba(255,255,255,0.15);}
+.foot-logo:hover{color:rgba(255,255,255,0.7);}
+.foot-logo em{color:var(--lavender);font-style:italic;opacity:0.7;}
+.foot-links{display:flex;gap:4px;}
+.foot-links a{
+  font-size:12px;color:rgba(255,255,255,0.25);
+  transition:all 0.15s;font-weight:500;letter-spacing:0.04em;
+  padding:6px 12px;border-radius:var(--radius-btn);
+}
+.foot-links a:hover{color:rgba(255,255,255,0.7);background:rgba(255,255,255,0.06);}
+.foot-note{font-size:11px;color:rgba(255,255,255,0.12);letter-spacing:0.02em;}
 
 /* ── RESPONSIVE ── */
 @media(max-width:720px){
@@ -606,13 +613,18 @@ h2.display em{font-style:italic;color:var(--ink-60);}
           <h4>Skills</h4>
           <ul class="about-list">
             <li>Product Design</li>
-            <li>UX Research & Strategy</li>
+            <li>User Experience Design (UX)</li>
+            <li>Figma</li>
             <li>Mobile Design (iOS & Android)</li>
             <li>Design Systems</li>
+            <li>UX Research</li>
+            <li>Prototyping</li>
             <li>Information Architecture</li>
-            <li>Prototyping & User Testing</li>
-            <li>Conversion Optimization</li>
             <li>A/B Testing</li>
+            <li>Webflow</li>
+            <li>Interaction Design</li>
+            <li>Conversion Rate Optimization</li>
+            <li>Google Analytics (GA4)</li>
           </ul>
         </div>
         <div class="about-col">
@@ -661,9 +673,11 @@ h2.display em{font-style:italic;color:var(--ink-60);}
       <div class="cta-fine">Response within 24 hours · Open to full-time senior IC roles</div>
     </div>
     <div class="cta-footer">
-      <div class="foot-logo">Sahand<em>.</em></div>
+      <a href="#" class="foot-logo">Sahand<em>.</em></a>
       <div class="foot-links">
-        <a href="https://linkedin.com/in/sahandh" target="_blank">LinkedIn</a>
+        <a href="#work">Work</a>
+        <a href="#about">About</a>
+        <a href="https://linkedin.com/in/sahandh" target="_blank">LinkedIn ↗</a>
         <a href="mailto:sahandhajizadeh@gmail.com">Email</a>
       </div>
       <div class="foot-note">© 2026 Sahand Hajizadeh</div>
@@ -671,7 +685,7 @@ h2.display em{font-style:italic;color:var(--ink-60);}
   </div>
 </section>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // Animate metric bars when Golf Ranch section scrolls into view
 const io = new IntersectionObserver(entries => {
   entries.forEach(entry => {
@@ -735,7 +749,7 @@ document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; cur.st
 (function raf(){ rx+=(mx-rx)*0.1; ry+=(my-ry)*0.1; ring.style.left=rx+'px'; ring.style.top=ry+'px'; requestAnimationFrame(raf); })();
 let hoveringInteractive = false;
 let isOnDark = false;
-const darkSections = document.querySelectorAll('.proj-card, .stats-card, .about-dark, .cta-dark, .recog-card');
+const darkSections = document.querySelectorAll('.proj-card, .stats-card, .about-dark, .cta-dark, .recog-card, .cta-footer');
 
 document.querySelectorAll('a, button, .mini-card, .proj-card, .nav-cta').forEach(el => {
   el.addEventListener('mouseenter', () => {
@@ -785,14 +799,4 @@ document.addEventListener('mousemove', e => {
 
     if (dist < magnetRadius) {
       const pull = (magnetRadius - dist) / magnetRadius;
-      el.style.transform = `translate(${dx * pull * magnetStrength}px, ${dy * pull * magnetStrength}px)`;
-      el.style.transition = 'transform 0.15s ease';
-    } else {
-      el.style.transform = 'translate(0px, 0px)';
-      el.style.transition = 'transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
-    }
-  });
-});
-</script>
-</body>
-</html>
+      el.style.transform = `translate(${dx 
