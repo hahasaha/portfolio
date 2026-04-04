@@ -716,6 +716,18 @@ document.addEventListener('mousemove', e => {
   cur.classList.toggle('on-dark', onDark);
   ring.classList.toggle('on-dark', onDark);
 });
+
+document.querySelectorAll('a, button').forEach(el => {
+  el.addEventListener('mouseenter', () => cur.classList.add('on-dark'));
+  el.addEventListener('mouseleave', () => {
+    const rect = cur.getBoundingClientRect ? null : null;
+    const isOverDark = [...document.querySelectorAll('.proj-card, .stats-card, .about-dark, .cta-dark, .recog-card')].some(el => {
+      const r = el.getBoundingClientRect();
+      return mx >= r.left && mx <= r.right && my >= r.top && my <= r.bottom;
+    });
+    if (!isOverDark) cur.classList.remove('on-dark');
+  });
+});
 </script>
 </body>
 </html>
