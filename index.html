@@ -625,6 +625,26 @@ h2.display em{font-style:italic;color:var(--ink-60);}
   </div>
 </section>
 
+<!-- TOOLS -->
+<section style="padding:0 0 72px;">
+  <div class="container">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+      <a href="project-matcher.html" style="background:var(--ink);border-radius:var(--radius-card);padding:28px 32px;text-decoration:none;border:1px solid rgba(255,255,255,0.06);transition:transform 0.25s cubic-bezier(0.16,1,0.3,1);display:flex;flex-direction:column;gap:10px;" onmouseenter="this.style.transform='translateY(-3px)'" onmouseleave="this.style.transform='translateY(0)'">
+        <div style="font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.2);">Interactive</div>
+        <div style="font-family:'DM Serif Display',serif;font-size:22px;color:white;letter-spacing:-0.01em;line-height:1.2;">Not sure where to start? <em style="color:var(--lavender);font-style:italic;">I'll help.</em></div>
+        <div style="font-size:13px;color:rgba(255,255,255,0.35);line-height:1.6;">Answer 4 quick questions and I'll point you to the right case study.</div>
+        <div style="font-size:12px;color:var(--lavender);margin-top:4px;font-weight:600;">Find my match →</div>
+      </a>
+      <a href="palette-generator.html" style="background:var(--cream-2);border-radius:var(--radius-card);padding:28px 32px;text-decoration:none;border:1px solid var(--rule);transition:transform 0.25s cubic-bezier(0.16,1,0.3,1);display:flex;flex-direction:column;gap:10px;" onmouseenter="this.style.transform='translateY(-3px)'" onmouseleave="this.style.transform='translateY(0)'">
+        <div style="font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-35);">Design tool</div>
+        <div style="font-family:'DM Serif Display',serif;font-size:22px;color:var(--ink);letter-spacing:-0.01em;line-height:1.2;">Pick a mood. Get a <em style="color:var(--lavender-dark);font-style:italic;">palette.</em></div>
+        <div style="font-size:13px;color:var(--ink-60);line-height:1.6;">A free color palette generator. Built with the same thinking I bring to every project.</div>
+        <div style="font-size:12px;color:var(--lavender-dark);margin-top:4px;font-weight:600;">Generate a palette →</div>
+      </a>
+    </div>
+  </div>
+</section>
+
 <!-- ABOUT -->
 <section class="about-section" id="about">
   <div class="container">
@@ -686,7 +706,7 @@ h2.display em{font-style:italic;color:var(--ink-60);}
       <h2>Ready to build something <em>great?</em></h2>
       <p>Looking for a senior IC role where design has a real seat at the table. Open to remote or San Francisco.</p>
       <div class="btn-pair">
-        <a href="mailto:sahandhajizadeh@gmail.com" class="btn-dark-filled">sahandhajizadeh@gmail.com</a>
+        <a href="/cdn-cgi/l/email-protection#1d6e7c757c7379757c7774677c7978755d7a707c7471337e7270" class="btn-dark-filled"><span class="__cf_email__" data-cfemail="96e5f7fef7f8f2fef7fcffecf7f2f3fed6f1fbf7fffab8f5f9fb">[email&#160;protected]</span></a>
         <a href="https://linkedin.com/in/sahandh" target="_blank" class="btn-dark-outline">LinkedIn ↗</a>
       </div>
       <div class="cta-fine">Response within 24 hours · Open to full-time senior IC roles</div>
@@ -697,14 +717,14 @@ h2.display em{font-style:italic;color:var(--ink-60);}
         <a href="#work">Work</a>
         <a href="#about">About</a>
         <a href="https://linkedin.com/in/sahandh" target="_blank">LinkedIn ↗</a>
-        <a href="mailto:sahandhajizadeh@gmail.com">Email</a>
+        <a href="/cdn-cgi/l/email-protection#4f3c2e272e212b272e2526352e2b2a270f28222e2623612c2022">Email</a>
       </div>
       <div class="foot-note">© 2026 Sahand Hajizadeh</div>
     </div>
   </div>
 </section>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // Animate metric bars when Golf Ranch section scrolls into view
 const io = new IntersectionObserver(entries => {
   entries.forEach(entry => {
@@ -818,14 +838,4 @@ document.addEventListener('mousemove', e => {
 
     if (dist < magnetRadius) {
       const pull = (magnetRadius - dist) / magnetRadius;
-      el.style.transform = `translate(${dx * pull * magnetStrength}px, ${dy * pull * magnetStrength}px)`;
-      el.style.transition = 'transform 0.15s ease';
-    } else {
-      el.style.transform = 'translate(0px, 0px)';
-      el.style.transition = 'transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
-    }
-  });
-});
-</script>
-</body>
-</html> 
+      el.style.transform = `translate(${dx 

@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Palette Generator — Sahand Hajizadeh</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%231a1a14'/><text x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' font-family='Georgia,serif' font-style='italic' font-size='20' fill='%23c4aff0'>S</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --cream:#f5f0e2;
+  --ink:#1a1a14;
+  --ink-60:rgba(26,26,20,0.6);
+  --ink-15:rgba(26,26,20,0.1);
+  --lavender:#c4aff0;
+  --lavender-bg:#d8ccf8;
+  --lavender-dark:#8b70d0;
+  --rule:rgba(26,26,20,0.1);
+  --radius:20px;
+}
+html,body{min-height:100vh;background:var(--cream);font-family:'DM Sans',system-ui,sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased;}
+body{display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:80px 24px 48px;}
+
+.back-link{position:fixed;top:20px;left:24px;font-size:13px;font-weight:500;color:var(--ink-60);text-decoration:none;display:flex;align-items:center;gap:6px;transition:color 0.15s;}
+.back-link:hover{color:var(--ink);}
+
+.page-header{text-align:center;margin-bottom:48px;}
+.eyebrow{font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-60);margin-bottom:14px;}
+.page-title{font-family:'DM Serif Display',serif;font-size:clamp(32px,6vw,56px);line-height:1.06;letter-spacing:-0.02em;margin-bottom:12px;}
+.page-title em{font-style:italic;color:var(--lavender-dark);}
+.page-sub{font-size:16px;color:var(--ink-60);max-width:420px;margin:0 auto;line-height:1.6;}
+
+/* MOOD PICKER */
+.mood-section{margin-bottom:40px;text-align:center;}
+.mood-label{font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-60);margin-bottom:16px;}
+.mood-pills{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;}
+.mood-pill{
+  font-size:13px;font-weight:500;padding:10px 20px;border-radius:50px;
+  border:1.5px solid var(--rule);background:transparent;color:var(--ink-60);
+  cursor:pointer;transition:all 0.2s cubic-bezier(0.16,1,0.3,1);
+  font-family:'DM Sans',sans-serif;
+}
+.mood-pill:hover{border-color:var(--ink-60);color:var(--ink);}
+.mood-pill.active{background:var(--ink);color:var(--cream);border-color:var(--ink);}
+
+/* PALETTE DISPLAY */
+.palette-wrap{width:100%;max-width:680px;margin-bottom:32px;}
+.swatches{display:grid;grid-template-columns:repeat(5,1fr);border-radius:20px;overflow:hidden;height:220px;margin-bottom:0;}
+.swatch{flex:1;display:flex;flex-direction:column;justify-content:flex-end;padding:14px;cursor:pointer;position:relative;transition:flex 0.4s cubic-bezier(0.16,1,0.3,1);}
+.swatch:hover{flex:1.4;}
+.swatch-hex{font-size:11px;font-weight:600;letter-spacing:0.04em;opacity:0;transition:opacity 0.2s;font-family:'DM Sans',sans-serif;}
+.swatch:hover .swatch-hex{opacity:1;}
+.swatch-name{font-size:10px;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;opacity:0;transition:opacity 0.2s;margin-top:3px;font-family:'DM Sans',sans-serif;}
+.swatch:hover .swatch-name{opacity:1;}
+.copy-flash{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:11px;font-weight:600;background:rgba(0,0,0,0.6);color:white;padding:4px 10px;border-radius:20px;opacity:0;pointer-events:none;transition:opacity 0.3s;white-space:nowrap;}
+.swatch.copied .copy-flash{opacity:1;}
+
+/* EXPORT ROW */
+.export-row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-bottom:32px;}
+.export-btn{
+  font-size:13px;font-weight:600;padding:12px 22px;border-radius:50px;
+  border:1.5px solid var(--rule);background:transparent;color:var(--ink-60);
+  cursor:pointer;transition:all 0.2s;font-family:'DM Sans',sans-serif;
+  display:flex;align-items:center;gap:7px;
+}
+.export-btn:hover{border-color:var(--ink);color:var(--ink);background:rgba(26,26,20,0.04);}
+.export-btn.primary{background:var(--lavender-bg);border-color:transparent;color:var(--ink);}
+.export-btn.primary:hover{background:var(--lavender);}
+.export-btn.copied-btn{background:var(--ink);color:var(--cream);border-color:var(--ink);}
+
+/* CODE BLOCK */
+.code-section{width:100%;max-width:680px;}
+.code-block{background:var(--ink);border-radius:16px;padding:24px;overflow:auto;}
+.code-block pre{font-family:'SF Mono','Fira Code',monospace;font-size:12px;color:rgba(255,255,255,0.7);line-height:1.8;white-space:pre;}
+.code-keyword{color:#c4aff0;}
+.code-value{color:#e8a040;}
+.code-prop{color:rgba(255,255,255,0.5);}
+
+/* GENERATE BTN */
+.gen-btn{
+  font-size:14px;font-weight:600;padding:14px 32px;border-radius:50px;
+  background:transparent;border:1.5px solid var(--rule);color:var(--ink-60);
+  cursor:pointer;transition:all 0.25s cubic-bezier(0.16,1,0.3,1);
+  font-family:'DM Sans',sans-serif;margin-bottom:32px;display:flex;align-items:center;gap:8px;
+}
+.gen-btn:hover{border-color:var(--ink);color:var(--ink);transform:translateY(-1px);}
+
+/* CREDIT */
+.credit{margin-top:32px;font-size:12px;color:var(--ink-60);text-align:center;}
+.credit a{color:var(--ink);font-weight:500;text-decoration:none;border-bottom:1px solid var(--rule);}
+
+/* ANIMATION */
+.swatch{animation:swatchIn 0.5s cubic-bezier(0.16,1,0.3,1) both;}
+@keyframes swatchIn{from{opacity:0;transform:scaleY(0.8);}to{opacity:1;transform:scaleY(1);}}
+</style>
+</head>
+<body>
+
+<a href="index.html" class="back-link">← Back</a>
+
+<div class="page-header">
+  <div class="eyebrow">Design tool</div>
+  <h1 class="page-title">Pick a mood.<br>Get a <em>palette.</em></h1>
+  <p class="page-sub">Built with the same thinking I bring to every project. Copy it. Use it. Make something.</p>
+</div>
+
+<div class="mood-section">
+  <div class="mood-label">Choose a vibe</div>
+  <div class="mood-pills">
+    <button class="mood-pill active" onclick="setMood('sahand')">Sahand's system</button>
+    <button class="mood-pill" onclick="setMood('wild')">Wild & Crazy</button>
+    <button class="mood-pill" onclick="setMood('chill')">Chill Vibes</button>
+    <button class="mood-pill" onclick="setMood('ocean')">Ocean Breeze</button>
+    <button class="mood-pill" onclick="setMood('golden')">Golden Hour</button>
+    <button class="mood-pill" onclick="setMood('midnight')">Midnight</button>
+    <button class="mood-pill" onclick="setMood('forest')">Deep Forest</button>
+    <button class="mood-pill" onclick="setMood('candy')">Candy Pop</button>
+  </div>
+</div>
+
+<div class="palette-wrap">
+  <div class="swatches" id="swatches"></div>
+</div>
+
+<button class="gen-btn" onclick="shuffle()">↻ Shuffle this mood</button>
+
+<div class="export-row">
+  <button class="export-btn primary" onclick="copyCSS()">Copy CSS variables</button>
+  <button class="export-btn" onclick="copyHex()">Copy hex codes</button>
+  <button class="export-btn" onclick="copyFigma()">Copy Figma tokens</button>
+</div>
+
+<div class="code-section">
+  <div class="code-block"><pre id="code-output"></pre></div>
+</div>
+
+<div class="credit">
+  Made by <a href="index.html">Sahand Hajizadeh</a> — Senior Product Designer
+</div>
+
+<script>
+const moods = {
+  sahand: {
+    palettes: [
+      [{h:'#f5f0e2',n:'cream'},{h:'#1a1a14',n:'ink'},{h:'#c4aff0',n:'lavender'},{h:'#1a3d2e',n:'forest'},{h:'#e8a040',n:'amber'}],
+    ],
+    random: false
+  },
+  wild: {
+    palettes: [
+      [{h:'#FF3CAC',n:'hot pink'},{h:'#784BA0',n:'purple'},{h:'#2B86C5',n:'electric blue'},{h:'#FFEB3B',n:'neon yellow'},{h:'#00F5D4',n:'mint'}],
+      [{h:'#F72585',n:'magenta'},{h:'#7209B7',n:'violet'},{h:'#3A0CA3',n:'indigo'},{h:'#4361EE',n:'cobalt'},{h:'#4CC9F0',n:'sky'}],
+      [{h:'#FF6B6B',n:'coral'},{h:'#FFE66D',n:'lemon'},{h:'#4ECDC4',n:'teal'},{h:'#45B7D1',n:'blue'},{h:'#96E6A1',n:'mint'}],
+    ]
+  },
+  chill: {
+    palettes: [
+      [{h:'#F8F4F0',n:'linen'},{h:'#D4C5B2',n:'sand'},{h:'#9B8EA0',n:'mauve'},{h:'#6B7280',n:'slate'},{h:'#374151',n:'charcoal'}],
+      [{h:'#FAFAF9',n:'white'},{h:'#E7E5E4',n:'smoke'},{h:'#A8A29E',n:'stone'},{h:'#78716C',n:'warm gray'},{h:'#292524',n:'espresso'}],
+      [{h:'#F0F4F8',n:'ice'},{h:'#CBD5E0',n:'mist'},{h:'#90A4B7',n:'dusk'},{h:'#546E7A',n:'slate'},{h:'#263238',n:'midnight'}],
+    ]
+  },
+  ocean: {
+    palettes: [
+      [{h:'#E0F4FF',n:'sky'},{h:'#96D5F5',n:'mist'},{h:'#38B2E8',n:'wave'},{h:'#0D6FA8',n:'deep'},{h:'#03254C',n:'abyss'}],
+      [{h:'#F0FFFC',n:'seafoam'},{h:'#80DEEA',n:'aqua'},{h:'#26C6DA',n:'teal'},{h:'#00838F',n:'ocean'},{h:'#004D56',n:'depth'}],
+      [{h:'#E8F5E9',n:'surf'},{h:'#80CBC4',n:'tide'},{h:'#26A69A',n:'sea'},{h:'#00796B',n:'deep teal'},{h:'#004D40',n:'abyssal'}],
+    ]
+  },
+  golden: {
+    palettes: [
+      [{h:'#FFF8E7',n:'champagne'},{h:'#FFD88A',n:'honey'},{h:'#F5A623',n:'amber'},{h:'#C47A1A',n:'gold'},{h:'#7A4500',n:'bronze'}],
+      [{h:'#FEF3C7',n:'cream'},{h:'#FCD34D',n:'saffron'},{h:'#F59E0B',n:'amber'},{h:'#B45309',n:'copper'},{h:'#451A03',n:'mahogany'}],
+      [{h:'#FFFBF0',n:'ivory'},{h:'#FFE4A0',n:'butter'},{h:'#F5B800',n:'sunflower'},{h:'#C68400',n:'harvest'},{h:'#6B4A00',n:'bark'}],
+    ]
+  },
+  midnight: {
+    palettes: [
+      [{h:'#0D0D1A',n:'void'},{h:'#1A1A3E',n:'navy'},{h:'#2D2B55',n:'deep'},{h:'#7C73E6',n:'violet'},{h:'#C4B5FD',n:'lavender'}],
+      [{h:'#0F0F23',n:'abyss'},{h:'#1E1B4B',n:'indigo'},{h:'#3730A3',n:'royal'},{h:'#818CF8',n:'periwinkle'},{h:'#E0E7FF',n:'ghost'}],
+      [{h:'#050505',n:'black'},{h:'#111827',n:'coal'},{h:'#374151',n:'smoke'},{h:'#9CA3AF',n:'silver'},{h:'#F9FAFB',n:'white'}],
+    ]
+  },
+  forest: {
+    palettes: [
+      [{h:'#F0F7F0',n:'mist'},{h:'#A8D5B5',n:'sage'},{h:'#4A9B6F',n:'fern'},{h:'#1F6B40',n:'forest'},{h:'#0D3B22',n:'deep'}],
+      [{h:'#F4F9EE',n:'dew'},{h:'#C5DFA8',n:'moss'},{h:'#7CB96A',n:'leaf'},{h:'#3D7A2E',n:'pine'},{h:'#1A3D14',n:'bark'}],
+      [{h:'#EEF5EE',n:'canopy'},{h:'#B5CFAA',n:'lichen'},{h:'#5D9E6A',n:'cedar'},{h:'#2E6B3E',n:'grove'},{h:'#142E1C',n:'root'}],
+    ]
+  },
+  candy: {
+    palettes: [
+      [{h:'#FFF0F6',n:'blush'},{h:'#FFB3D1',n:'bubblegum'},{h:'#FF6BA8',n:'flamingo'},{h:'#E91E8C',n:'hot pink'},{h:'#9C0057',n:'berry'}],
+      [{h:'#F0F8FF',n:'cloud'},{h:'#B3D9FF',n:'cotton'},{h:'#66AAFF',n:'sky blue'},{h:'#2255FF',n:'royal'},{h:'#110099',n:'cobalt'}],
+      [{h:'#FFFDE7',n:'vanilla'},{h:'#FFD180',n:'peach'},{h:'#FF9100',n:'tangerine'},{h:'#E65100',n:'papaya'},{h:'#7B2500',n:'cinnamon'}],
+    ]
+  }
+};
+
+let currentMood = 'sahand';
+let currentPalette = [...moods.sahand.palettes[0]];
+
+function setMood(mood) {
+  currentMood = mood;
+  document.querySelectorAll('.mood-pill').forEach(p => p.classList.remove('active'));
+  event.target.classList.add('active');
+  shuffle();
+}
+
+function shuffle() {
+  const mood = moods[currentMood];
+  if (currentMood === 'sahand') {
+    currentPalette = [...mood.palettes[0]];
+  } else {
+    const pool = mood.palettes;
+    currentPalette = [...pool[Math.floor(Math.random() * pool.length)]];
+  }
+  renderSwatches();
+  renderCode();
+}
+
+function renderSwatches() {
+  const wrap = document.getElementById('swatches');
+  wrap.innerHTML = '';
+  currentPalette.forEach((s, i) => {
+    const lum = luminance(s.h);
+    const textColor = lum > 0.4 ? 'rgba(0,0,0,0.7)' : 'rgba(255,255,255,0.85)';
+    const div = document.createElement('div');
+    div.className = 'swatch';
+    div.style.cssText = `background:${s.h};animation-delay:${i*0.06}s;`;
+    div.innerHTML = `
+      <div class="copy-flash">Copied!</div>
+      <div class="swatch-hex" style="color:${textColor}">${s.h}</div>
+      <div class="swatch-name" style="color:${textColor}">${s.n}</div>
+    `;
+    div.onclick = () => {
+      navigator.clipboard.writeText(s.h);
+      div.classList.add('copied');
+      setTimeout(() => div.classList.remove('copied'), 1200);
+    };
+    wrap.appendChild(div);
+  });
+}
+
+function luminance(hex) {
+  const r = parseInt(hex.slice(1,3),16)/255;
+  const g = parseInt(hex.slice(3,5),16)/255;
+  const b = parseInt(hex.slice(5,7),16)/255;
+  return 0.299*r + 0.587*g + 0.114*b;
+}
+
+function renderCode() {
+  const names = ['background','surface','accent','deep','highlight'];
+  const lines = currentPalette.map((s,i) => `  <span class="code-keyword">--color-${names[i]}</span>: <span class="code-value">${s.h}</span>; <span class="code-prop">/* ${s.n} */</span>`);
+  document.getElementById('code-output').innerHTML = `<span class="code-keyword">:root</span> {\n${lines.join('\n')}\n}`;
+}
+
+function copyCSS() {
+  const names = ['background','surface','accent','deep','highlight'];
+  const text = `:root {\n${currentPalette.map((s,i) => `  --color-${names[i]}: ${s.h}; /* ${s.n} */`).join('\n')}\n}`;
+  copyAndFlash(text, event.target, 'Copied CSS!');
+}
+
+function copyHex() {
+  const text = currentPalette.map(s => s.h).join(', ');
+  copyAndFlash(text, event.target, 'Copied hex!');
+}
+
+function copyFigma() {
+  const names = ['background','surface','accent','deep','highlight'];
+  const tokens = currentPalette.map((s,i) => `${names[i]}: "${s.h}"`).join('\n');
+  copyAndFlash(tokens, event.target, 'Copied tokens!');
+}
+
+function copyAndFlash(text, btn, msg) {
+  navigator.clipboard.writeText(text);
+  const orig = btn.textContent;
+  btn.classList.add('copied-btn');
+  btn.textContent = '✓ ' + msg;
+  setTimeout(() => { btn.classList.remove('copied-btn'); btn.textContent = orig; }, 1800);
+}
+
+renderSwatches();
+renderCode();
+</script>
+</body>
+</html>
