@@ -72,7 +72,7 @@ nav{
   background:var(--lavender-bg)!important;color:var(--ink)!important;
   font-weight:600!important;border:1.5px solid rgba(139,112,208,0.3)!important;
 }
-.nav-cta:hover{background:white!important;border-color:rgba(26,26,20,0.15)!important;transform:translateY(-1px);box-shadow:0 3px 14px rgba(0,0,0,0.08);}
+.nav-cta:hover{background:white!important;border-color:rgba(26,26,20,0.15)!important;transform:translateY(-1px) scale(1.05);box-shadow:0 3px 14px rgba(0,0,0,0.08);}
 
 /* ── HERO ── */
 .hero{padding:80px 0 0;text-align:center;background:var(--cream);}
@@ -104,7 +104,7 @@ nav{
   border:1.5px solid rgba(139,112,208,0.3);
   transition:all 0.25s cubic-bezier(0.16,1,0.3,1);letter-spacing:-0.01em;
 }
-.btn-filled:hover{background:white;border-color:rgba(26,26,20,0.15);transform:translateY(-2px);box-shadow:0 4px 20px rgba(0,0,0,0.08);}
+.btn-filled:hover{background:white;border-color:rgba(26,26,20,0.15);transform:translateY(-2px) scale(1.05);box-shadow:0 4px 20px rgba(0,0,0,0.08);}
 .btn-outline{
   display:inline-flex;align-items:center;gap:8px;
   background:transparent;color:var(--ink);
@@ -113,7 +113,7 @@ nav{
   border:1.5px solid rgba(26,26,20,0.2);
   transition:all 0.25s cubic-bezier(0.16,1,0.3,1);letter-spacing:-0.01em;
 }
-.btn-outline:hover{border-color:rgba(26,26,20,0.15);background:white;transform:translateY(-2px);box-shadow:0 4px 20px rgba(0,0,0,0.08);}
+.btn-outline:hover{border-color:rgba(26,26,20,0.15);background:white;transform:translateY(-2px) scale(1.05);box-shadow:0 4px 20px rgba(0,0,0,0.08);}
 .hero-note{margin-top:16px;font-size:12px;color:var(--ink-35);}
 
 /* ── STATS CARD ── */
@@ -205,9 +205,9 @@ h2.display em{font-style:italic;color:var(--ink-60);}
   border:1.5px solid rgba(255,255,255,0.12);
   transition:all 0.25s cubic-bezier(0.16,1,0.3,1);
 }
-.proj-cta:hover{background:white;color:var(--ink);border-color:transparent;transform:translateY(-2px);box-shadow:0 4px 20px rgba(0,0,0,0.08);}
+.proj-cta:hover{background:white;color:var(--ink);border-color:transparent;transform:translateY(-2px) scale(1.05);box-shadow:0 4px 20px rgba(0,0,0,0.08);}
 .proj-cta.lavender{background:var(--lavender-bg);color:var(--ink);border-color:transparent;}
-.proj-cta.lavender:hover{background:white;transform:translateY(-2px);box-shadow:0 4px 20px rgba(0,0,0,0.08);}
+.proj-cta.lavender:hover{background:white;transform:translateY(-2px) scale(1.05);box-shadow:0 4px 20px rgba(0,0,0,0.08);}
 
 /* Right panel inside project card */
 .proj-right{display:flex;flex-direction:column;gap:0;}
@@ -284,7 +284,7 @@ h2.display em{font-style:italic;color:var(--ink-60);}
   border:1.5px solid transparent;
   transition:all 0.25s cubic-bezier(0.16,1,0.3,1);
 }
-.btn-dark-filled:hover{background:white;color:var(--ink);transform:translateY(-2px);box-shadow:0 4px 20px rgba(0,0,0,0.08);}
+.btn-dark-filled:hover{background:white;color:var(--ink);transform:translateY(-2px) scale(1.05);box-shadow:0 4px 20px rgba(0,0,0,0.08);}
 .btn-dark-outline{
   display:inline-flex;align-items:center;gap:8px;
   background:transparent;color:rgba(255,255,255,0.45);
@@ -293,7 +293,7 @@ h2.display em{font-style:italic;color:var(--ink-60);}
   border:1.5px solid rgba(255,255,255,0.12);
   transition:all 0.25s cubic-bezier(0.16,1,0.3,1);
 }
-.btn-dark-outline:hover{background:white;color:var(--ink);border-color:transparent;transform:translateY(-2px);box-shadow:0 4px 20px rgba(0,0,0,0.08);}
+.btn-dark-outline:hover{background:white;color:var(--ink);border-color:transparent;transform:translateY(-2px) scale(1.05);box-shadow:0 4px 20px rgba(0,0,0,0.08);}
 
 /* ── RECOGNITION ── */
 .recog-section{padding:72px 0;}
@@ -415,7 +415,9 @@ h2.display em{font-style:italic;color:var(--ink-60);}
     <div class="btn-pair fade-up d4">
       <a href="#work" class="btn-filled">View my work</a>
       <a href="#about" class="btn-outline">About me</a>
-      <a href="project-matcher.html" class="btn-outline" style="border-color:rgba(139,112,208,0.4);color:var(--lavender-dark);">Not sure? Get matched →</a>
+    </div>
+    <div style="text-align:center;margin-top:12px;" class="fade-up d4" style="animation-delay:0.52s">
+      <a href="project-matcher.html" class="btn-outline" style="border-color:rgba(139,112,208,0.4);color:var(--lavender-dark);">Get matched with a project →</a>
     </div>
     <div class="hero-note fade-up d4" style="animation-delay:0.58s">Open to senior IC roles · Remote or San Francisco</div>
   </div>
@@ -797,8 +799,6 @@ document.querySelectorAll('a, button, .mini-card, .proj-card, .nav-cta').forEach
     ring.classList.add('big');
     if (isOnDark) {
       cur.classList.add('invert');
-    } else {
-      cur.classList.add('on-dark');
     }
   });
   el.addEventListener('mouseleave', () => {
