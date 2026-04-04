@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Inkwell — Sahand Hajizadeh</title>
+  <meta name="description" content="Enterprise workflow tooling designed for a major entertainment company. NDA — details available on request." />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="index.html" class="nav-logo">Sahand<span>.</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html">Work</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="mailto:sahand@example.com" class="nav-cta">Get in touch</a></li>
+    </ul>
+    <button class="nav-toggle" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- CASE STUDY HERO -->
+  <div class="cs-hero">
+    <div class="cs-hero-inner">
+      <div class="cs-tag">Enterprise UX · AI Tools · Dashboards</div>
+      <h1 class="cs-title fade-up fade-up-1">Designing enterprise workflow tools for a major entertainment company.</h1>
+      <p class="cs-subtitle fade-up fade-up-2">
+        Internal dashboards and workflow interfaces that help large creative teams move faster 
+        and reduce operational friction. Built through Inkwell.
+      </p>
+      <div class="cs-meta fade-up fade-up-3">
+        <div class="cs-meta-item">
+          <div class="cs-meta-label">Client</div>
+          <div class="cs-meta-value">Inkwell (confidential client)</div>
+        </div>
+        <div class="cs-meta-item">
+          <div class="cs-meta-label">Role</div>
+          <div class="cs-meta-value">Product Designer</div>
+        </div>
+        <div class="cs-meta-item">
+          <div class="cs-meta-label">Timeline</div>
+          <div class="cs-meta-value">Feb 2026 — Present</div>
+        </div>
+        <div class="cs-meta-item">
+          <div class="cs-meta-label">Focus</div>
+          <div class="cs-meta-value">Enterprise UX, AI, Information Architecture</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PASSWORD GATE -->
+  <section>
+    <div class="container">
+      <div class="password-gate" id="gate">
+        <div style="font-size: 3rem; margin-bottom: 1.5rem;">🔒</div>
+        <h3>This project is under NDA</h3>
+        <p>
+          The full case study is available with a password, or I'm happy to walk through 
+          the work in a conversation. Just reach out.
+        </p>
+        <div class="password-form">
+          <input type="password" placeholder="Enter password" id="pw-input" />
+          <button class="btn-primary" onclick="checkPassword()">View work</button>
+        </div>
+        <p style="margin-top: 1.5rem; font-size: 0.8rem; color: var(--ink-muted);">
+          No password? <a href="mailto:sahand@example.com" style="color: var(--accent); border-bottom: 1px solid var(--accent);">Get in touch →</a>
+        </p>
+      </div>
+
+      <!-- Hidden content, shown after correct password -->
+      <div id="cs-content" style="display: none;">
+        <div class="cs-body">
+          <h2>Overview</h2>
+          <p>
+            Through Inkwell, I'm designing internal enterprise tools for a major entertainment company — 
+            dashboards and workflow interfaces that help large creative teams move faster and reduce 
+            operational friction.
+          </p>
+          <p>
+            The work spans the full design process: stakeholder research, information architecture, 
+            high-fidelity UI, and close collaboration with engineering.
+          </p>
+
+          <div class="cs-image-full">[ Dashboard overview — scenario comparison UI ]</div>
+
+          <h2>The challenge</h2>
+          <p>
+            Large enterprise teams often deal with tools built for individual contributors 
+            that don't scale to cross-functional workflows. The design challenge: create 
+            interfaces that are intuitive for experts under pressure, not just novices with time to learn.
+          </p>
+
+          <div class="cs-image-full">[ Workflow detail — violation flags + annotation system ]</div>
+
+          <h2>My approach</h2>
+          <p>
+            I focused on state legibility above everything else. In high-stakes workflows, 
+            users need to know exactly what the system is doing at any moment — what's active, 
+            what's changed, what needs their attention.
+          </p>
+          <p>
+            This shaped every design decision: badge placement, footer action ordering, 
+            how the AI assistant surfaces contextual help, and how the map-based interface 
+            communicates scale and scope.
+          </p>
+
+          <div class="cs-image-full">[ Scale indicator + action bar — system state at a glance ]</div>
+
+          <div style="margin-top: 5rem; padding-top: 3rem; border-top: 1px solid var(--border);">
+            <a href="index.html" class="btn-secondary">← Back to work</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-left">Sahand<span style="color: var(--accent)">.</span></div>
+    <ul class="footer-links">
+      <li><a href="https://linkedin.com/in/sahandh" target="_blank">LinkedIn</a></li>
+      <li><a href="mailto:sahand@example.com">Email</a></li>
+    </ul>
+    <p class="footer-copy">© 2026 Sahand Hajizadeh</p>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script>
+    function checkPassword() {
+      const pw = document.getElementById('pw-input').value;
+      if (pw === 'sahand2026') {
+        document.getElementById('gate').style.display = 'none';
+        document.getElementById('cs-content').style.display = 'block';
+      } else {
+        document.getElementById('pw-input').style.borderColor = '#c8440f';
+        setTimeout(() => {
+          document.getElementById('pw-input').style.borderColor = '';
+        }, 1500);
+      }
+    }
+
+    document.getElementById('pw-input').addEventListener('keydown', e => {
+      if (e.key === 'Enter') checkPassword();
+    });
+  </script>
+</body>
+</html>
