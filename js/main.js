@@ -22,7 +22,7 @@ window.addEventListener('scroll', () => {
   const nav = document.querySelector('nav');
   if (nav) {
     nav.style.borderBottomColor = window.scrollY > 40
-      ? 'rgba(26,23,20,0.12)'
-      : 'rgba(26,23,20,0.06)';
+      ? 'rgba(0,0,0,0.12)'
+      : 'rgba(0,0,0,0.06)';
   }
 });
