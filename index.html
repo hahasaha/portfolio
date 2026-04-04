@@ -770,7 +770,7 @@ document.addEventListener('mousemove', e => {
   ring.classList.toggle('on-dark', isOnDark);
 });
 
-document.querySelectorAll('.btn-filled, .btn-outline, .nav-cta').forEach(el => {
+document.querySelectorAll('.btn-filled, .btn-outline, .btn-dark-filled, .btn-dark-outline, .proj-cta, .nav-cta').forEach(el => {
   el.addEventListener('mousemove', e => {
     const rect = el.getBoundingClientRect();
     const x = e.clientX - rect.left - rect.width / 2;
