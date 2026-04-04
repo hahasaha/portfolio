@@ -799,4 +799,14 @@ document.addEventListener('mousemove', e => {
 
     if (dist < magnetRadius) {
       const pull = (magnetRadius - dist) / magnetRadius;
-      el.style.transform = `translate(${dx 
+      el.style.transform = `translate(${dx * pull * magnetStrength}px, ${dy * pull * magnetStrength}px)`;
+      el.style.transition = 'transform 0.15s ease';
+    } else {
+      el.style.transform = 'translate(0px, 0px)';
+      el.style.transition = 'transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+    }
+  });
+});
+</script>
+</body>
+</html> 
