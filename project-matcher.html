@@ -29,9 +29,9 @@ body{display:flex;flex-direction:column;align-items:center;justify-content:cente
 .back-link:hover{color:var(--ink);}
 
 /* CARD */
-.card{width:100%;max-width:580px;background:var(--ink);border-radius:28px;overflow:hidden;position:relative;}
+.card{width:100%;max-width:580px;background:var(--ink);border-radius:28px;overflow:hidden;overflow-y:auto;max-height:90vh;position:relative;}
 .card-top{padding:40px 40px 32px;}
-.eyebrow{font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.25);margin-bottom:14px;}
+.eyebrow{font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--lavender);margin-bottom:14px;}
 .card-title{font-family:'DM Serif Display',serif;font-size:clamp(26px,5vw,38px);color:white;line-height:1.1;letter-spacing:-0.02em;margin-bottom:8px;}
 .card-title em{font-style:italic;color:var(--lavender);}
 .card-sub{font-size:14px;color:rgba(255,255,255,0.4);line-height:1.6;}
@@ -42,7 +42,7 @@ body{display:flex;flex-direction:column;align-items:center;justify-content:cente
 
 /* QUESTION */
 .question-wrap{padding:32px 40px 40px;min-height:280px;display:flex;flex-direction:column;}
-.q-counter{font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.2);margin-bottom:16px;}
+.q-counter{font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--lavender);margin-bottom:16px;}
 .q-text{font-family:'DM Serif Display',serif;font-size:clamp(18px,3vw,24px);color:white;line-height:1.25;letter-spacing:-0.01em;margin-bottom:28px;}
 .options{display:flex;flex-direction:column;gap:8px;flex:1;}
 .opt{
@@ -72,7 +72,7 @@ body{display:flex;flex-direction:column;align-items:center;justify-content:cente
 .btn-next:hover{background:var(--lavender);transform:translateY(-2px);box-shadow:0 4px 20px rgba(196,175,240,0.3);}
 
 /* RESULT */
-.result-wrap{padding:32px 40px 40px;display:none;flex-direction:column;gap:24px;}
+.result-wrap{padding:32px 40px 40px;display:none;flex-direction:column;gap:24px;overflow-y:auto;}
 .result-label{font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.25);}
 .result-project{
   background:rgba(255,255,255,0.05);border:1.5px solid rgba(196,175,240,0.25);
@@ -107,9 +107,8 @@ body{display:flex;flex-direction:column;align-items:center;justify-content:cente
 </head>
 <body>
 
-<a href="index.html" class="back-link">← Back</a>
-
 <div class="card">
+  <a href="index.html" style="position:absolute;top:16px;right:20px;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;font-size:18px;color:rgba(255,255,255,0.4);text-decoration:none;transition:all 0.2s;z-index:10;" onmouseenter="this.style.background='rgba(255,255,255,0.15)';this.style.color='white'" onmouseleave="this.style.background='rgba(255,255,255,0.08)';this.style.color='rgba(255,255,255,0.4)'">×</a>
   <div class="card-top">
     <div class="eyebrow">Case study finder</div>
     <h1 class="card-title">Find the work that's <em>right for you.</em></h1>
