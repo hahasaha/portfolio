@@ -6,6 +6,7 @@
 <title>Sahand Hajizadeh — Senior Product Designer</title>
 <meta name="description" content="Senior product designer. Ex-Evernote, eBay. Making complex things feel simple.">
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 
@@ -672,6 +673,10 @@ h2.display em{font-style:italic;color:var(--ink-60);}
 </section>
 
 <script>
+const lenis = new Lenis({ duration: 1.2, easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
+function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+requestAnimationFrame(raf);
+
 // Animate metric bars when Golf Ranch section scrolls into view
 const io = new IntersectionObserver(entries => {
   entries.forEach(entry => {
@@ -698,6 +703,36 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
     }
   });
 });
+
+const statsCard = document.querySelector('.stats-card');
+const statNums = document.querySelectorAll('.stat .n');
+const targets = ['10', '250', '4', '25'];
+const suffixes = ['+', 'M', '×', '%'];
+const durations = [1200, 1800, 800, 1000];
+let statsAnimated = false;
+
+const statsObserver = new IntersectionObserver(entries => {
+  if (entries[0].isIntersecting && !statsAnimated) {
+    statsAnimated = true;
+    statNums.forEach((el, i) => {
+      const target = parseInt(targets[i]);
+      const suffix = suffixes[i];
+      const duration = durations[i];
+      const start = performance.now();
+      function update(now) {
+        const elapsed = now - start;
+        const progress = Math.min(elapsed / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        const current = Math.round(eased * target);
+        el.innerHTML = current + '<em>' + suffix + '</em>';
+        if (progress < 1) requestAnimationFrame(update);
+      }
+      requestAnimationFrame(update);
+    });
+  }
+}, { threshold: 0.5 });
+
+if (statsCard) statsObserver.observe(statsCard);
 
 const cur = document.getElementById('cur'), ring = document.getElementById('ring');
 let mx=0, my=0, rx=0, ry=0;
