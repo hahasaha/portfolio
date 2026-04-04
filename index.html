@@ -381,6 +381,10 @@ h2.display em{font-style:italic;color:var(--ink-60);}
 .d3{animation-delay:0.34s}
 .d4{animation-delay:0.46s}
 
+.theme-dot{width:16px;height:16px;border-radius:50%;border:2px solid transparent;cursor:pointer;transition:transform 0.15s,border-color 0.15s;padding:0;}
+.theme-dot:hover{transform:scale(1.25);}
+.theme-dot.active{border-color:var(--ink);transform:scale(1.15);}
+
 .cursor { width: 10px; height: 10px; border-radius: 50%; background: var(--ink); position: fixed; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); transition: background 0.25s; }
 .cursor-ring { width: 36px; height: 36px; border-radius: 50%; border: 1.5px solid rgba(26,26,20,0.25); position: fixed; pointer-events: none; z-index: 9998; transform: translate(-50%, -50%); transition: width 0.25s, height 0.25s, border-color 0.25s; }
 .cursor-ring.big { width: 52px; height: 52px; border-color: var(--lavender-dark); }
@@ -403,6 +407,16 @@ h2.display em{font-style:italic;color:var(--ink-60);}
     <a href="#contact" class="nav-cta">Get in touch</a>
   </div>
 </nav>
+
+<div id="theme-bar" style="background:var(--cream);border-bottom:1px solid var(--rule);padding:0 24px;height:36px;display:flex;align-items:center;justify-content:center;gap:8px;">
+  <span style="font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-35);margin-right:4px;">Theme</span>
+  <button onclick="setTheme('sahand')" class="theme-dot" style="background:#c4aff0;" title="Sahand's system"></button>
+  <button onclick="setTheme('midnight')" class="theme-dot" style="background:#1a1a14;" title="Midnight"></button>
+  <button onclick="setTheme('forest')" class="theme-dot" style="background:#1a3d2e;" title="Deep Forest"></button>
+  <button onclick="setTheme('golden')" class="theme-dot" style="background:#e8a040;" title="Golden Hour"></button>
+  <button onclick="setTheme('ocean')" class="theme-dot" style="background:#38b2e8;" title="Ocean Breeze"></button>
+  <button onclick="setTheme('candy')" class="theme-dot" style="background:#ff6ba8;" title="Candy Pop"></button>
+</div>
 
 <!-- HERO -->
 <section class="hero">
@@ -830,6 +844,26 @@ document.addEventListener('mousemove', e => {
     }
   });
 });
+
+const themes = {
+  sahand:   { '--cream':'#f5f0e2', '--cream-2':'#ede8d8', '--ink':'#1a1a14', '--ink-60':'rgba(26,26,20,0.6)', '--ink-35':'rgba(26,26,20,0.35)', '--ink-15':'rgba(26,26,20,0.12)', '--green':'#1a3d2e', '--green-2':'#224d3a', '--lavender':'#c4aff0', '--lavender-bg':'#d8ccf8', '--lavender-dark':'#8b70d0', '--amber':'#e8a040', '--rule':'rgba(26,26,20,0.1)' },
+  midnight: { '--cream':'#0d0d1a', '--cream-2':'#1a1a3e', '--ink':'#e0e0f0', '--ink-60':'rgba(224,224,240,0.6)', '--ink-35':'rgba(224,224,240,0.35)', '--ink-15':'rgba(224,224,240,0.1)', '--green':'#2d2b55', '--green-2':'#3a3870', '--lavender':'#7c73e6', '--lavender-bg':'#3730a3', '--lavender-dark':'#a5b4fc', '--amber':'#f59e0b', '--rule':'rgba(224,224,240,0.1)' },
+  forest:   { '--cream':'#f0f7f0', '--cream-2':'#ddeedd', '--ink':'#0d3b22', '--ink-60':'rgba(13,59,34,0.6)', '--ink-35':'rgba(13,59,34,0.35)', '--ink-15':'rgba(13,59,34,0.1)', '--green':'#1f6b40', '--green-2':'#2a8a52', '--lavender':'#7cb96a', '--lavender-bg':'#c5dfa8', '--lavender-dark':'#3d7a2e', '--amber':'#e8a040', '--rule':'rgba(13,59,34,0.1)' },
+  golden:   { '--cream':'#fffbf0', '--cream-2':'#fff0cc', '--ink':'#7a4500', '--ink-60':'rgba(122,69,0,0.6)', '--ink-35':'rgba(122,69,0,0.35)', '--ink-15':'rgba(122,69,0,0.1)', '--green':'#c47a1a', '--green-2':'#d4892a', '--lavender':'#f5a623', '--lavender-bg':'#ffd88a', '--lavender-dark':'#c47a1a', '--amber':'#e8a040', '--rule':'rgba(122,69,0,0.1)' },
+  ocean:    { '--cream':'#e0f4ff', '--cream-2':'#c0e8f8', '--ink':'#03254c', '--ink-60':'rgba(3,37,76,0.6)', '--ink-35':'rgba(3,37,76,0.35)', '--ink-15':'rgba(3,37,76,0.1)', '--green':'#0d6fa8', '--green-2':'#1a82bb', '--lavender':'#38b2e8', '--lavender-bg':'#96d5f5', '--lavender-dark':'#0d6fa8', '--amber':'#f59e0b', '--rule':'rgba(3,37,76,0.1)' },
+  candy:    { '--cream':'#fff0f6', '--cream-2':'#ffe0ee', '--ink':'#9c0057', '--ink-60':'rgba(156,0,87,0.6)', '--ink-35':'rgba(156,0,87,0.35)', '--ink-15':'rgba(156,0,87,0.1)', '--green':'#e91e8c', '--green-2':'#f02d9a', '--lavender':'#ff6ba8', '--lavender-bg':'#ffb3d1', '--lavender-dark':'#e91e8c', '--amber':'#ff9100', '--rule':'rgba(156,0,87,0.1)' }
+};
+
+function setTheme(name) {
+  const vars = themes[name];
+  const root = document.documentElement.style;
+  Object.entries(vars).forEach(([k,v]) => root.setProperty(k, v));
+  document.querySelectorAll('.theme-dot').forEach((d,i) => d.classList.remove('active'));
+  const idx = Object.keys(themes).indexOf(name);
+  document.querySelectorAll('.theme-dot')[idx].classList.add('active');
+}
+
+document.querySelectorAll('.theme-dot')[0].classList.add('active');
 </script>
 </body>
 </html>
