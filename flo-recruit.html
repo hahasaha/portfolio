@@ -6,16 +6,36 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-:root{--cream:#f5f0e2;--cream-2:#ede8d8;--ink:#1a1a14;--ink-60:rgba(26,26,20,0.6);--ink-35:rgba(26,26,20,0.35);--ink-15:rgba(26,26,20,0.12);--green:#1a3d2e;--lavender:#c4aff0;--lavender-bg:#d8ccf8;--lavender-dark:#8b70d0;--rule:rgba(26,26,20,0.1);--radius-card:24px;--radius-btn:50px;}
+:root{
+  --cream:#f5f0e2;
+  --cream-2:#ede8d8;
+  --ink:#1a1a14;
+  --ink-60:rgba(26,26,20,0.6);
+  --ink-35:rgba(26,26,20,0.35);
+  --ink-15:rgba(26,26,20,0.12);
+  --green:#1a3d2e;
+  --lavender:#c4aff0;
+  --lavender-bg:#d8ccf8;
+  --lavender-dark:#8b70d0;
+  --rule:rgba(26,26,20,0.1);
+  --radius-card:24px;
+  --radius-btn:50px;
+}
 html{scroll-behavior:smooth;background:var(--cream);}
 body{font-family:'DM Sans',system-ui,sans-serif;background:var(--cream);color:var(--ink);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased;cursor:none;}
 a{color:inherit;text-decoration:none;}
+
+/* Cursor */
 .cursor{width:10px;height:10px;border-radius:50%;background:var(--ink);position:fixed;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:background 0.25s;}
 .cursor-ring{width:36px;height:36px;border-radius:50%;border:1.5px solid rgba(26,26,20,0.25);position:fixed;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width 0.25s,height 0.25s;}
 .cursor-ring.big{width:52px;height:52px;border-color:var(--lavender-dark);}
 .cursor.on-dark{background:white;}.cursor-ring.on-dark{border-color:rgba(255,255,255,0.35);}
 @media(max-width:720px){.cursor,.cursor-ring{display:none;}body{cursor:auto;}}
+
+/* Layout */
 .container{max-width:900px;margin:0 auto;padding:0 24px;}
+
+/* Nav */
 nav{background:var(--cream);border-bottom:1px solid var(--rule);padding:0 24px;height:60px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;backdrop-filter:blur(12px);}
 .nav-logo{font-family:'DM Serif Display',serif;font-size:20px;color:var(--ink);letter-spacing:-0.02em;}
 .nav-logo em{color:var(--green);font-style:italic;}
@@ -23,6 +43,8 @@ nav{background:var(--cream);border-bottom:1px solid var(--rule);padding:0 24px;h
 .nav-links a{font-size:13px;font-weight:500;color:var(--ink-60);padding:8px 14px;border-radius:var(--radius-btn);transition:all 0.15s;}
 .nav-links a:hover{color:var(--ink);background:var(--ink-15);}
 .nav-cta{background:var(--lavender-bg)!important;color:var(--ink)!important;font-weight:600!important;border:1.5px solid rgba(139,112,208,0.3)!important;}
+
+/* Hero */
 .cs-hero{padding:64px 0 48px;}
 .cs-back{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:500;color:var(--ink-35);margin-bottom:32px;transition:color 0.15s;}
 .cs-back:hover{color:var(--ink);}
@@ -33,43 +55,91 @@ nav{background:var(--cream);border-bottom:1px solid var(--rule);padding:0 24px;h
 .cs-meta{display:flex;gap:32px;flex-wrap:wrap;padding-top:24px;border-top:1px solid var(--rule);}
 .cs-meta-label{font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-35);margin-bottom:4px;}
 .cs-meta-value{font-size:14px;color:var(--ink);font-weight:500;}
-.cs-cover{width:100%;height:380px;border-radius:var(--radius-card);display:flex;align-items:center;justify-content:center;margin:40px 0;}
+
+/* Cover */
+.cs-cover{width:100%;border-radius:var(--radius-card);overflow:hidden;margin:40px 0;background:#1a1a14;}
+.cs-cover img{width:100%;display:block;}
+.cs-cover-placeholder{width:100%;height:380px;display:flex;align-items:center;justify-content:center;}
 .cs-cover-label{font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.3);}
+
+/* Metrics */
 .cs-metrics{display:grid;grid-template-columns:repeat(3,1fr);background:var(--ink);border-radius:var(--radius-card);overflow:hidden;margin:48px 0;}
 .cs-metric{padding:32px 24px;text-align:center;border-right:1px solid rgba(255,255,255,0.06);}
 .cs-metric:last-child{border-right:none;}
 .cs-metric-num{font-family:'DM Serif Display',serif;font-size:clamp(36px,6vw,56px);color:var(--lavender);line-height:1;letter-spacing:-0.02em;margin-bottom:6px;}
 .cs-metric-label{font-size:12px;color:rgba(255,255,255,0.4);}
+
+/* Body */
 .cs-body{max-width:680px;margin:0 auto;padding:0 24px 80px;}
-.cs-body h2{font-family:'DM Serif Display',serif;font-size:clamp(24px,4vw,36px);letter-spacing:-0.02em;color:var(--ink);margin:48px 0 16px;}
+.cs-body h2{font-family:'DM Serif Display',serif;font-size:clamp(24px,4vw,36px);letter-spacing:-0.02em;color:var(--ink);margin:56px 0 16px;}
 .cs-body p{font-size:16px;color:var(--ink-60);line-height:1.8;margin-bottom:20px;}
-.cs-img{width:100%;height:320px;background:var(--cream-2);border-radius:16px;display:flex;align-items:center;justify-content:center;margin:24px 0;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-35);}
+
+/* Screen images */
+.cs-screen{width:100%;border-radius:16px;overflow:hidden;margin:32px 0;box-shadow:0 2px 24px rgba(26,26,20,0.08);}
+.cs-screen img{width:100%;display:block;}
+.cs-screen-caption{font-size:12px;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;color:var(--ink-35);margin-top:10px;margin-bottom:32px;text-align:center;}
+
+/* Two-up screens */
+.cs-screens-2up{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:32px 0;}
+.cs-screens-2up .cs-screen{margin:0;}
+@media(max-width:600px){.cs-screens-2up{grid-template-columns:1fr;}}
+
+/* Pull quote */
+.cs-pullquote{border-left:3px solid var(--lavender);padding:20px 24px;margin:40px 0;background:rgba(196,175,240,0.08);border-radius:0 12px 12px 0;}
+.cs-pullquote p{font-family:'DM Serif Display',serif;font-size:20px;line-height:1.5;color:var(--ink);font-style:italic;margin:0;}
+
+/* Callout */
+.cs-callout{background:var(--cream-2);border-radius:16px;padding:28px 32px;margin:32px 0;}
+.cs-callout-label{font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-35);margin-bottom:10px;}
+.cs-callout p{font-size:15px;color:var(--ink-60);line-height:1.75;margin:0;}
+
+/* Outcome list */
+.cs-outcomes{list-style:none;margin:20px 0 28px;}
+.cs-outcomes li{font-size:16px;color:var(--ink-60);line-height:1.8;padding-left:20px;position:relative;margin-bottom:8px;}
+.cs-outcomes li::before{content:'→';position:absolute;left:0;color:var(--lavender-dark);font-weight:600;}
+
+/* CTA row */
 .cs-cta-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:48px;padding-top:32px;border-top:1px solid var(--rule);}
 .btn-filled{display:inline-flex;align-items:center;gap:8px;background:var(--lavender-bg);color:var(--ink);font-size:15px;font-weight:600;padding:14px 32px;border-radius:var(--radius-btn);border:1.5px solid rgba(139,112,208,0.3);transition:all 0.15s;}
 .btn-filled:hover{background:var(--lavender);}
 .btn-outline{display:inline-flex;align-items:center;gap:8px;background:transparent;color:var(--ink);font-size:15px;font-weight:600;padding:14px 32px;border-radius:var(--radius-btn);border:1.5px solid rgba(26,26,20,0.2);transition:all 0.15s;}
 .btn-outline:hover{border-color:var(--ink-60);}
+
+/* Footer */
 footer{background:var(--ink);border-radius:var(--radius-card) var(--radius-card) 0 0;padding:48px 32px;text-align:center;margin-top:80px;}
 .foot-logo{font-family:'DM Serif Display',serif;font-size:18px;color:rgba(255,255,255,0.3);margin-bottom:16px;}
 .foot-logo em{color:rgba(196,175,240,0.4);font-style:italic;}
 .foot-links{display:flex;justify-content:center;gap:24px;}
 .foot-links a{font-size:13px;color:rgba(255,255,255,0.3);transition:color 0.15s;font-weight:500;}
 .foot-links a:hover{color:rgba(255,255,255,0.7);}
-@media(max-width:720px){.cs-metrics{grid-template-columns:1fr 1fr;}.cs-metric{border-right:none;border-bottom:1px solid rgba(255,255,255,0.06);}.cs-meta{gap:20px;}.nav-links a:not(.nav-cta){display:none;}}
+
+@media(max-width:720px){
+  .cs-metrics{grid-template-columns:1fr 1fr;}
+  .cs-metric{border-right:none;border-bottom:1px solid rgba(255,255,255,0.06);}
+  .cs-meta{gap:20px;}
+  .nav-links a:not(.nav-cta){display:none;}
+}
 </style>
 </head>
 <body>
 <div class="cursor" id="cur"></div><div class="cursor-ring" id="ring"></div>
+
 <nav>
   <a href="index.html" class="nav-logo">Sahand<em>.</em></a>
-  <div class="nav-links"><a href="index.html#work">Work</a><a href="about.html">About</a><a href="mailto:sahandhajizadeh@gmail.com" class="nav-cta">Get in touch</a></div>
+  <div class="nav-links">
+    <a href="index.html#work">Work</a>
+    <a href="about.html">About</a>
+    <a href="mailto:sahandhajizadeh@gmail.com" class="nav-cta">Get in touch</a>
+  </div>
 </nav>
+
+<!-- Hero -->
 <section class="cs-hero">
   <div class="container">
     <a href="index.html" class="cs-back">← Back to work</a>
     <div class="cs-label">B2B SaaS · Legal Tech · Dashboard Design</div>
     <h1 class="cs-title">Designing the candidate experience for the <em>leading legal recruiting platform.</em></h1>
-    <p class="cs-sub">Designed the candidate dashboard and onboarding experience for Flo Recruit — contributing to $1M in revenue generation across top law firms.</p>
+    <p class="cs-sub">Flo Recruit had no candidate-facing product. I designed it from scratch — the dashboard, onboarding flow, and UI system that launched across top U.S. law firms and contributed to $1M in new revenue.</p>
     <div class="cs-meta">
       <div class="cs-meta-item"><div class="cs-meta-label">Company</div><div class="cs-meta-value">Flo Recruit</div></div>
       <div class="cs-meta-item"><div class="cs-meta-label">Role</div><div class="cs-meta-value">Product Designer (Contract)</div></div>
@@ -78,46 +148,164 @@ footer{background:var(--ink);border-radius:var(--radius-card) var(--radius-card)
     </div>
   </div>
 </section>
+
+<!-- Cover — Hub Ribbon desktop dashboard -->
 <div class="container">
-  <div class="cs-cover" style="background:#1a1a14;">
-    <div class="cs-cover-label">Flo Recruit — candidate dashboard</div>
+  <div class="cs-cover">
+    <img
+      src="https://www.figma.com/api/mcp/asset/581320b2-e69b-447e-bc67-504f8224935b"
+      alt="Flo Recruit candidate portal — Career Hub desktop dashboard"
+      loading="eager"
+      onerror="this.parentElement.innerHTML='<div class=\'cs-cover-placeholder\'><span class=\'cs-cover-label\'>Flo Recruit — Candidate Portal</span></div>'"
+    />
   </div>
+
+  <!-- Metrics -->
   <div class="cs-metrics">
-    <div class="cs-metric"><div class="cs-metric-num">$1M</div><div class="cs-metric-label">Revenue contribution</div></div>
-    <div class="cs-metric"><div class="cs-metric-num">Top</div><div class="cs-metric-label">Law firms as clients</div></div>
-    <div class="cs-metric"><div class="cs-metric-num">4mo</div><div class="cs-metric-label">Contract engagement</div></div>
+    <div class="cs-metric">
+      <div class="cs-metric-num">$1M</div>
+      <div class="cs-metric-label">Revenue contribution at launch</div>
+    </div>
+    <div class="cs-metric">
+      <div class="cs-metric-num">Am100</div>
+      <div class="cs-metric-label">Law firms using the portal</div>
+    </div>
+    <div class="cs-metric">
+      <div class="cs-metric-num">0→1</div>
+      <div class="cs-metric-label">Built candidate product from scratch</div>
+    </div>
   </div>
 </div>
+
+<!-- Body -->
 <div class="cs-body">
-  <h2>Overview</h2>
-  <p>Flo Recruit is the leading legal recruiting platform, used by top law firms to manage their recruiting pipeline. I joined on contract to design the candidate-facing experience — the dashboard, onboarding flow, and UI improvements that streamlined candidate engagement.</p>
 
-  <div class="cs-img">[ Candidate dashboard — key screens and onboarding flow ]</div>
+  <h2>The problem</h2>
+  <p>Flo Recruit was already the leading platform for law firms to manage their recruiting pipelines — but the candidate side of that equation was an afterthought. Law students receiving interview invitations had no dedicated product experience. They were navigating a clunky, firm-facing interface that wasn't designed for them.</p>
+  <p>I was brought on contract to fix that. The brief: design a candidate portal from the ground up, ship it in four months, and make it good enough to close enterprise deals with Am Law 100 firms.</p>
 
-  <h2>What I did</h2>
-  <p>Partnered with PMs to define user flows and identify high-impact UI improvements. Launched the candidate portal across top law firms. Collaborated cross-functionally to align design strategy with product growth and customer needs.</p>
-  <p>The work contributed to $1M in revenue generation — a direct outcome of improved candidate engagement and reduced drop-off through the application process.</p>
+  <div class="cs-pullquote">
+    <p>"The candidate experience is what the law firms are actually selling to their recruits. If it's broken, we lose the deal."</p>
+  </div>
 
-  <div class="cs-img">[ Onboarding flow — before and after ]</div>
+  <h2>What I inherited</h2>
+  <p>There was no existing candidate design to build on — just a set of firm-side admin tools, an existing design system, and a tight timeline. I started by auditing how candidates were currently interacting with the platform: email invitations, manual scheduling, no consolidated view of upcoming interviews or events. Drop-off was high, and confusion was the norm.</p>
+  <p>The core jobs to be done were clear: candidates needed to see what was coming, understand what was expected of them, and join their interviews without friction.</p>
+
+  <!-- Onboarding screens - Registration + Email verify side by side -->
+  <div class="cs-screens-2up">
+    <div class="cs-screen">
+      <img
+        src="https://www.figma.com/api/mcp/asset/0fab07c0-bea7-448a-ac8b-75df04236cb9"
+        alt="Flo Recruit onboarding — email confirmation screen"
+        loading="lazy"
+        onerror="this.style.display='none'"
+      />
+    </div>
+    <div class="cs-screen">
+      <img
+        src="https://www.figma.com/api/mcp/asset/aae759d3-0ef9-4b29-9df3-90ddaca788a3"
+        alt="Flo Recruit onboarding — registration page"
+        loading="lazy"
+        onerror="this.style.display='none'"
+      />
+    </div>
+  </div>
+  <p class="cs-screen-caption">Onboarding flow — email confirmation & account registration</p>
+
+  <h2>Designing the onboarding flow</h2>
+  <p>The onboarding had to work for a very specific user: a law student receiving a recruiting invitation from a firm they desperately want to impress. The bar for confusion was zero — any friction and they'd email the firm directly, creating support burden and a bad first impression.</p>
+  <p>I designed a four-step flow: confirmation email → magic link verification → account registration → portal access. The key decisions were keeping each screen to a single action, using the firm's context (event name, firm logo) to ground the candidate in why they were there, and writing microcopy that felt calm and professional rather than generic SaaS.</p>
+
+  <div class="cs-callout">
+    <div class="cs-callout-label">Design constraint</div>
+    <p>Candidates often had multiple email addresses across personal, school, and firm-forwarded accounts. The onboarding had to handle email linking and account merging gracefully — otherwise the same candidate would appear as multiple users in the firm's pipeline.</p>
+  </div>
+
+  <h2>The candidate dashboard</h2>
+  <p>The centerpiece of the portal was a unified timeline view — every upcoming interview and event, across every firm the candidate was engaged with, in a single chronological feed. No more piecing together information from separate email threads.</p>
+
+  <!-- Dashboard timeline screen -->
+  <div class="cs-screen">
+    <img
+      src="https://www.figma.com/api/mcp/asset/63b6fd32-84ce-4933-94d4-e285185d0b64"
+      alt="Flo Recruit candidate dashboard — interview timeline view"
+      loading="lazy"
+      onerror="this.style.display='none'"
+    />
+  </div>
+  <p class="cs-screen-caption">Candidate dashboard — upcoming interviews and events, grouped chronologically</p>
+
+  <p>Each card showed the firm name and logo, interview type, date and time, location (virtual or in-person), and a "Join →" CTA when the interview was live. Interview cards were visually distinct from event cards — pink tags for interviews, blue for events — so candidates could parse their week at a glance.</p>
+  <p>The "Today" card was elevated to the top with a persistent blue banner and an active join button, so candidates could never miss a live interview. The grouped timeline (This week / Next week / May / June) gave a mental model without overwhelming.</p>
+
+  <h2>The Career Hub — desktop experience</h2>
+  <p>For the desktop portal, I designed a two-panel layout: a persistent left sidebar with the candidate's profile, LinkedIn, and a progress tracker showing interview and event completion, alongside a main content area with a daily schedule, firm-specific tips, and a blog post feed.</p>
+  <p>The progress tracker ("5/7 Interviews · 3/14 Events") with a color-coded progress bar was a deliberate piece of motivation design — legal recruiting is stressful, and giving candidates a sense of momentum mattered. The copy throughout reflected that: "Hey, you got this! Remember to breathe 😌"</p>
+
+  <!-- Hub desktop screenshot -->
+  <div class="cs-screen" style="background:#f0f2f7;">
+    <img
+      src="https://www.figma.com/api/mcp/asset/afea66e5-3eb6-4020-aea0-09e2db2d3300"
+      alt="Flo Recruit Career Hub — desktop navigation bar"
+      loading="lazy"
+      onerror="this.style.display='none'"
+    />
+  </div>
+  <p class="cs-screen-caption">Career Hub — desktop nav with My Dashboard / Job Board tabs and profile access</p>
+
+  <h2>Content system & helpful tips</h2>
+  <p>Beyond the schedule, the portal needed to actually help candidates succeed. I designed a Helpful Tips module and a Blog Posts feed that surfaced contextual guidance — how to prepare for video calls, what to do if you've created multiple accounts, student guides for virtual interviews.</p>
+  <p>This wasn't filler. Law students interviewing at Am Law 100 firms are high-stakes users who read everything. Embedding useful content in the product reduced support tickets and gave Flo Recruit a differentiated, premium feel over competitors.</p>
+
+  <div class="cs-callout">
+    <div class="cs-callout-label">Tip of the Day</div>
+    <p>One small touch that landed well internally: a rotating "Tip of the Day" card at the bottom of the schedule — practical, specific coaching for legal recruiting. "Come up with 3 answers to 'Why this firm?' before your interview." These were written with recruiting coordinators and surfaced in a visually distinct banner that felt editorial, not generic.</p>
+  </div>
+
+  <h2>Outcomes</h2>
+  <p>The candidate portal shipped on schedule and was deployed across Am Law 100 clients at launch. The improved candidate experience became a direct selling point in enterprise deals — firms used it to demonstrate their recruiting infrastructure to top candidates.</p>
+
+  <ul class="cs-outcomes">
+    <li>Contributed to $1M in revenue at launch — the portal was a key differentiator in enterprise firm deals</li>
+    <li>Reduced candidate drop-off through the interview process via a unified timeline and one-click join</li>
+    <li>Built a 0→1 candidate product in 4 months, from no design to full UI system in production</li>
+    <li>Established a design pattern library the team extended post-contract for the job board and additional modules</li>
+  </ul>
 
   <div class="cs-cta-row">
     <a href="index.html" class="btn-outline">← Back to work</a>
     <a href="mailto:sahandhajizadeh@gmail.com" class="btn-filled">Get in touch</a>
   </div>
+
 </div>
+
+<!-- Footer -->
 <div class="container">
   <footer>
     <div class="foot-logo">Sahand<em>.</em></div>
-    <div class="foot-links"><a href="index.html">Work</a><a href="about.html">About</a><a href="https://linkedin.com/in/sahandh" target="_blank">LinkedIn</a><a href="mailto:sahandhajizadeh@gmail.com">Email</a></div>
+    <div class="foot-links">
+      <a href="index.html">Work</a>
+      <a href="about.html">About</a>
+      <a href="https://linkedin.com/in/sahandh" target="_blank">LinkedIn</a>
+      <a href="mailto:sahandhajizadeh@gmail.com">Email</a>
+    </div>
   </footer>
 </div>
+
 <script>
 const cur=document.getElementById('cur'),ring=document.getElementById('ring');
 let mx=0,my=0,rx=0,ry=0;
 document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
 (function raf(){rx+=(mx-rx)*0.1;ry+=(my-ry)*0.1;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(raf);})();
-document.querySelectorAll('a,button').forEach(el=>{el.addEventListener('mouseenter',()=>{ring.classList.add('big');cur.classList.add('on-dark');});el.addEventListener('mouseleave',()=>{ring.classList.remove('big');cur.classList.remove('on-dark');});});
-document.querySelectorAll('.cs-metrics,.cs-cover,footer').forEach(el=>{el.addEventListener('mouseenter',()=>{cur.classList.add('on-dark');ring.classList.add('on-dark');});el.addEventListener('mouseleave',()=>{cur.classList.remove('on-dark');ring.classList.remove('on-dark');});});
+document.querySelectorAll('a,button').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{ring.classList.add('big');cur.classList.add('on-dark');});
+  el.addEventListener('mouseleave',()=>{ring.classList.remove('big');cur.classList.remove('on-dark');});
+});
+document.querySelectorAll('.cs-metrics,.cs-cover,footer').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cur.classList.add('on-dark');ring.classList.add('on-dark');});
+  el.addEventListener('mouseleave',()=>{cur.classList.remove('on-dark');ring.classList.remove('on-dark');});
+});
 </script>
 </body>
 </html>
