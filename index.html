@@ -824,7 +824,7 @@ let hoveringInteractive = false;
 let isOnDark = false;
 const darkSections = document.querySelectorAll('.proj-card, .stats-card, .about-dark, .cta-dark, .recog-card, .cta-footer');
 
-document.querySelectorAll('a, button, .mini-card, .proj-card, .nav-cta').forEach(el => {
+document.querySelectorAll('a, button, .mini-card, .nav-cta').forEach(el => {
   el.addEventListener('mouseenter', () => {
     hoveringInteractive = true;
     ring.classList.add('big');
