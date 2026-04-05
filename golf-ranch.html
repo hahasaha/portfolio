@@ -1,162 +1,597 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Golf Ranch — Sahand Hajizadeh</title>
-<meta name="description" content="How I designed and built the lead-gen platform for Golf Ranch — driving 4× membership growth and 25% organic traffic lift.">
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-<style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-:root{
-  --cream:#f5f0e2;--cream-2:#ede8d8;--ink:#1a1a14;
-  --ink-60:rgba(26,26,20,0.6);--ink-35:rgba(26,26,20,0.35);--ink-15:rgba(26,26,20,0.12);
-  --green:#1a3d2e;--green-2:#224d3a;--green-text:#f0ece0;--green-muted:rgba(240,236,224,0.55);
-  --lavender:#c4aff0;--lavender-bg:#d8ccf8;--lavender-dark:#8b70d0;
-  --rule:rgba(26,26,20,0.1);--radius-card:24px;--radius-btn:50px;
-}
-html{scroll-behavior:smooth;background:var(--cream);}
-body{font-family:'DM Sans',system-ui,sans-serif;background:var(--cream);color:var(--ink);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased;cursor:none;}
-a{color:inherit;text-decoration:none;}
-.cursor{width:10px;height:10px;border-radius:50%;background:var(--ink);position:fixed;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:background 0.25s;}
-.cursor-ring{width:36px;height:36px;border-radius:50%;border:1.5px solid rgba(26,26,20,0.25);position:fixed;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width 0.25s,height 0.25s,border-color 0.25s;}
-.cursor-ring.big{width:52px;height:52px;border-color:var(--lavender-dark);}
-.cursor.on-dark{background:white;}.cursor-ring.on-dark{border-color:rgba(255,255,255,0.35);}
-@media(max-width:720px){.cursor,.cursor-ring{display:none;}body{cursor:auto;}}
-.container{max-width:900px;margin:0 auto;padding:0 24px;}
-nav{background:var(--cream);border-bottom:1px solid var(--rule);padding:0 24px;height:60px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;backdrop-filter:blur(12px);}
-.nav-logo{font-family:'DM Serif Display',serif;font-size:20px;color:var(--ink);letter-spacing:-0.02em;}
-.nav-logo em{color:var(--green);font-style:italic;}
-.nav-links{display:flex;gap:6px;align-items:center;}
-.nav-links a{font-size:13px;font-weight:500;color:var(--ink-60);padding:8px 14px;border-radius:var(--radius-btn);transition:all 0.15s;}
-.nav-links a:hover{color:var(--ink);background:var(--ink-15);}
-.nav-cta{background:var(--lavender-bg)!important;color:var(--ink)!important;font-weight:600!important;border:1.5px solid rgba(139,112,208,0.3)!important;}
-.nav-cta:hover{background:var(--lavender)!important;}
-.cs-hero{padding:64px 0 48px;}
-.cs-back{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:500;color:var(--ink-35);margin-bottom:32px;transition:color 0.15s;border-radius:var(--radius-btn);padding:8px 0;}
-.cs-back:hover{color:var(--ink);}
-.cs-label{font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-35);margin-bottom:12px;}
-.cs-title{font-family:'DM Serif Display',serif;font-size:clamp(36px,7vw,72px);line-height:1.06;letter-spacing:-0.02em;color:var(--ink);margin-bottom:16px;}
-.cs-title em{font-style:italic;color:var(--lavender-dark);}
-.cs-sub{font-size:18px;color:var(--ink-60);max-width:580px;line-height:1.65;margin-bottom:32px;}
-.cs-meta{display:flex;gap:32px;flex-wrap:wrap;padding-top:24px;border-top:1px solid var(--rule);}
-.cs-meta-item{}
-.cs-meta-label{font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-35);margin-bottom:4px;}
-.cs-meta-value{font-size:14px;color:var(--ink);font-weight:500;}
-.cs-cover{width:100%;height:400px;background:var(--green);border-radius:var(--radius-card);display:flex;align-items:center;justify-content:center;margin:40px 0;overflow:hidden;position:relative;}
-.cs-cover-label{font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.3);}
-.cs-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--ink);border-radius:var(--radius-card);overflow:hidden;margin:48px 0;}
-.cs-metric{background:var(--ink);padding:32px 24px;text-align:center;}
-.cs-metric+.cs-metric{border-left:1px solid rgba(255,255,255,0.06);}
-.cs-metric-num{font-family:'DM Serif Display',serif;font-size:clamp(36px,6vw,56px);color:var(--lavender);line-height:1;letter-spacing:-0.02em;margin-bottom:6px;}
-.cs-metric-label{font-size:12px;color:rgba(255,255,255,0.4);}
-.cs-body{max-width:680px;margin:0 auto;padding:0 24px 80px;}
-.cs-body h2{font-family:'DM Serif Display',serif;font-size:clamp(24px,4vw,36px);letter-spacing:-0.02em;color:var(--ink);margin:48px 0 16px;}
-.cs-body p{font-size:16px;color:var(--ink-60);line-height:1.8;margin-bottom:20px;}
-.cs-callout{background:var(--cream-2);border-left:3px solid var(--lavender-dark);border-radius:0 12px 12px 0;padding:20px 24px;margin:24px 0;}
-.cs-callout p{font-family:'DM Serif Display',serif;font-size:20px;font-style:italic;color:var(--ink);margin:0;line-height:1.4;}
-.cs-img{width:100%;height:320px;background:var(--cream-2);border-radius:16px;display:flex;align-items:center;justify-content:center;margin:24px 0;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-35);}
-.cs-cta-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:48px;padding-top:32px;border-top:1px solid var(--rule);}
-.btn-filled{display:inline-flex;align-items:center;gap:8px;background:var(--lavender-bg);color:var(--ink);font-size:15px;font-weight:600;font-family:'DM Sans',sans-serif;padding:14px 32px;border-radius:var(--radius-btn);border:1.5px solid rgba(139,112,208,0.3);transition:all 0.15s;}
-.btn-filled:hover{background:var(--lavender);}
-.btn-outline{display:inline-flex;align-items:center;gap:8px;background:transparent;color:var(--ink);font-size:15px;font-weight:600;font-family:'DM Sans',sans-serif;padding:14px 32px;border-radius:var(--radius-btn);border:1.5px solid rgba(26,26,20,0.2);transition:all 0.15s;}
-.btn-outline:hover{border-color:var(--ink-60);background:rgba(26,26,20,0.04);}
-footer{background:var(--ink);border-radius:var(--radius-card) var(--radius-card) 0 0;padding:48px 32px;text-align:center;margin-top:80px;}
-.foot-logo{font-family:'DM Serif Display',serif;font-size:18px;color:rgba(255,255,255,0.3);margin-bottom:16px;}
-.foot-logo em{color:rgba(196,175,240,0.4);font-style:italic;}
-.foot-links{display:flex;justify-content:center;gap:24px;}
-.foot-links a{font-size:13px;color:rgba(255,255,255,0.3);transition:color 0.15s;font-weight:500;}
-.foot-links a:hover{color:rgba(255,255,255,0.7);}
-@media(max-width:720px){.cs-metrics{grid-template-columns:1fr 1fr;}.cs-metric+.cs-metric{border-left:none;border-top:1px solid rgba(255,255,255,0.06);}.cs-meta{gap:20px;}.nav-links a:not(.nav-cta){display:none;}}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Golf Ranch — Sahand Hajizadeh</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #f5f0e2;
+      --ink: #1a1a14;
+      --ink-muted: #6b6b5a;
+      --lavender: #c4aff0;
+      --lavender-light: #d8ccf8;
+      --lavender-dark: #8b70d0;
+      --green: #1a3a2a;
+      --green-accent: #3d7a5a;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--cream);
+      color: var(--ink);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      cursor: none;
+    }
+
+    /* CURSOR */
+    .cursor {
+      width: 10px; height: 10px;
+      background: var(--ink);
+      border-radius: 50%;
+      position: fixed;
+      top: 0; left: 0;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: width 0.2s, height 0.2s, background 0.2s;
+    }
+    .cursor.expanded { width: 40px; height: 40px; background: var(--lavender); opacity: 0.6; }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      background: var(--green);
+      transition: background 0.3s;
+    }
+
+    .nav-logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.4rem;
+      color: var(--cream);
+      text-decoration: none;
+    }
+
+    .nav-links { display: flex; gap: 32px; align-items: center; }
+    .nav-links a {
+      color: rgba(245,240,226,0.7);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--cream); }
+
+    .nav-cta {
+      background: var(--cream) !important;
+      color: var(--green) !important;
+      padding: 8px 20px;
+      border-radius: 100px;
+      font-weight: 600 !important;
+    }
+
+    /* PROGRESS BAR */
+    .progress-bar {
+      position: fixed;
+      top: 0; left: 0;
+      height: 3px;
+      background: var(--lavender);
+      z-index: 200;
+      width: 0%;
+      transition: width 0.1s linear;
+    }
+
+    /* HERO */
+    .hero {
+      background: var(--green);
+      color: var(--cream);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 120px 40px 80px;
+    }
+
+    .hero-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--green-accent);
+      margin-bottom: 24px;
+    }
+
+    .hero h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(3rem, 8vw, 7rem);
+      line-height: 1.0;
+      max-width: 900px;
+      margin-bottom: 40px;
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      color: var(--lavender-light);
+    }
+
+    .hero-meta {
+      display: flex;
+      gap: 48px;
+      flex-wrap: wrap;
+      border-top: 1px solid rgba(245,240,226,0.15);
+      padding-top: 32px;
+    }
+
+    .hero-meta-item { }
+    .hero-meta-item .label {
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(245,240,226,0.5);
+      margin-bottom: 4px;
+    }
+    .hero-meta-item .value {
+      font-size: 0.95rem;
+      color: var(--cream);
+      font-weight: 500;
+    }
+
+    /* STATS BAR */
+    .stats-bar {
+      background: var(--lavender);
+      padding: 40px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+    }
+
+    .stat {
+      text-align: center;
+      padding: 24px;
+      border-right: 1px solid rgba(26,26,20,0.15);
+    }
+    .stat:last-child { border-right: none; }
+
+    .stat-number {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      color: var(--ink);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .stat-label {
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--ink);
+      opacity: 0.65;
+      letter-spacing: 0.05em;
+    }
+
+    /* SECTIONS */
+    .section {
+      padding: 100px 40px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--ink-muted);
+      margin-bottom: 16px;
+    }
+
+    .section h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      line-height: 1.15;
+      margin-bottom: 32px;
+      max-width: 700px;
+    }
+
+    .section h2 em {
+      font-style: italic;
+      color: var(--lavender-dark);
+    }
+
+    .section p {
+      font-size: 1.05rem;
+      line-height: 1.8;
+      color: var(--ink-muted);
+      max-width: 640px;
+      margin-bottom: 20px;
+    }
+
+    .section p strong {
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    /* TWO COL */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: start;
+    }
+
+    /* FULL BLEED IMAGE */
+    .full-bleed {
+      width: 100%;
+      background: transparent;
+    }
+
+    .full-bleed img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 12px;
+    }
+
+    .image-caption {
+      font-size: 0.75rem;
+      color: var(--ink-muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-align: center;
+      margin-top: 16px;
+    }
+
+    /* IMAGE GRID */
+    .image-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin: 48px 0;
+    }
+
+    .image-grid img {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      display: block;
+    }
+
+    /* CALLOUT */
+    .callout {
+      background: var(--green);
+      color: var(--cream);
+      padding: 80px 40px;
+    }
+
+    .callout-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .callout h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      line-height: 1.2;
+      margin-bottom: 24px;
+      max-width: 700px;
+    }
+
+    .callout h2 em { font-style: italic; color: var(--lavender-light); }
+
+    .callout p {
+      font-size: 1.05rem;
+      line-height: 1.8;
+      color: rgba(245,240,226,0.7);
+      max-width: 600px;
+    }
+
+    /* DIVIDER */
+    .section-divider {
+      height: 1px;
+      background: rgba(26,26,20,0.1);
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    /* PILL TAGS */
+    .tags {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 40px;
+    }
+
+    .tag {
+      background: rgba(196,175,240,0.2);
+      color: var(--lavender-dark);
+      border: 1px solid var(--lavender);
+      padding: 6px 16px;
+      border-radius: 100px;
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+
+    /* NEXT PROJECT */
+    .next-project {
+      background: var(--ink);
+      color: var(--cream);
+      padding: 100px 40px;
+      text-align: center;
+    }
+
+    .next-project .label {
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(245,240,226,0.4);
+      margin-bottom: 24px;
+    }
+
+    .next-project h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      margin-bottom: 40px;
+    }
+
+    .next-project h2 em { font-style: italic; color: var(--lavender); }
+
+    .btn-primary {
+      display: inline-block;
+      background: var(--lavender);
+      color: var(--ink);
+      padding: 16px 36px;
+      border-radius: 100px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      text-decoration: none;
+      transition: transform 0.2s, background 0.2s;
+    }
+    .btn-primary:hover { transform: translateY(-2px); background: var(--lavender-light); }
+
+    /* SCROLL REVEAL */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* MOBILE */
+    @media (max-width: 768px) {
+      nav { padding: 16px 20px; }
+      .hero { padding: 100px 20px 60px; }
+      .hero-meta { gap: 24px; }
+      .stats-bar { grid-template-columns: 1fr; }
+      .stat { border-right: none; border-bottom: 1px solid rgba(26,26,20,0.15); }
+      .stat:last-child { border-bottom: none; }
+      .section { padding: 60px 20px; }
+      .two-col { grid-template-columns: 1fr; gap: 40px; }
+      .image-grid { grid-template-columns: 1fr; }
+      .callout { padding: 60px 20px; }
+      .next-project { padding: 60px 20px; }
+    }
+  </style>
 </head>
 <body>
-<div class="cursor" id="cur"></div>
-<div class="cursor-ring" id="ring"></div>
 
-<nav>
-  <a href="index.html" class="nav-logo">Sahand<em>.</em></a>
-  <div class="nav-links">
-    <a href="index.html#work">Work</a>
-    <a href="about.html">About</a>
-    <a href="mailto:sahandhajizadeh@gmail.com" class="nav-cta">Get in touch</a>
-  </div>
-</nav>
+  <div class="cursor" id="cursor"></div>
+  <div class="progress-bar" id="progress"></div>
 
-<section class="cs-hero">
-  <div class="container">
-    <a href="index.html" class="cs-back">← Back to work</a>
-    <div class="cs-label">UX Design · Web · Conversion Optimization</div>
-    <h1 class="cs-title">Building a lead-gen machine for a fast-growing <em>golf franchise.</em></h1>
-    <p class="cs-sub">Golf Ranch needed more than a website refresh. They needed a full conversion engine — one that turned casual interest into booked visits across six Texas locations.</p>
-    <div class="cs-meta">
-      <div class="cs-meta-item"><div class="cs-meta-label">Client</div><div class="cs-meta-value">Golf Ranch</div></div>
-      <div class="cs-meta-item"><div class="cs-meta-label">Role</div><div class="cs-meta-value">UX Designer + Web Developer</div></div>
-      <div class="cs-meta-item"><div class="cs-meta-label">Timeline</div><div class="cs-meta-value">Dec 2024 — Present</div></div>
-      <div class="cs-meta-item"><div class="cs-meta-label">Stack</div><div class="cs-meta-value">Webflow, GA4, GTM, Figma</div></div>
-    </div>
-  </div>
-</section>
-
-<div class="container">
-  <div class="cs-cover" style="background:var(--green);">
-    <div class="cs-cover-label">golfranch.com — homepage</div>
-  </div>
-
-  <div class="cs-metrics">
-    <div class="cs-metric"><div class="cs-metric-num">4×</div><div class="cs-metric-label">Membership signup growth</div></div>
-    <div class="cs-metric"><div class="cs-metric-num">25%</div><div class="cs-metric-label">Organic traffic increase</div></div>
-    <div class="cs-metric"><div class="cs-metric-num">6</div><div class="cs-metric-label">Locations optimized</div></div>
-  </div>
-</div>
-
-<div class="cs-body">
-  <h2>The problem</h2>
-  <p>Golf Ranch is a fast-growing driving range franchise in Texas — anti-country-club, walk-in-friendly, built for everyone. When I came on board, the site had no consistent lead funnel, no SEO strategy, and no way to measure what was actually driving visits. Traffic was coming in. Conversions weren't following.</p>
-
-  <div class="cs-callout"><p>"Design the site like a product — not a brochure."</p></div>
-
-  <h2>What I built</h2>
-  <p>I started with a full audit: SEO, conversion flow, analytics setup. Then rebuilt the site in Webflow — six location pages, a free bucket funnel, a thank-you page optimized for commitment, a careers page with intentional friction, and a blog CMS for ongoing content.</p>
-  <p>The free bucket funnel became the core lead-gen engine. Users fill out a form and land on a thank-you page with a location-specific Calendly embed — not a real reservation system, but a psychological commitment device. When someone books a time slot, they feel locked in. That feeling drives physical visit rates up.</p>
-
-  <div class="cs-img">[ Before / After — Homepage redesign ]</div>
-
-  <h2>SEO overhaul</h2>
-  <p>I rewrote every meta title and description across all six locations with city-specific keywords, set up Google Search Console and a sitemap, added LocalBusiness schema markup, and built a blog CMS for ongoing content. Within three months, organic traffic was up 25%.</p>
-
-  <div class="cs-img">[ GA4 organic traffic — before and after ]</div>
-
-  <h2>Conversion optimization</h2>
-  <p>Added a permanent sticky CTA button across the entire site. Built an exit intent pop-up. Ran A/B tests on headline copy. Used GA4 funnel analysis to identify drop-off points and iterated on each step of the funnel.</p>
-  <p>Membership signups grew 4×. The free bucket funnel became the primary lead-gen channel and continues to improve with every test cycle.</p>
-
-  <div class="cs-cta-row">
-    <a href="index.html" class="btn-outline">← Back to work</a>
-    <a href="mailto:sahandhajizadeh@gmail.com" class="btn-filled">Get in touch</a>
-  </div>
-</div>
-
-<div class="container">
-  <footer>
-    <div class="foot-logo">Sahand<em>.</em></div>
-    <div class="foot-links">
-      <a href="index.html">Work</a>
+  <!-- NAV -->
+  <nav>
+    <a href="index.html" class="nav-logo">Sahand.</a>
+    <div class="nav-links">
+      <a href="index.html#work">Work</a>
       <a href="about.html">About</a>
-      <a href="https://linkedin.com/in/sahandh" target="_blank">LinkedIn</a>
-      <a href="mailto:sahandhajizadeh@gmail.com">Email</a>
-      <a href="resume.pdf" target="_blank">Resume</a>
+      <a href="mailto:sahandhajizadeh@gmail.com" class="nav-cta">Get in touch</a>
     </div>
-  </footer>
-</div>
+  </nav>
 
-<script>
-const cur=document.getElementById('cur'),ring=document.getElementById('ring');
-let mx=0,my=0,rx=0,ry=0;
-document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
-(function raf(){rx+=(mx-rx)*0.1;ry+=(my-ry)*0.1;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(raf);})();
-document.querySelectorAll('a,button').forEach(el=>{el.addEventListener('mouseenter',()=>{ring.classList.add('big');cur.classList.add('on-dark');});el.addEventListener('mouseleave',()=>{ring.classList.remove('big');cur.classList.remove('on-dark');});});
-document.querySelectorAll('.cs-metrics,.cs-cover,footer').forEach(el=>{el.addEventListener('mouseenter',()=>{cur.classList.add('on-dark');ring.classList.add('on-dark');});el.addEventListener('mouseleave',()=>{cur.classList.remove('on-dark');ring.classList.remove('on-dark');});});
-</script>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-label">Case Study — Golf Ranch</div>
+    <h1>A website that actually <em>converts.</em></h1>
+    <div class="hero-meta">
+      <div class="hero-meta-item">
+        <div class="label">Role</div>
+        <div class="value">Lead Product Designer</div>
+      </div>
+      <div class="hero-meta-item">
+        <div class="label">Platform</div>
+        <div class="value">Webflow — Mobile First</div>
+      </div>
+      <div class="hero-meta-item">
+        <div class="label">Timeline</div>
+        <div class="value">2025–2026, Ongoing</div>
+      </div>
+      <div class="hero-meta-item">
+        <div class="label">Client</div>
+        <div class="value">Golf Ranch USA</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <div class="stats-bar reveal">
+    <div class="stat">
+      <div class="stat-number">4×</div>
+      <div class="stat-label">Membership signup increase</div>
+    </div>
+    <div class="stat">
+      <div class="stat-number">10K+</div>
+      <div class="stat-label">Free bucket leads / month</div>
+    </div>
+    <div class="stat">
+      <div class="stat-number">+25%</div>
+      <div class="stat-label">Organic traffic growth</div>
+    </div>
+  </div>
+
+  <!-- OVERVIEW -->
+  <div class="section reveal">
+    <div class="section-label">Overview</div>
+    <h2>A premium driving range <em>deserves</em> a premium site.</h2>
+    <div class="two-col">
+      <div>
+        <p>Golf Ranch operates six premium driving range locations across Texas, Missouri, Connecticut, and Arizona — featuring Toptracer shot-tracking technology, full bars, and a walk-in model that's growing fast.</p>
+        <p>When I came on, the site wasn't keeping up. <strong>90% of traffic was mobile</strong>, but the experience was built for desktop. Lead capture was loose. Membership conversion was low. There was no SEO strategy.</p>
+        <p>My job was to fix all of it — design, build, and ship a site that could actually support growth.</p>
+      </div>
+      <div>
+        <div class="tags">
+          <span class="tag">Mobile-First</span>
+          <span class="tag">Webflow</span>
+          <span class="tag">Conversion Design</span>
+          <span class="tag">Lead Generation</span>
+          <span class="tag">SEO</span>
+          <span class="tag">Design System</span>
+        </div>
+        <p><strong>My scope:</strong> End-to-end design and Webflow build. I handled strategy, UX, visual design, copywriting, and implementation — working directly with the founders and their GTM lead.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- SCREENSHOT - HOMEPAGE -->
+  <div class="section reveal">
+    <div class="section-label">The Site</div>
+    <h2>Mobile-first, <em>always.</em></h2>
+    <p>With 90% of visitors coming in on phone, every design decision started on a 390px canvas. The desktop experience followed — not the other way around.</p>
+    <div class="full-bleed" style="margin-top: 48px;">
+      <!-- ADD: Homepage screenshot, mobile + desktop side by side -->
+      <img src="images/golf-ranch-home.png" alt="Golf Ranch homepage" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+      <div style="display:none; background: rgba(26,26,20,0.06); border-radius: 12px; height: 400px; align-items: center; justify-content: center; color: var(--ink-muted); font-size: 0.85rem; letter-spacing: 0.08em; text-transform: uppercase;">Add homepage screenshot — golf-ranch-home.png</div>
+    </div>
+  </div>
+
+  <!-- PROBLEM -->
+  <div class="callout reveal">
+    <div class="callout-inner">
+      <div class="section-label" style="color: rgba(245,240,226,0.4);">The Problem</div>
+      <h2>The site was <em>leaking</em> every visitor it earned.</h2>
+      <p>Walk-in traffic is Golf Ranch's model — no reservations, just show up. But the site wasn't giving people a reason to. No clear CTA above the fold. No lead capture to stay in touch. No local SEO to pull people in when they searched "driving range near me." The site looked like a brochure, not a growth tool.</p>
+    </div>
+  </div>
+
+  <!-- FREE BUCKET -->
+  <div class="section reveal">
+    <div class="section-label">Lead Generation</div>
+    <h2>The free bucket — a <em>10,000/month</em> lead machine.</h2>
+    <div class="two-col">
+      <div>
+        <p>The single highest-impact design decision: a persistent, always-visible sticky CTA button that drives visitors to the free bucket offer. Sign up, get a free bucket of balls on your first visit.</p>
+        <p>It sounds simple. The execution was everything — <strong>placement, copy, friction reduction, and the thank-you flow</strong> all had to work together. We rolled it out across all six location pages and the homepage.</p>
+        <p>The result: over 10,000 new leads per month, consistently.</p>
+      </div>
+      <div class="full-bleed">
+        <!-- ADD: Free bucket form / sticky CTA screenshot -->
+        <img src="images/golf-ranch-free-bucket.png" alt="Free bucket lead capture" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+        <div style="display:none; background: rgba(26,26,20,0.06); border-radius: 12px; height: 300px; align-items: center; justify-content: center; color: var(--ink-muted); font-size: 0.85rem; letter-spacing: 0.08em; text-transform: uppercase;">Add free bucket screenshot — golf-ranch-free-bucket.png</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- MEMBERSHIP -->
+  <div class="section reveal">
+    <div class="section-label">Membership</div>
+    <h2>4× more members — from one page <em>redesign.</em></h2>
+    <div class="two-col">
+      <div class="full-bleed">
+        <!-- ADD: Ranch Pass / membership page screenshot -->
+        <img src="images/golf-ranch-membership.png" alt="Ranch Pass membership page" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+        <div style="display:none; background: rgba(26,26,20,0.06); border-radius: 12px; height: 300px; align-items: center; justify-content: center; color: var(--ink-muted); font-size: 0.85rem; letter-spacing: 0.08em; text-transform: uppercase;">Add membership screenshot — golf-ranch-membership.png</div>
+      </div>
+      <div>
+        <p>The Ranch Pass membership page was the second major conversion surface. The original version buried the value prop. Pricing was unclear. There was no urgency and no social proof.</p>
+        <p>I redesigned it from the ground up — <strong>leading with the savings math</strong>, surfacing testimonials, and making the sign-up flow frictionless on mobile.</p>
+        <p>Membership signups quadrupled.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- LOCATION PAGES -->
+  <div class="section reveal">
+    <div class="section-label">Location Pages + SEO</div>
+    <h2>Built to rank. <em>Launched March 2026.</em></h2>
+    <p>Each Golf Ranch location needed its own SEO-optimized page — structured for local search, consistent in design, and fast to publish as new locations open. I designed a scalable location page template in Webflow that the team can replicate in minutes.</p>
+    <p>The SEO push launched in March 2026. <strong>Organic traffic is already up 25%</strong> in the first weeks post-launch.</p>
+    <div class="full-bleed" style="margin-top: 48px;">
+      <!-- ADD: Location page screenshot (e.g. Glendale) -->
+      <img src="images/golf-ranch-location.png" alt="Golf Ranch location page" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+      <div style="display:none; background: rgba(26,26,20,0.06); border-radius: 12px; height: 400px; align-items: center; justify-content: center; color: var(--ink-muted); font-size: 0.85rem; letter-spacing: 0.08em; text-transform: uppercase;">Add location page screenshot — golf-ranch-location.png</div>
+    </div>
+  </div>
+
+  <!-- WHAT'S NEXT -->
+  <div class="callout reveal">
+    <div class="callout-inner">
+      <div class="section-label" style="color: rgba(245,240,226,0.4);">What's Next</div>
+      <h2>Now building the <em>Swing app.</em></h2>
+      <p>The web results opened the door to a bigger product conversation. I'm now designing the Swing by Golf Ranch mobile app — a companion experience for members that brings session tracking, leaderboards, and location tools to their phone. 0→1, in progress.</p>
+    </div>
+  </div>
+
+  <!-- NEXT PROJECT -->
+  <div class="next-project">
+    <div class="label">Next Case Study</div>
+    <h2>Evernote — 8M+ <em>users.</em></h2>
+    <a href="evernote.html" class="btn-primary">View case study →</a>
+  </div>
+
+  <script>
+    // Cursor
+    const cursor = document.getElementById('cursor');
+    let mouseX = 0, mouseY = 0, curX = 0, curY = 0;
+    document.addEventListener('mousemove', e => { mouseX = e.clientX; mouseY = e.clientY; });
+    const lerp = (a, b, n) => (1 - n) * a + n * b;
+    function animateCursor() {
+      curX = lerp(curX, mouseX, 0.12);
+      curY = lerp(curY, mouseY, 0.12);
+      cursor.style.left = curX + 'px';
+      cursor.style.top = curY + 'px';
+      requestAnimationFrame(animateCursor);
+    }
+    animateCursor();
+    document.querySelectorAll('a, button').forEach(el => {
+      el.addEventListener('mouseenter', () => cursor.classList.add('expanded'));
+      el.addEventListener('mouseleave', () => cursor.classList.remove('expanded'));
+    });
+
+    // Progress bar
+    const progress = document.getElementById('progress');
+    window.addEventListener('scroll', () => {
+      const pct = window.scrollY / (document.body.scrollHeight - window.innerHeight) * 100;
+      progress.style.width = pct + '%';
+    });
+
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+    }, { threshold: 0.1 });
+    reveals.forEach(el => observer.observe(el));
+  </script>
 </body>
 </html>
