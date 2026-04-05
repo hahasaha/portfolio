@@ -393,7 +393,13 @@ h2.display em{font-style:italic;color:var(--ink-60);}
 .theme-dot{width:16px;height:16px;border-radius:50%;border:2px solid transparent;cursor:pointer;transition:transform 0.15s,border-color 0.15s;padding:0;position:relative;}
 .theme-dot:hover{transform:scale(1.25);}
 .theme-dot.active{border-color:var(--ink);transform:scale(1.15);}
-.theme-dot::after{content:attr(data-label);position:absolute;top:24px;left:50%;transform:translateX(-50%);font-size:10px;font-weight:600;letter-spacing:0.04em;color:var(--ink);background:var(--cream);border:1px solid var(--rule);padding:4px 10px;border-radius:8px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity 0.1s;}
+.theme-dot::after{content:attr(data-label);position:absolute;top:36px;left:50%;transform:translateX(-50%);font-size:10px;font-weight:600;letter-spacing:0.04em;padding:4px 10px;border-radius:8px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity 0.1s;color:attr(data-tip-color);background:attr(data-tip-bg);}
+.theme-dot[data-label="Purple Rain"]::after{color:white;background:#8b70d0;}
+.theme-dot[data-label="Midnight"]::after{color:#a5b4fc;background:#0d0d1a;border:1px solid rgba(165,180,252,0.2);}
+.theme-dot[data-label="Deep Forest"]::after{color:#c5dfa8;background:#1a3d2e;}
+.theme-dot[data-label="Golden Hour"]::after{color:#7a4500;background:#ffd88a;}
+.theme-dot[data-label="Ocean Breeze"]::after{color:white;background:#0d6fa8;}
+.theme-dot[data-label="Candy Pop"]::after{color:white;background:#e91e8c;}
 .theme-dot:hover::after{opacity:1;}
 
 .cursor { width: 10px; height: 10px; border-radius: 50%; background: var(--ink); position: fixed; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); transition: background 0.25s; }
@@ -421,7 +427,7 @@ h2.display em{font-style:italic;color:var(--ink-60);}
 
 <div id="theme-bar" style="background:var(--cream);border-bottom:1px solid var(--rule);padding:0 24px;height:36px;display:flex;align-items:center;justify-content:center;gap:8px;position:sticky;top:60px;z-index:99;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);">
   <span style="font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-35);margin-right:4px;">Pick your theme!</span>
-  <button onclick="setTheme('sahand')" class="theme-dot" style="background:#c4aff0;" data-label="Sahand's system"></button>
+  <button onclick="setTheme('sahand')" class="theme-dot" style="background:#c4aff0;" data-label="Purple Rain"></button>
   <button onclick="setTheme('midnight')" class="theme-dot" style="background:#1a1a14;" data-label="Midnight"></button>
   <button onclick="setTheme('forest')" class="theme-dot" style="background:#1a3d2e;" data-label="Deep Forest"></button>
   <button onclick="setTheme('golden')" class="theme-dot" style="background:#e8a040;" data-label="Golden Hour"></button>
