@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Evernote — Sahand Hajizadeh</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -12,7 +11,7 @@ html{scroll-behavior:smooth;background:var(--cream);}
 body{font-family:'DM Sans',system-ui,sans-serif;background:var(--cream);color:var(--ink);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased;cursor:none;}
 a{color:inherit;text-decoration:none;}
 .cursor{width:10px;height:10px;border-radius:50%;background:var(--ink);position:fixed;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:background 0.25s;}
-.cursor-ring{width:36px;height:36px;border-radius:50%;border:1.5px solid rgba(26,26,20,0.25);position:fixed;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width 0.25s,height 0.25s,border-color 0.25s;}
+.cursor-ring{width:36px;height:36px;border-radius:50%;border:1.5px solid rgba(26,26,20,0.25);position:fixed;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width 0.25s,height 0.25s;}
 .cursor-ring.big{width:52px;height:52px;border-color:var(--lavender-dark);}
 .cursor.on-dark{background:white;}.cursor-ring.on-dark{border-color:rgba(255,255,255,0.35);}
 @media(max-width:720px){.cursor,.cursor-ring{display:none;}body{cursor:auto;}}
@@ -24,7 +23,6 @@ nav{background:var(--cream);border-bottom:1px solid var(--rule);padding:0 24px;h
 .nav-links a{font-size:13px;font-weight:500;color:var(--ink-60);padding:8px 14px;border-radius:var(--radius-btn);transition:all 0.15s;}
 .nav-links a:hover{color:var(--ink);background:var(--ink-15);}
 .nav-cta{background:var(--lavender-bg)!important;color:var(--ink)!important;font-weight:600!important;border:1.5px solid rgba(139,112,208,0.3)!important;}
-.nav-cta:hover{background:var(--lavender)!important;}
 .cs-hero{padding:64px 0 48px;}
 .cs-back{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:500;color:var(--ink-35);margin-bottom:32px;transition:color 0.15s;}
 .cs-back:hover{color:var(--ink);}
@@ -35,21 +33,27 @@ nav{background:var(--cream);border-bottom:1px solid var(--rule);padding:0 24px;h
 .cs-meta{display:flex;gap:32px;flex-wrap:wrap;padding-top:24px;border-top:1px solid var(--rule);}
 .cs-meta-label{font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-35);margin-bottom:4px;}
 .cs-meta-value{font-size:14px;color:var(--ink);font-weight:500;}
-.cs-cover{width:100%;height:380px;border-radius:var(--radius-card);display:flex;align-items:center;justify-content:center;margin:40px 0;}
-.cs-cover-label{font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.3);}
-.cs-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:0;background:var(--ink);border-radius:var(--radius-card);overflow:hidden;margin:48px 0;}
-.cs-metric{background:var(--ink);padding:32px 24px;text-align:center;border-right:1px solid rgba(255,255,255,0.06);}
+.cs-cover{width:100%;border-radius:var(--radius-card);overflow:hidden;margin:40px 0;}
+.cs-cover img{width:100%;display:block;}
+.cs-metrics{display:grid;grid-template-columns:repeat(3,1fr);background:var(--ink);border-radius:var(--radius-card);overflow:hidden;margin:48px 0;}
+.cs-metric{padding:32px 24px;text-align:center;border-right:1px solid rgba(255,255,255,0.06);}
 .cs-metric:last-child{border-right:none;}
 .cs-metric-num{font-family:'DM Serif Display',serif;font-size:clamp(36px,6vw,56px);color:var(--lavender);line-height:1;letter-spacing:-0.02em;margin-bottom:6px;}
 .cs-metric-label{font-size:12px;color:rgba(255,255,255,0.4);}
 .cs-body{max-width:680px;margin:0 auto;padding:0 24px 80px;}
-.cs-body h2{font-family:'DM Serif Display',serif;font-size:clamp(24px,4vw,36px);letter-spacing:-0.02em;color:var(--ink);margin:48px 0 16px;}
+.cs-body h2{font-family:'DM Serif Display',serif;font-size:clamp(24px,4vw,36px);letter-spacing:-0.02em;color:var(--ink);margin:56px 0 16px;}
 .cs-body p{font-size:16px;color:var(--ink-60);line-height:1.8;margin-bottom:20px;}
-.cs-callout{background:var(--cream-2);border-left:3px solid var(--lavender-dark);border-radius:0 12px 12px 0;padding:20px 24px;margin:24px 0;}
-.cs-callout p{font-family:'DM Serif Display',serif;font-size:20px;font-style:italic;color:var(--ink);margin:0;line-height:1.4;}
-.cs-img{width:100%;height:320px;background:var(--cream-2);border-radius:16px;display:flex;align-items:center;justify-content:center;margin:24px 0;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-35);}
-.chip-grid{display:flex;flex-wrap:wrap;gap:8px;margin:20px 0;}
-.chip{font-size:12px;font-weight:500;color:var(--lavender-dark);background:rgba(139,112,208,0.1);border:1px solid rgba(139,112,208,0.2);padding:6px 14px;border-radius:var(--radius-btn);}
+.cs-screen{width:100%;border-radius:16px;overflow:hidden;margin:32px 0;box-shadow:0 2px 24px rgba(26,26,20,0.08);}
+.cs-screen img{width:100%;display:block;}
+.cs-screen-caption{font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-35);margin-top:-20px;margin-bottom:32px;text-align:center;}
+.cs-pullquote{border-left:3px solid var(--lavender);padding:20px 24px;margin:40px 0;background:rgba(196,175,240,0.08);border-radius:0 12px 12px 0;}
+.cs-pullquote p{font-family:'DM Serif Display',serif;font-size:20px;line-height:1.5;color:var(--ink);font-style:italic;margin:0;}
+.cs-callout{background:var(--cream-2);border-radius:16px;padding:28px 32px;margin:32px 0;}
+.cs-callout-label{font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-35);margin-bottom:10px;}
+.cs-callout p{font-size:15px;color:var(--ink-60);line-height:1.75;margin:0;}
+.cs-outcomes{list-style:none;margin:20px 0 28px;}
+.cs-outcomes li{font-size:16px;color:var(--ink-60);line-height:1.8;padding-left:20px;position:relative;margin-bottom:8px;}
+.cs-outcomes li::before{content:'→';position:absolute;left:0;color:var(--lavender-dark);font-weight:600;}
 .cs-cta-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:48px;padding-top:32px;border-top:1px solid var(--rule);}
 .btn-filled{display:inline-flex;align-items:center;gap:8px;background:var(--lavender-bg);color:var(--ink);font-size:15px;font-weight:600;padding:14px 32px;border-radius:var(--radius-btn);border:1.5px solid rgba(139,112,208,0.3);transition:all 0.15s;}
 .btn-filled:hover{background:var(--lavender);}
@@ -65,8 +69,8 @@ footer{background:var(--ink);border-radius:var(--radius-card) var(--radius-card)
 </style>
 </head>
 <body>
-<div class="cursor" id="cur"></div>
-<div class="cursor-ring" id="ring"></div>
+<div class="cursor" id="cur"></div><div class="cursor-ring" id="ring"></div>
+
 <nav>
   <a href="index.html" class="nav-logo">Sahand<em>.</em></a>
   <div class="nav-links">
@@ -75,72 +79,134 @@ footer{background:var(--ink);border-radius:var(--radius-card) var(--radius-card)
     <a href="mailto:sahandhajizadeh@gmail.com" class="nav-cta">Get in touch</a>
   </div>
 </nav>
+
 <section class="cs-hero">
   <div class="container">
     <a href="index.html" class="cs-back">← Back to work</a>
-    <div class="cs-label">Mobile Design · Design Systems · iOS & Android</div>
-    <h1 class="cs-title">Redesigning mobile for <em>250M+ users</em> — and building the system to sustain it.</h1>
-    <p class="cs-sub">Nearly 5 years at Evernote, leading the mobile experience from product designer to senior — shipping dozens of features, building the design system, and mentoring the team.</p>
+    <div class="cs-label">Mobile · Design Systems · iOS &amp; Android</div>
+    <h1 class="cs-title">Rebuilding Evernote's mobile experience for <em>250 million users.</em></h1>
+    <p class="cs-sub">5 years as Senior Product Designer. Led the full iOS and Android redesign, built the mobile design system from scratch, and unified a product that two separate teams had been pulling apart for years.</p>
     <div class="cs-meta">
       <div class="cs-meta-item"><div class="cs-meta-label">Company</div><div class="cs-meta-value">Evernote</div></div>
-      <div class="cs-meta-item"><div class="cs-meta-label">Role</div><div class="cs-meta-value">Product Designer → Senior PD</div></div>
-      <div class="cs-meta-item"><div class="cs-meta-label">Timeline</div><div class="cs-meta-value">Jul 2018 — Feb 2023 · 5 years</div></div>
-      <div class="cs-meta-item"><div class="cs-meta-label">Platform</div><div class="cs-meta-value">iOS, Android, Tablet</div></div>
+      <div class="cs-meta-item"><div class="cs-meta-label">Role</div><div class="cs-meta-value">Senior Product Designer</div></div>
+      <div class="cs-meta-item"><div class="cs-meta-label">Timeline</div><div class="cs-meta-value">Mar 2020 — Feb 2023 · 5 years</div></div>
+      <div class="cs-meta-item"><div class="cs-meta-label">Platforms</div><div class="cs-meta-value">iOS · Android · iPad</div></div>
     </div>
   </div>
 </section>
+
 <div class="container">
-  <div class="cs-cover" style="background:#2D2B7A;">
-    <div class="cs-cover-label">Evernote iOS — mobile redesign</div>
+  <div class="cs-cover">
+    <img src="images/evernote-nav.png" alt="Evernote — new mobile navigation unified across iOS and Android" />
   </div>
   <div class="cs-metrics">
-    <div class="cs-metric"><div class="cs-metric-num">250M+</div><div class="cs-metric-label">Users impacted</div></div>
-    <div class="cs-metric"><div class="cs-metric-num">5yr</div><div class="cs-metric-label">Tenure at Evernote</div></div>
-    <div class="cs-metric"><div class="cs-metric-num">2</div><div class="cs-metric-label">Platforms: iOS + Android</div></div>
+    <div class="cs-metric">
+      <div class="cs-metric-num">8M+</div>
+      <div class="cs-metric-label">Monthly active mobile users</div>
+    </div>
+    <div class="cs-metric">
+      <div class="cs-metric-num">3</div>
+      <div class="cs-metric-label">Platforms redesigned — iOS, Android, iPad</div>
+    </div>
+    <div class="cs-metric">
+      <div class="cs-metric-num">5yr</div>
+      <div class="cs-metric-label">Tenure as Senior Product Designer</div>
+    </div>
   </div>
 </div>
+
 <div class="cs-body">
-  <h2>Context</h2>
-  <p>I joined Evernote in 2018 as a product designer on the mobile team and grew into a senior role over five years. My focus was the iOS and Android experience — at a time when Evernote had accumulated years of feature debt and user expectations for mobile had fundamentally shifted.</p>
-  <p>I partnered closely with the mobile PM, engineering, and UX research — shipping incrementally, running weekly design reviews, and mentoring junior designers throughout.</p>
 
-  <div class="cs-callout"><p>"Our mobile experience needed to feel like a product from 2022, not 2014."</p></div>
+  <h2>The problem</h2>
+  <p>Evernote's iOS and Android apps had been built by two separate teams, and it showed. The navigation was completely different — iOS used a bottom bar for one-touch access, Android used a hamburger menu. The editor toolbar varied by platform. The tablet experience was an afterthought. Users with multiple devices were experiencing what felt like two different products.</p>
+  <p>My mandate was to fix that. Design a new, consistent mobile experience across all platforms — without disrupting the habits of millions of existing users.</p>
 
-  <h2>The mobile redesign</h2>
-  <p>I led the full redesign of the iOS and Android apps — touching navigation, the note editor, search, tags, notebooks, and the home screen. We validated every major decision with user research and shipped incrementally, never a big-bang release.</p>
+  <div class="cs-screen">
+    <img src="images/evernote-problem.png" alt="Evernote — iOS and Android navigation inconsistency" loading="lazy" />
+  </div>
+  <p class="cs-screen-caption">The problem — iOS and Android had completely different navigation, built by two separate teams</p>
 
-  <div class="cs-img">[ Before / After — Evernote iOS navigation and home screen ]</div>
-
-  <h2>Building the design system</h2>
-  <p>As the mobile team grew, I built the mobile design system from scratch — components, tokens, documentation, and guidelines for both iOS and Android. It became the foundation every subsequent feature was built on, accelerating design-to-dev handoff and consistency across platforms.</p>
-
-  <div class="chip-grid">
-    <span class="chip">Typography system</span><span class="chip">Color tokens</span>
-    <span class="chip">Component library</span><span class="chip">Motion principles</span>
-    <span class="chip">Dark mode</span><span class="chip">iOS + Android</span>
-    <span class="chip">Figma variables</span><span class="chip">Dev handoff</span>
+  <div class="cs-pullquote">
+    <p>"The two apps were designed and built by two separate teams — and they were also not talking to desktop."</p>
   </div>
 
-  <div class="cs-img">[ Mobile design system — component library overview ]</div>
+  <h2>Navigation — the hardest decision first</h2>
+  <p>The first and most contentious decision was navigation architecture. iOS had a bottom tab bar — fast, thumb-friendly, one-touch access to everything. Android had a hamburger menu. We needed to pick one pattern and commit.</p>
+  <p>We tested both. Users were comfortable with either. But when we looked at the product roadmap, the answer became clear: a scalable sidebar menu made more sense for where Evernote was heading. We were adding features. The bottom bar would run out of room. So we gave up one-touch iOS access in favor of a menu that could grow — and that now matched the desktop sidebar exactly.</p>
 
-  <h2>What I shipped</h2>
-  <p>Over five years: dozens of shipped features, a full mobile redesign, a mobile design system built from scratch, mentorship of junior designers, weekly stand-ups and design reviews, and direct partnership with engineering and product leadership.</p>
+  <div class="cs-callout">
+    <div class="cs-callout-label">The tradeoff</div>
+    <p>Giving up the iOS bottom nav was unpopular internally. It meant more taps to get anywhere. But it unlocked a consistent mental model across mobile and desktop, and gave us room to scale. We made the menu expandable on Android — something the platform had never had before.</p>
+  </div>
+
+  <h2>The editor — analytics-driven prioritization</h2>
+  <p>The editor was the other major battleground. iOS and Android had different toolbars, different formatting options, different interaction patterns. We had 106 million editor actions in our analytics. We used them.</p>
+  <p>The data told us: attachment was #1, bold was #2, checkbox was #4. Undo was used on Android but wasn't available on iOS at all. We used this to prioritize what got built, what got promoted in the toolbar, and what got cut. Every decision was anchored to real usage, not intuition.</p>
+
+  <div class="cs-screen">
+    <img src="images/evernote-editor.png" alt="Evernote — analytics data driving editor prioritization" loading="lazy" />
+  </div>
+  <p class="cs-screen-caption">Editor prioritization — 106M actions analyzed to determine what to build, promote, and cut</p>
+
+  <p>We also added an "Edit Button" — a long-requested feature that protected notes from accidental edits. Forum posts praising it appeared within days of launch. We iterated based on beta feedback, adding a "Single tap to edit" toggle for users who wanted the old behavior back.</p>
+
+  <h2>Tablet — intentional, not an afterthought</h2>
+  <p>The tablet experience had always been the mobile bottom bar shoved onto the left side of a larger screen. Nobody had ever designed specifically for it. I proposed we build a permanent sidebar — matching the desktop — rather than adapting the mobile nav. For MVP we shipped a simplified version. Then I pushed for the full sidebar. It shipped.</p>
+
+  <h2>The design system</h2>
+  <p>Partway through the redesign it became clear we had a bigger problem: every screen was being built from scratch, every time. There was no shared vocabulary. A button looked one way in notes, another way in settings. I helped form a weekly Design Systems team — three designers, one mobile and two desktop — to fix this.</p>
+
+  <div class="cs-screen">
+    <img src="images/evernote-design-system.png" alt="Evernote — design systems team and component work" loading="lazy" />
+  </div>
+  <p class="cs-screen-caption">Design Systems team — 3 designers meeting weekly, building Atoms, Molecules, and Organisms</p>
+
+  <p>We built the system in three layers. Atoms were the smallest pieces — we cleaned up and organized hundreds of icons into an official library. Molecules were reusable components: buttons, inputs, pills, badges, toasts. Organisms were full UI patterns: the note preview card, the bottom nav, the top nav. Text styles were baked into components so designers never had to think about which font size to use.</p>
+
+  <div class="cs-screen">
+    <img src="images/evernote-components.png" alt="Evernote — entire screens built from components" loading="lazy" />
+  </div>
+  <p class="cs-screen-caption">Entire screens assembled from components — available to PMs, devs, and marketing, always up to date</p>
+
+  <div class="cs-callout">
+    <div class="cs-callout-label">What the system unlocked</div>
+    <p>Screens built from components were available to anyone in the company — PMs, engineers, marketing — and were always up to date because changing a component updated every screen that used it. Responsiveness was built into the components. The design system became the source of truth for the entire mobile product.</p>
+  </div>
+
+  <h2>Outcomes</h2>
+  <p>The redesign shipped across iOS, Android, and iPad. The design system became the foundation the team built on for years after. Two major features — the Evernote Homepage and Evernote Tasks — were designed and shipped faster than anything before them, because the components were already there.</p>
+
+  <div class="cs-screen">
+    <img src="images/evernote-results.png" alt="Evernote — Homepage and Tasks shipped using the design system" loading="lazy" />
+  </div>
+  <p class="cs-screen-caption">Results — designers became faster and more consistent, shipping Homepage and Tasks using the new system</p>
+
+  <ul class="cs-outcomes">
+    <li>Unified iOS and Android navigation for the first time — one consistent experience across all platforms</li>
+    <li>Built the mobile design system from scratch — Atoms, Molecules, Organisms, used by the entire product org</li>
+    <li>Accelerated feature delivery — Homepage and Tasks shipped faster than any previous feature, using the system</li>
+    <li>8M+ monthly active users on redesigned mobile experience across iOS, Android, and iPad</li>
+  </ul>
 
   <div class="cs-cta-row">
     <a href="index.html" class="btn-outline">← Back to work</a>
     <a href="mailto:sahandhajizadeh@gmail.com" class="btn-filled">Get in touch</a>
   </div>
+
 </div>
+
 <div class="container">
   <footer>
     <div class="foot-logo">Sahand<em>.</em></div>
     <div class="foot-links">
-      <a href="index.html">Work</a><a href="about.html">About</a>
+      <a href="index.html">Work</a>
+      <a href="about.html">About</a>
       <a href="https://linkedin.com/in/sahandh" target="_blank">LinkedIn</a>
       <a href="mailto:sahandhajizadeh@gmail.com">Email</a>
     </div>
   </footer>
 </div>
+
 <script>
 const cur=document.getElementById('cur'),ring=document.getElementById('ring');
 let mx=0,my=0,rx=0,ry=0;
