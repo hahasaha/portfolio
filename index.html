@@ -677,7 +677,7 @@ h2.display em{font-style:italic;color:var(--ink-60);}
         <h2>The kind of designer <em>you're looking for.</em></h2>
         <p>I've shipped mobile experiences for 250M+ users at Evernote, designed internal tools recognized by Nielsen Norman Group at eBay, and built full conversion systems for Golf Ranch that drove 4× membership growth. I work best when design has a real seat at the table — cross-functional, end-to-end, and accountable to outcomes. Interaction design and systems thinking are where I'm strongest. I'm scrappy, I ship, and I'm easy to work with.</p>
       </div>
-      <div style="margin:0 -40px 0;overflow:hidden;border-top:1px solid rgba(255,255,255,0.06);">
+      <div id="collage-wrap" style="margin:0 -40px 0;overflow:hidden;border-top:1px solid rgba(255,255,255,0.06);">
         <img src="images/evernote-collage.png" alt="Evernote design work across iOS, Android, iPad, and Apple Watch" style="width:100%;display:block;object-fit:cover;object-position:center top;max-height:280px;">
       </div>
       <div class="about-grid">
@@ -840,14 +840,21 @@ document.querySelectorAll('a, button, .mini-card, .nav-cta').forEach(el => {
   });
 });
 
+const collageWrap = document.getElementById('collage-wrap');
 document.addEventListener('mousemove', e => {
   isOnDark = false;
+  let overCollage = false;
+  if (collageWrap) {
+    const cr = collageWrap.getBoundingClientRect();
+    if (e.clientX >= cr.left && e.clientX <= cr.right && e.clientY >= cr.top && e.clientY <= cr.bottom) overCollage = true;
+  }
   darkSections.forEach(el => {
     const r = el.getBoundingClientRect();
     if (e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom) {
       isOnDark = true;
     }
   });
+  if (overCollage) isOnDark = false;
   if (!hoveringInteractive) {
     cur.classList.toggle('on-dark', isOnDark);
     cur.classList.remove('invert');
