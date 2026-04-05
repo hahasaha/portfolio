@@ -64,12 +64,27 @@ footer{background:var(--ink);border-radius:var(--radius-card) var(--radius-card)
 .foot-links{display:flex;justify-content:center;gap:24px;}
 .foot-links a{font-size:13px;color:rgba(255,255,255,0.3);transition:color 0.15s;font-weight:500;}
 .foot-links a:hover{color:rgba(255,255,255,0.7);}
-@media(max-width:720px){.nav-links a:not(.nav-cta){display:none;}.pw-form{flex-direction:column;border-radius:16px;}.pw-btn{border-radius:0 0 16px 16px;}}
+.progress-bar{position:fixed;top:0;left:0;height:3px;background:var(--lavender);z-index:200;width:0%;transition:width 0.1s linear;}
+.callout{background:#1a3a2a;color:#f5f0e2;padding:80px 40px;}
+.callout-inner{max-width:1100px;margin:0 auto;}
+.callout h2{font-family:'DM Serif Display',serif;font-size:clamp(2rem,4vw,3rem);line-height:1.2;margin-bottom:24px;max-width:700px;}
+.callout h2 em{font-style:italic;color:var(--lavender-bg);}
+.callout p{font-size:1.05rem;line-height:1.8;color:rgba(245,240,226,0.7);max-width:600px;}
+.tags{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:40px;}
+.tag{background:rgba(196,175,240,0.2);color:var(--lavender-dark);border:1px solid var(--lavender);padding:6px 16px;border-radius:100px;font-size:0.8rem;font-weight:500;}
+.next-project{background:var(--ink);color:#f5f0e2;padding:100px 40px;text-align:center;}
+.next-project .label{font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;color:rgba(245,240,226,0.4);margin-bottom:24px;}
+.next-project h2{font-family:'DM Serif Display',serif;font-size:clamp(2.5rem,5vw,4.5rem);margin-bottom:40px;}
+.next-project h2 em{font-style:italic;color:var(--lavender);}
+.btn-primary{display:inline-block;background:var(--lavender);color:var(--ink);padding:16px 36px;border-radius:100px;font-weight:600;font-size:0.95rem;text-decoration:none;transition:transform 0.2s,background 0.2s;}
+.btn-primary:hover{transform:translateY(-2px);background:var(--lavender-bg);}
+@media(max-width:720px){.nav-links a:not(.nav-cta){display:none;}.pw-form{flex-direction:column;border-radius:16px;}.pw-btn{border-radius:0 0 16px 16px;}.callout{padding:60px 20px;}.next-project{padding:60px 20px;}}
 </style>
 </head>
 <body>
 <div class="cursor" id="cur"></div>
 <div class="cursor-ring" id="ring"></div>
+<div class="progress-bar" id="progress"></div>
 
 <nav>
   <a href="index.html" class="nav-logo">Sahand<em>.</em></a>
@@ -86,6 +101,12 @@ footer{background:var(--ink);border-radius:var(--radius-card) var(--radius-card)
     <div class="cs-label">Enterprise UX · AI Tools · Dashboards</div>
     <h1 class="cs-title">Designing enterprise workflow tools for a <em>major entertainment company.</em></h1>
     <p class="cs-sub">Internal dashboards and workflow interfaces that help large creative teams move faster and reduce operational friction. Built through Inkwell.</p>
+    <div class="tags">
+      <span class="tag">Enterprise</span>
+      <span class="tag">NDA</span>
+      <span class="tag">Web App</span>
+      <span class="tag">Workflow Design</span>
+    </div>
     <div class="cs-meta">
       <div class="cs-meta-item"><div class="cs-meta-label">Client</div><div class="cs-meta-value">Inkwell (NDA)</div></div>
       <div class="cs-meta-item"><div class="cs-meta-label">Role</div><div class="cs-meta-value">Product Designer</div></div>
@@ -123,6 +144,13 @@ footer{background:var(--ink);border-radius:var(--radius-card) var(--radius-card)
 
       <div class="cs-img">[ Dashboard overview — scenario comparison UI ]</div>
 
+      <div class="callout" style="margin:32px -24px;border-radius:16px;">
+        <div class="callout-inner">
+          <h2>Enterprise tools built for experts <em>under pressure.</em></h2>
+          <p>Large creative teams were stuck with tools designed for individual contributors — not cross-functional workflows at scale. The challenge was designing interfaces that are intuitive for experts making high-stakes decisions, not just novices with time to learn.</p>
+        </div>
+      </div>
+
       <h2>The design challenge</h2>
       <p>Large enterprise teams deal with tools built for individual contributors that don't scale to cross-functional workflows. The design challenge: create interfaces that are intuitive for experts under decision-making pressure, not just novices with time to learn.</p>
       <p>I focused on state legibility above everything else. In high-stakes workflows, users need to know exactly what the system is doing at any moment — what's active, what's changed, what needs their attention.</p>
@@ -140,6 +168,12 @@ footer{background:var(--ink);border-radius:var(--radius-card) var(--radius-card)
       </div>
     </div>
   </div>
+</div>
+
+<div class="next-project">
+  <div class="label">Next Case Study</div>
+  <h2>Evernote — 8M+ <em>users.</em></h2>
+  <a href="evernote.html" class="btn-primary">View case study →</a>
 </div>
 
 <div class="container">
@@ -171,7 +205,9 @@ let mx=0,my=0,rx=0,ry=0;
 document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
 (function raf(){rx+=(mx-rx)*0.1;ry+=(my-ry)*0.1;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(raf);})();
 document.querySelectorAll('a,button').forEach(el=>{el.addEventListener('mouseenter',()=>{ring.classList.add('big');cur.classList.add('on-dark');});el.addEventListener('mouseleave',()=>{ring.classList.remove('big');cur.classList.remove('on-dark');});});
-document.querySelectorAll('.gate,footer').forEach(el=>{el.addEventListener('mouseenter',()=>{cur.classList.add('on-dark');ring.classList.add('on-dark');});el.addEventListener('mouseleave',()=>{cur.classList.remove('on-dark');ring.classList.remove('on-dark');});});
+const progress=document.getElementById('progress');
+window.addEventListener('scroll',()=>{const pct=window.scrollY/(document.body.scrollHeight-window.innerHeight)*100;progress.style.width=pct+'%';});
+document.querySelectorAll('.gate,.callout,.next-project,footer').forEach(el=>{el.addEventListener('mouseenter',()=>{cur.classList.add('on-dark');ring.classList.add('on-dark');});el.addEventListener('mouseleave',()=>{cur.classList.remove('on-dark');ring.classList.remove('on-dark');});});
 </script>
 </body>
 </html>

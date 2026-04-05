@@ -65,11 +65,31 @@ footer{background:var(--ink);border-radius:var(--radius-card) var(--radius-card)
 .foot-links{display:flex;justify-content:center;gap:24px;}
 .foot-links a{font-size:13px;color:rgba(255,255,255,0.3);transition:color 0.15s;font-weight:500;}
 .foot-links a:hover{color:rgba(255,255,255,0.7);}
-@media(max-width:720px){.cs-metrics{grid-template-columns:1fr 1fr;}.cs-metric{border-right:none;border-bottom:1px solid rgba(255,255,255,0.06);}.cs-meta{gap:20px;}.nav-links a:not(.nav-cta){display:none;}}
+.progress-bar{position:fixed;top:0;left:0;height:3px;background:var(--lavender);z-index:200;width:0%;transition:width 0.1s linear;}
+.stats-bar{background:var(--lavender);padding:40px;display:grid;grid-template-columns:repeat(3,1fr);gap:0;}
+.stat{text-align:center;padding:24px;border-right:1px solid rgba(26,26,20,0.15);}
+.stat:last-child{border-right:none;}
+.stat-number{font-family:'DM Serif Display',serif;font-size:clamp(2.5rem,5vw,4rem);color:var(--ink);line-height:1;margin-bottom:8px;}
+.stat-label{font-size:0.8rem;font-weight:500;color:var(--ink);opacity:0.65;letter-spacing:0.05em;}
+.callout{background:#1a3a2a;color:#f5f0e2;padding:80px 40px;}
+.callout-inner{max-width:1100px;margin:0 auto;}
+.callout h2{font-family:'DM Serif Display',serif;font-size:clamp(2rem,4vw,3rem);line-height:1.2;margin-bottom:24px;max-width:700px;}
+.callout h2 em{font-style:italic;color:var(--lavender-bg);}
+.callout p{font-size:1.05rem;line-height:1.8;color:rgba(245,240,226,0.7);max-width:600px;}
+.tags{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:40px;}
+.tag{background:rgba(196,175,240,0.2);color:var(--lavender-dark);border:1px solid var(--lavender);padding:6px 16px;border-radius:100px;font-size:0.8rem;font-weight:500;}
+.next-project{background:var(--ink);color:#f5f0e2;padding:100px 40px;text-align:center;}
+.next-project .label{font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;color:rgba(245,240,226,0.4);margin-bottom:24px;}
+.next-project h2{font-family:'DM Serif Display',serif;font-size:clamp(2.5rem,5vw,4.5rem);margin-bottom:40px;}
+.next-project h2 em{font-style:italic;color:var(--lavender);}
+.btn-primary{display:inline-block;background:var(--lavender);color:var(--ink);padding:16px 36px;border-radius:100px;font-weight:600;font-size:0.95rem;text-decoration:none;transition:transform 0.2s,background 0.2s;}
+.btn-primary:hover{transform:translateY(-2px);background:var(--lavender-bg);}
+@media(max-width:720px){.cs-metrics{grid-template-columns:1fr 1fr;}.cs-metric{border-right:none;border-bottom:1px solid rgba(255,255,255,0.06);}.cs-meta{gap:20px;}.nav-links a:not(.nav-cta){display:none;}.stats-bar{grid-template-columns:1fr;}.stat{border-right:none;border-bottom:1px solid rgba(26,26,20,0.15);}.stat:last-child{border-bottom:none;}.callout{padding:60px 20px;}.next-project{padding:60px 20px;}}
 </style>
 </head>
 <body>
 <div class="cursor" id="cur"></div><div class="cursor-ring" id="ring"></div>
+<div class="progress-bar" id="progress"></div>
 
 <nav>
   <a href="index.html" class="nav-logo">Sahand<em>.</em></a>
@@ -86,6 +106,12 @@ footer{background:var(--ink);border-radius:var(--radius-card) var(--radius-card)
     <div class="cs-label">B2B SaaS · Legal Tech · Dashboard Design</div>
     <h1 class="cs-title">Designing the candidate experience for the <em>leading legal recruiting platform.</em></h1>
     <p class="cs-sub">Flo Recruit had no candidate-facing product. I designed it from scratch — the dashboard, onboarding flow, and UI system that launched across top U.S. law firms and contributed to $1M in new revenue.</p>
+    <div class="tags">
+      <span class="tag">Web App</span>
+      <span class="tag">0→1</span>
+      <span class="tag">Dashboard Design</span>
+      <span class="tag">Legal Tech</span>
+    </div>
     <div class="cs-meta">
       <div class="cs-meta-item"><div class="cs-meta-label">Company</div><div class="cs-meta-value">Flo Recruit</div></div>
       <div class="cs-meta-item"><div class="cs-meta-label">Role</div><div class="cs-meta-value">Product Designer (Contract)</div></div>
@@ -101,11 +127,36 @@ footer{background:var(--ink);border-radius:var(--radius-card) var(--radius-card)
   </div>
 </div>
 
+<div class="stats-bar">
+  <div class="stat">
+    <div class="stat-number">$1M</div>
+    <div class="stat-label">Revenue at launch</div>
+  </div>
+  <div class="stat">
+    <div class="stat-number">4mo</div>
+    <div class="stat-label">Zero to one</div>
+  </div>
+  <div class="stat">
+    <div class="stat-number">0→1</div>
+    <div class="stat-label">Candidate product</div>
+  </div>
+</div>
+
 <div class="cs-body">
 
   <h2>The problem</h2>
   <p>Flo Recruit was the leading platform for law firms to manage recruiting pipelines — but the candidate side was an afterthought. Law students had no dedicated product experience. They were navigating a firm-facing interface that wasn't built for them. I was brought on contract to design the candidate portal from scratch, ship it in four months, and make it good enough to close enterprise deals with Am Law 100 firms. The core challenge: candidates needed to see what was coming, understand what was expected, and join their interviews without friction.</p>
 
+</div>
+
+<div class="callout">
+  <div class="callout-inner">
+    <h2>No candidate product. <em>No starting point.</em></h2>
+    <p>Flo Recruit had built a powerful platform for law firms — but candidates were an afterthought. There was no portal, no dashboard, no dedicated experience. I was brought on to design the entire candidate-facing product from scratch, in four months, good enough to close Am Law 100 deals.</p>
+  </div>
+</div>
+
+<div class="cs-body">
   <h2>Exploration</h2>
   <p>Before landing on the final direction, I explored two distinct approaches to the dashboard. The first was a simpler list-based view — minimal chrome, focused purely on the schedule. The second pushed further: a richer portal with a hero onboarding moment, progress stats, and a more editorial layout. The second direction won — it gave candidates a sense of ownership over their recruiting process, not just a calendar.</p>
 
@@ -160,6 +211,12 @@ footer{background:var(--ink);border-radius:var(--radius-card) var(--radius-card)
 
 </div>
 
+<div class="next-project">
+  <div class="label">Next Case Study</div>
+  <h2>Golf Ranch — 10K <em>leads/month.</em></h2>
+  <a href="golf-ranch.html" class="btn-primary">View case study →</a>
+</div>
+
 <div class="container">
   <footer>
     <div class="foot-logo">Sahand<em>.</em></div>
@@ -179,7 +236,9 @@ let mx=0,my=0,rx=0,ry=0;
 document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
 (function raf(){rx+=(mx-rx)*0.1;ry+=(my-ry)*0.1;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(raf);})();
 document.querySelectorAll('a,button').forEach(el=>{el.addEventListener('mouseenter',()=>{ring.classList.add('big');cur.classList.add('on-dark');});el.addEventListener('mouseleave',()=>{ring.classList.remove('big');cur.classList.remove('on-dark');});});
-document.querySelectorAll('.cs-metrics,.cs-cover,footer').forEach(el=>{el.addEventListener('mouseenter',()=>{cur.classList.add('on-dark');ring.classList.add('on-dark');});el.addEventListener('mouseleave',()=>{cur.classList.remove('on-dark');ring.classList.remove('on-dark');});});
+const progress=document.getElementById('progress');
+window.addEventListener('scroll',()=>{const pct=window.scrollY/(document.body.scrollHeight-window.innerHeight)*100;progress.style.width=pct+'%';});
+document.querySelectorAll('.cs-metrics,.cs-cover,.stats-bar,.callout,.next-project,footer').forEach(el=>{el.addEventListener('mouseenter',()=>{cur.classList.add('on-dark');ring.classList.add('on-dark');});el.addEventListener('mouseleave',()=>{cur.classList.remove('on-dark');ring.classList.remove('on-dark');});});
 </script>
 </body>
 </html>

@@ -65,11 +65,31 @@ footer{background:var(--ink);border-radius:var(--radius-card) var(--radius-card)
 .foot-links{display:flex;justify-content:center;gap:24px;}
 .foot-links a{font-size:13px;color:rgba(255,255,255,0.3);transition:color 0.15s;font-weight:500;}
 .foot-links a:hover{color:rgba(255,255,255,0.7);}
-@media(max-width:720px){.cs-metrics{grid-template-columns:1fr 1fr;}.cs-metric{border-right:none;border-bottom:1px solid rgba(255,255,255,0.06);}.cs-meta{gap:20px;}.nav-links a:not(.nav-cta){display:none;}}
+.progress-bar{position:fixed;top:0;left:0;height:3px;background:var(--lavender);z-index:200;width:0%;transition:width 0.1s linear;}
+.stats-bar{background:var(--lavender);padding:40px;display:grid;grid-template-columns:repeat(3,1fr);gap:0;}
+.stat{text-align:center;padding:24px;border-right:1px solid rgba(26,26,20,0.15);}
+.stat:last-child{border-right:none;}
+.stat-number{font-family:'DM Serif Display',serif;font-size:clamp(2.5rem,5vw,4rem);color:var(--ink);line-height:1;margin-bottom:8px;}
+.stat-label{font-size:0.8rem;font-weight:500;color:var(--ink);opacity:0.65;letter-spacing:0.05em;}
+.callout{background:#1a3a2a;color:#f5f0e2;padding:80px 40px;}
+.callout-inner{max-width:1100px;margin:0 auto;}
+.callout h2{font-family:'DM Serif Display',serif;font-size:clamp(2rem,4vw,3rem);line-height:1.2;margin-bottom:24px;max-width:700px;}
+.callout h2 em{font-style:italic;color:var(--lavender-bg);}
+.callout p{font-size:1.05rem;line-height:1.8;color:rgba(245,240,226,0.7);max-width:600px;}
+.tags{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:40px;}
+.tag{background:rgba(196,175,240,0.2);color:var(--lavender-dark);border:1px solid var(--lavender);padding:6px 16px;border-radius:100px;font-size:0.8rem;font-weight:500;}
+.next-project{background:var(--ink);color:#f5f0e2;padding:100px 40px;text-align:center;}
+.next-project .label{font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;color:rgba(245,240,226,0.4);margin-bottom:24px;}
+.next-project h2{font-family:'DM Serif Display',serif;font-size:clamp(2.5rem,5vw,4.5rem);margin-bottom:40px;}
+.next-project h2 em{font-style:italic;color:var(--lavender);}
+.btn-primary{display:inline-block;background:var(--lavender);color:var(--ink);padding:16px 36px;border-radius:100px;font-weight:600;font-size:0.95rem;text-decoration:none;transition:transform 0.2s,background 0.2s;}
+.btn-primary:hover{transform:translateY(-2px);background:var(--lavender-bg);}
+@media(max-width:720px){.cs-metrics{grid-template-columns:1fr 1fr;}.cs-metric{border-right:none;border-bottom:1px solid rgba(255,255,255,0.06);}.cs-meta{gap:20px;}.nav-links a:not(.nav-cta){display:none;}.stats-bar{grid-template-columns:1fr;}.stat{border-right:none;border-bottom:1px solid rgba(26,26,20,0.15);}.stat:last-child{border-bottom:none;}.callout{padding:60px 20px;}.next-project{padding:60px 20px;}}
 </style>
 </head>
 <body>
 <div class="cursor" id="cur"></div><div class="cursor-ring" id="ring"></div>
+<div class="progress-bar" id="progress"></div>
 
 <nav>
   <a href="index.html" class="nav-logo">Sahand<em>.</em></a>
@@ -91,6 +111,14 @@ footer{background:var(--ink);border-radius:var(--radius-card) var(--radius-card)
       <li>Built the mobile design system from scratch</li>
       <li>Unified a product that two separate teams had been pulling apart for years</li>
     </ul></p>
+    <div class="tags">
+      <span class="tag">iOS</span>
+      <span class="tag">Android</span>
+      <span class="tag">iPad</span>
+      <span class="tag">Design System</span>
+      <span class="tag">Navigation</span>
+      <span class="tag">0→1</span>
+    </div>
     <div class="cs-meta">
       <div class="cs-meta-item"><div class="cs-meta-label">Company</div><div class="cs-meta-value">Evernote</div></div>
       <div class="cs-meta-item"><div class="cs-meta-label">Role</div><div class="cs-meta-value">Senior Product Designer</div></div>
@@ -103,6 +131,20 @@ footer{background:var(--ink);border-radius:var(--radius-card) var(--radius-card)
 <div class="container">
   <div class="cs-cover">
     <img src="images/evernote-cs-header.png" alt="Evernote — case study hero" />
+  </div>
+  <div class="stats-bar">
+    <div class="stat">
+      <div class="stat-number">8M+</div>
+      <div class="stat-label">Monthly active users</div>
+    </div>
+    <div class="stat">
+      <div class="stat-number">5yr</div>
+      <div class="stat-label">At Evernote</div>
+    </div>
+    <div class="stat">
+      <div class="stat-number">3</div>
+      <div class="stat-label">Platforms (iOS, Android, iPad)</div>
+    </div>
   </div>
   <!-- <div class="cs-metrics">
     <div class="cs-metric">
@@ -137,7 +179,16 @@ footer{background:var(--ink);border-radius:var(--radius-card) var(--radius-card)
   <div class="cs-pullquote">
     <p>"The two apps were designed and built by two separate teams — and they were also not talking to desktop."</p>
   </div>
+</div>
 
+<div class="callout">
+  <div class="callout-inner">
+    <h2>Two apps, two teams, <em>zero alignment.</em></h2>
+    <p>iOS and Android had diverged so far that users switching devices felt like they were using a completely different product. Navigation, editor, tablet — everything was inconsistent. The mandate was to unify all of it without disrupting 8 million active users.</p>
+  </div>
+</div>
+
+<div class="cs-body">
   <h2>Navigation — the hardest decision first</h2>
   <p>The first and most contentious decision was navigation architecture. iOS had a bottom tab bar — fast, thumb-friendly, one-touch access to everything. Android had a hamburger menu. We needed to pick one pattern and commit.</p>
   <p>We tested both. Users were comfortable with either. But when we looked at the product roadmap, the answer became clear: a scalable sidebar menu made more sense for where Evernote was heading. We were adding features. The bottom bar would run out of room. So we gave up one-touch iOS access in favor of a menu that could grow — and that now matched the desktop sidebar exactly.</p>
@@ -227,6 +278,12 @@ footer{background:var(--ink);border-radius:var(--radius-card) var(--radius-card)
 
 </div>
 
+<div class="next-project">
+  <div class="label">Next Case Study</div>
+  <h2>Flo Recruit — $1M <em>at launch.</em></h2>
+  <a href="flo-recruit.html" class="btn-primary">View case study →</a>
+</div>
+
 <div class="container">
   <footer>
     <div class="foot-logo">Sahand<em>.</em></div>
@@ -246,7 +303,9 @@ let mx=0,my=0,rx=0,ry=0;
 document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
 (function raf(){rx+=(mx-rx)*0.1;ry+=(my-ry)*0.1;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(raf);})();
 document.querySelectorAll('a,button').forEach(el=>{el.addEventListener('mouseenter',()=>{ring.classList.add('big');cur.classList.add('on-dark');});el.addEventListener('mouseleave',()=>{ring.classList.remove('big');cur.classList.remove('on-dark');});});
-document.querySelectorAll('.cs-metrics,.cs-cover,footer').forEach(el=>{el.addEventListener('mouseenter',()=>{cur.classList.add('on-dark');ring.classList.add('on-dark');});el.addEventListener('mouseleave',()=>{cur.classList.remove('on-dark');ring.classList.remove('on-dark');});});
+const progress=document.getElementById('progress');
+window.addEventListener('scroll',()=>{const pct=window.scrollY/(document.body.scrollHeight-window.innerHeight)*100;progress.style.width=pct+'%';});
+document.querySelectorAll('.cs-metrics,.cs-cover,.stats-bar,.callout,.next-project,footer').forEach(el=>{el.addEventListener('mouseenter',()=>{cur.classList.add('on-dark');ring.classList.add('on-dark');});el.addEventListener('mouseleave',()=>{cur.classList.remove('on-dark');ring.classList.remove('on-dark');});});
 </script>
 </body>
 </html>

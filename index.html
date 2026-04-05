@@ -409,11 +409,13 @@ h2.display em{font-style:italic;color:var(--ink-60);}
 .cursor.on-dark.invert { background: var(--ink); }
 .cursor-ring.on-dark { border-color: rgba(255,255,255,0.35); }
 @media(max-width:720px) { .cursor, .cursor-ring { display: none; } body { cursor: auto; } }
+.progress-bar{position:fixed;top:0;left:0;height:3px;background:var(--lavender);z-index:200;width:0%;transition:width 0.1s linear;}
 </style>
 </head>
 <body>
 <div class="cursor" id="cur"></div>
 <div class="cursor-ring" id="ring"></div>
+<div class="progress-bar" id="progress"></div>
 
 <!-- NAV -->
 <nav>
@@ -894,6 +896,9 @@ function setTheme(name) {
 }
 
 document.querySelectorAll('.theme-dot')[0].classList.add('active');
+
+const progress=document.getElementById('progress');
+window.addEventListener('scroll',()=>{const pct=window.scrollY/(document.body.scrollHeight-window.innerHeight)*100;progress.style.width=pct+'%';});
 </script>
 </body>
 </html>
