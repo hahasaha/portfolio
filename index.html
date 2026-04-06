@@ -389,7 +389,7 @@ h2.display em{font-style:italic;color:var(--ink-60);}
 .d3{animation-delay:0.34s}
 .d4{animation-delay:0.46s}
 
-.theme-dot{width:16px;height:16px;border-radius:50%;border:2px solid transparent;cursor:pointer;transition:transform 0.15s,border-color 0.15s;padding:0;position:relative;}
+.theme-dot{width:16px;height:16px;border-radius:50%;border:2px solid rgba(245,240,226,0.3);cursor:pointer;transition:transform 0.15s,border-color 0.15s;padding:0;position:relative;}
 .theme-dot:hover{transform:scale(1.25);}
 .theme-dot.active{border-color:#f5f0e2;transform:scale(1.15);}
 .theme-dot.active:hover{transform:scale(1.25);}
@@ -420,6 +420,7 @@ h2.display em{font-style:italic;color:var(--ink-60);}
 <nav>
   <a href="#" class="nav-logo" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">Sahand<em>.</em></a>
   <div id="theme-bar" style="display:flex;align-items:center;gap:8px;">
+    <span style="font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:rgba(245,240,226,0.5);margin-right:4px;">Theme</span>
     <button onclick="setTheme('sahand')" class="theme-dot" style="background:#c4aff0;" data-label="Purple Rain"></button>
     <button onclick="setTheme('midnight')" class="theme-dot" style="background:#1a1a14;" data-label="Midnight"></button>
     <button onclick="setTheme('forest')" class="theme-dot" style="background:#1a3d2e;" data-label="Deep Forest"></button>
@@ -428,8 +429,6 @@ h2.display em{font-style:italic;color:var(--ink-60);}
     <button onclick="setTheme('candy')" class="theme-dot" style="background:#ff6ba8;" data-label="Candy Pop"></button>
   </div>
   <div class="nav-links">
-    <a href="#work">Work</a>
-    <a href="#about">About</a>
     <a href="#contact" class="nav-cta">Get in touch</a>
   </div>
 </nav>
