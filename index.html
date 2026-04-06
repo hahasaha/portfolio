@@ -165,6 +165,26 @@ h2.display em{font-style:italic;color:var(--ink-60);}
 /* ── WORK SECTION ── */
 .work-section{padding:72px 0;}
 
+/* ── SHARED CARD COMPONENTS ── */
+.proj-tag-small{font-size:11px;color:var(--on-dark-muted);background:rgba(255,255,255,0.06);padding:4px 10px;border-radius:20px;}
+.proj-tag-wrap{display:flex;flex-wrap:wrap;gap:6px;}
+.proj-img{width:100%;border-radius:12px;object-fit:cover;object-position:top;}
+.proj-img-wrap{display:flex;flex-direction:column;gap:12px;}
+.nda-overlay{position:relative;border-radius:12px;overflow:hidden;}
+.nda-overlay img{width:100%;display:block;border-radius:12px;}
+.nda-badge{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.25);border-radius:12px;backdrop-filter:blur(2px);}
+.nda-badge-inner{text-align:center;background:rgba(15,15,22,0.85);padding:10px 18px;border-radius:10px;border:1px solid rgba(196,175,240,0.2);}
+.nda-label{font-size:10px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:#c4aff0;margin-bottom:4px;}
+.nda-sub{font-size:12px;color:var(--on-dark-muted);}
+.proj-disabled-btn{display:inline-flex;align-items:center;gap:8px;background:transparent;color:var(--on-dark-faint);font-size:13px;font-weight:600;padding:11px 22px;border-radius:50px;border:1.5px solid rgba(255,255,255,0.08);cursor:default;}
+.browser-mock{background:#e8e8e8;border-radius:12px;overflow:hidden;margin-bottom:16px;}
+.browser-dots{padding:8px 12px;display:flex;align-items:center;gap:6px;}
+.browser-dot{width:10px;height:10px;border-radius:50%;}
+.browser-url{flex:1;background:#fff;border-radius:4px;height:18px;margin-left:6px;display:flex;align-items:center;padding:0 8px;}
+.browser-url span{font-size:9px;color:#999;}
+.about-link{color:var(--lavender);text-decoration:none;font-weight:500;transition:color 0.15s;}
+.about-link:hover{color:white;}
+
 /* Featured project cards — dark floating */
 .proj-card{
   background:var(--ink);border-radius:var(--radius-card);
@@ -271,7 +291,7 @@ h2.display em{font-style:italic;color:var(--ink-60);}
 .about-grid{display:grid;grid-template-columns:1fr 1fr 1fr;}
 .about-col{padding:28px 40px;border-top:1px solid rgba(255,255,255,0.06);}
 .about-col:first-child{border-right:1px solid rgba(255,255,255,0.06);}
-.about-col h4{
+.about-col h3{
   font-size:10px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;
   color:var(--on-dark-faint);margin-bottom:14px;
 }
@@ -376,6 +396,12 @@ h2.display em{font-style:italic;color:var(--ink-60);}
 .foot-note{font-size:11px;color:rgba(255,255,255,0.12);letter-spacing:0.02em;}
 
 /* ── RESPONSIVE ── */
+@media(max-width:1024px){
+  .proj-body{grid-template-columns:1fr;gap:24px;}
+  .about-grid{grid-template-columns:1fr;}
+  .about-col:first-child{border-right:none;border-bottom:1px solid rgba(255,255,255,0.06);}
+  .mini-grid{grid-template-columns:1fr;}
+}
 @media(max-width:720px){
   .stats-card{grid-template-columns:1fr 1fr;gap:24px;}
   .stat+.stat{border-left:none;}
@@ -528,16 +554,14 @@ h2.display em{font-style:italic;color:var(--ink-60);}
           <a href="golf-ranch.html" class="proj-cta lavender">Open case study →</a>
         </div>
         <div class="proj-right" id="golf-metrics">
-          <div style="background:#e8e8e8;border-radius:12px;overflow:hidden;margin-bottom:16px;">
-            <div style="padding:8px 12px;display:flex;align-items:center;gap:6px;">
-              <div style="width:10px;height:10px;border-radius:50%;background:#ff5f57;"></div>
-              <div style="width:10px;height:10px;border-radius:50%;background:#febc2e;"></div>
-              <div style="width:10px;height:10px;border-radius:50%;background:#28c840;"></div>
-              <div style="flex:1;background:#fff;border-radius:4px;height:18px;margin-left:6px;display:flex;align-items:center;padding:0 8px;">
-                <span style="font-size:9px;color:#999;">golfranch.com</span>
-              </div>
+          <div class="browser-mock">
+            <div class="browser-dots">
+              <div class="browser-dot" style="background:#ff5f57;"></div>
+              <div class="browser-dot" style="background:#febc2e;"></div>
+              <div class="browser-dot" style="background:#28c840;"></div>
+              <div class="browser-url"><span>golfranch.com</span></div>
             </div>
-            <img src="images/golf-ranch-hero.webp" alt="Golf Ranch homepage" style="width:100%;display:block;object-fit:cover;object-position:top;max-height:200px;">
+            <img src="images/golf-ranch-hero.webp" alt="Golf Ranch homepage" class="proj-img" style="max-height:200px;">
           </div>
           <div class="proj-metric-row">
             <span class="proj-metric-label">Membership signups</span>
@@ -574,23 +598,23 @@ h2.display em{font-style:italic;color:var(--ink-60);}
             <div class="proj-item">Enterprise Dashboard Design</div>
             <div class="proj-item">Simplifying Complex Data Visualization</div>
           </div>
-          <div style="display:inline-flex;align-items:center;gap:8px;background:transparent;color:rgba(255,255,255,0.2);font-size:13px;font-weight:600;padding:11px 22px;border-radius:50px;border:1.5px solid rgba(255,255,255,0.08);cursor:default;">Ask me about this in an interview</div>
+          <div class="proj-disabled-btn">Ask me about this in an interview</div>
         </div>
-        <div style="display:flex;flex-direction:column;gap:12px;">
-          <div style="position:relative;border-radius:12px;overflow:hidden;">
-            <img src="images/inkwell-blurred.webp" alt="Inkwell dashboard" style="width:100%;display:block;border-radius:12px;">
-            <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.25);border-radius:12px;backdrop-filter:blur(2px);">
-              <div style="text-align:center;background:rgba(15,15,22,0.85);padding:10px 18px;border-radius:10px;border:1px solid rgba(196,175,240,0.2);">
-                <div style="font-size:10px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:#c4aff0;margin-bottom:4px;">NDA Protected</div>
-                <div style="font-size:12px;color:rgba(255,255,255,0.55);">Available to discuss in conversation</div>
+        <div class="proj-img-wrap">
+          <div class="nda-overlay">
+            <img src="images/inkwell-blurred.webp" alt="Inkwell dashboard">
+            <div class="nda-badge">
+              <div class="nda-badge-inner">
+                <div class="nda-label">NDA Protected</div>
+                <div class="nda-sub">Available to discuss in conversation</div>
               </div>
             </div>
           </div>
-          <div style="display:flex;flex-wrap:wrap;gap:6px;">
-            <span style="font-size:11px;color:rgba(255,255,255,0.4);background:rgba(255,255,255,0.06);padding:4px 10px;border-radius:20px;">Enterprise dashboards</span>
-            <span style="font-size:11px;color:rgba(255,255,255,0.4);background:rgba(255,255,255,0.06);padding:4px 10px;border-radius:20px;">Data visualization</span>
-            <span style="font-size:11px;color:rgba(255,255,255,0.4);background:rgba(255,255,255,0.06);padding:4px 10px;border-radius:20px;">Workflow UX</span>
-            <span style="font-size:11px;color:rgba(255,255,255,0.4);background:rgba(255,255,255,0.06);padding:4px 10px;border-radius:20px;">Interaction design</span>
+          <div class="proj-tag-wrap">
+            <span class="proj-tag-small">Enterprise dashboards</span>
+            <span class="proj-tag-small">Data visualization</span>
+            <span class="proj-tag-small">Workflow UX</span>
+            <span class="proj-tag-small">Interaction design</span>
           </div>
         </div>
       </div>
@@ -615,8 +639,8 @@ h2.display em{font-style:italic;color:var(--ink-60);}
           <a href="evernote.html" class="proj-cta lavender">View case study →</a>
         </div>
         <div>
-          <img src="images/evernote-screens.webp" alt="Evernote mobile screens" style="width:100%;border-radius:12px;object-fit:cover;object-position:top;">
-          <div style="display:flex;flex-direction:column;gap:0;margin-top:12px;">
+          <img src="images/evernote-screens.webp" alt="Evernote mobile screens" class="proj-img">
+          <div class="proj-img-wrap" style="margin-top:12px;gap:0;">
             <div class="proj-metric-row">
               <span class="proj-metric-label">Users reached</span>
               <span class="proj-metric-val">8M+ users</span>
@@ -652,11 +676,11 @@ h2.display em{font-style:italic;color:var(--ink-60);}
           <a href="flo-recruit.html" class="proj-cta lavender">View case study →</a>
         </div>
         <div>
-          <img src="images/flo-hub.webp" alt="Flo Recruit candidate portal" style="width:100%;border-radius:12px;object-fit:cover;object-position:top;">
-          <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:12px;">
-            <span style="font-size:11px;color:rgba(255,255,255,0.4);background:rgba(255,255,255,0.06);padding:4px 10px;border-radius:20px;">Onboarding</span>
-            <span style="font-size:11px;color:rgba(255,255,255,0.4);background:rgba(255,255,255,0.06);padding:4px 10px;border-radius:20px;">Dashboards</span>
-            <span style="font-size:11px;color:rgba(255,255,255,0.4);background:rgba(255,255,255,0.06);padding:4px 10px;border-radius:20px;">Interaction design</span>
+          <img src="images/flo-hub.webp" alt="Flo Recruit candidate portal" class="proj-img">
+          <div class="proj-tag-wrap" style="margin-top:12px;">
+            <span class="proj-tag-small">Onboarding</span>
+            <span class="proj-tag-small">Dashboards</span>
+            <span class="proj-tag-small">Interaction design</span>
           </div>
         </div>
       </div>
@@ -709,14 +733,14 @@ h2.display em{font-style:italic;color:var(--ink-60);}
     <div class="about-dark">
       <div class="about-dark-header">
         <h2>Hi! I'm <em>Sahand.</em></h2>
-        <p>Right now I'm really into AI tools and learning how they can help my design craft (I actually built this page with Claude Code). <br><br>Outside of work I'm a passionate home-barista (<a href="https://instagram.com/thebrownbarista" target="_blank" rel="noopener noreferrer" style="color:var(--lavender);text-decoration:none;font-weight:500;transition:color 0.15s;" onmouseenter="this.style.color='white'" onmouseleave="this.style.color='var(--lavender)'">@thebrownbarista</a>), motorcycle enthusiast ("haji-moto"), and dog dad (<a href="https://www.instagram.com/ziggy.moto" target="_blank" rel="noopener noreferrer" style="color:var(--lavender);text-decoration:none;font-weight:500;transition:color 0.15s;" onmouseenter="this.style.color='white'" onmouseleave="this.style.color='var(--lavender)'">hey Ziggy!</a>).</p>
+        <p>Right now I'm really into AI tools and learning how they can help my design craft (I actually built this page with Claude Code). <br><br>Outside of work I'm a passionate home-barista (<a href="https://instagram.com/thebrownbarista" target="_blank" rel="noopener noreferrer" class="about-link">@thebrownbarista</a>), motorcycle enthusiast ("haji-moto"), and dog dad (<a href="https://www.instagram.com/ziggy.moto" target="_blank" rel="noopener noreferrer" class="about-link">hey Ziggy!</a>).</p>
       </div>
       <div id="collage-wrap" style="margin:0 -40px 0;overflow:hidden;border-top:1px solid rgba(255,255,255,0.06);">
         <img src="images/three-phones.webp" alt="Mobile design work across Flo Recruit, Evernote, and Golf Ranch" style="width:100%;display:block;object-fit:cover;object-position:center top;max-height:420px;">
       </div>
       <div class="about-grid">
         <div class="about-col">
-          <h4>Experience</h4>
+          <h3>Experience</h3>
           <div class="about-exp-item">
             <div class="about-exp-role">Product Designer — Inkwell</div>
             <div class="about-exp-co">Contract · Feb 2026 – Present</div>
@@ -739,7 +763,7 @@ h2.display em{font-style:italic;color:var(--ink-60);}
           </div>
         </div>
         <div class="about-col">
-          <h4>Skills</h4>
+          <h3>Skills</h3>
           <ul class="about-list">
             <li>Product Design</li>
             <li>Figma</li>
