@@ -97,15 +97,18 @@ nav{
 }
 .hero h1{
   font-family:'DM Serif Display',serif;
-  font-size:clamp(32px,6vw,66px);
+  font-size:clamp(38px,7.25vw,80px);
   line-height:1.06;letter-spacing:-0.02em;
   color:var(--on-green);margin-bottom:20px;
 }
 .hero h1 em{font-style:italic;color:var(--lavender);}
 .hero-sub{
-  font-size:18px;color:var(--on-green-muted);
+  font-size:19px;
+  color:var(--on-green-muted);
+  color:color-mix(in srgb,var(--on-green) 88%,transparent);
   max-width:520px;margin:0 auto 36px;
-  line-height:1.65;font-weight:400;
+  line-height:1.65;font-weight:500;
+  letter-spacing:0.01em;
 }
 .hero-sub strong{color:var(--on-green);font-weight:600;}
 .btn-pair{display:flex;justify-content:center;align-items:center;gap:12px;flex-wrap:wrap;}
@@ -477,6 +480,7 @@ h2.display em{font-style:italic;color:var(--ink-60);}
     <button onclick="setTheme('rose')" class="theme-dot" style="background:#d4907c;" data-label="Soft Rose" aria-label="Soft Rose theme"></button>
   </div>
   <div class="nav-links">
+    <a href="#about">About</a>
     <a href="#contact" class="nav-cta">Get in touch</a>
   </div>
 </nav>
@@ -485,12 +489,10 @@ h2.display em{font-style:italic;color:var(--ink-60);}
 <section class="hero">
   <div class="container">
     <div class="hero-pre fade-up d1">Senior Product Designer · 10+ Years</div>
-    <h1 class="fade-up d2">Hiring for <em>great design?</em></h1>
-    <p class="hero-sub fade-up d3">
-      <strong>Mobile.</strong> <strong>Enterprise UX.</strong> <strong>Growth.</strong><br>I've done all three.    </p>
+    <h1 class="fade-up d2">I focus on <em>impact.</em></h1>
+    <p class="hero-sub fade-up d3">Mobile apps. Enterprise tools. Websites that convert.</p>
     <div class="btn-pair fade-up d4">
       <a href="#work" class="btn-filled">View my work</a>
-      <a href="#about" class="btn-outline">About me</a>
     </div>
     <div class="fade-up d4" style="animation-delay:0.58s;display:none;flex-direction:column;align-items:center;gap:10px;margin-top:16px;">
       <div style="font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-35);">Hiring for something specific?</div>
@@ -502,7 +504,7 @@ h2.display em{font-style:italic;color:var(--ink-60);}
         <span style="font-size:18px;color:rgba(139,112,208,0.5);">→</span>
       </a>
     </div>
-    <div class="hero-note fade-up d4" style="animation-delay:0.7s"><span class="mobile-break">· </span>Open to senior IC roles · <br class="mobile-break">Remote or San Francisco Bay Area</div>
+    <div class="hero-note fade-up d4" style="animation-delay:0.7s">· Open to senior IC roles ·<br>San Francisco Bay Area · Remote</div>
   </div>
 </section>
 
