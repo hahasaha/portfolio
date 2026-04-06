@@ -129,7 +129,7 @@ nav{
 .btn-outline:hover{border-color:var(--on-green);background:var(--on-green-faint);transform:translateY(-2px);}
 .hero-note{margin-top:16px;font-size:12px;color:var(--on-green-muted);}
 .mobile-break{display:none;}
-@media(max-width:720px){.mobile-break{display:block;}}
+@media(max-width:720px){.mobile-break{display:inline;}br.mobile-break{display:block;}}
 
 /* ── STATS CARD ── */
 .stats-wrap{padding:40px 24px 0;display:none;}
@@ -445,7 +445,7 @@ h2.display em{font-style:italic;color:var(--ink-60);}
     <span style="font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--on-green-muted);margin-right:4px;">Pick your theme!</span>
     <button onclick="setTheme('sahand')" class="theme-dot" style="background:#c4aff0;" data-label="Purple Rain" aria-label="Purple Rain theme"></button>
     <button onclick="setTheme('noir')" class="theme-dot" style="background:#0a0a0a;" data-label="Noir" aria-label="Noir theme"></button>
-    <button onclick="setTheme('forest')" class="theme-dot" style="background:#1a3d2e;" data-label="Deep Forest" aria-label="Deep Forest theme"></button>
+    <button onclick="setTheme('forest')" class="theme-dot" style="background:#1a3d2e;border-color:rgba(245,240,226,0.4);" data-label="Deep Forest" aria-label="Deep Forest theme"></button>
     <button onclick="setTheme('golden')" class="theme-dot" style="background:#e8a040;" data-label="Golden Hour" aria-label="Golden Hour theme"></button>
     <button onclick="setTheme('ocean')" class="theme-dot" style="background:#38b2e8;" data-label="Ocean Breeze" aria-label="Ocean Breeze theme"></button>
     <button onclick="setTheme('rose')" class="theme-dot" style="background:#d4907c;" data-label="Soft Rose" aria-label="Soft Rose theme"></button>
@@ -476,7 +476,7 @@ h2.display em{font-style:italic;color:var(--ink-60);}
         <span style="font-size:18px;color:rgba(139,112,208,0.5);">→</span>
       </a>
     </div>
-    <div class="hero-note fade-up d4" style="animation-delay:0.7s">· Open to senior IC roles · <br class="mobile-break">Remote or San Francisco Bay Area</div>
+    <div class="hero-note fade-up d4" style="animation-delay:0.7s"><span class="mobile-break">· </span>Open to senior IC roles · <br class="mobile-break">Remote or San Francisco Bay Area</div>
   </div>
 </section>
 
