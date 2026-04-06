@@ -84,6 +84,12 @@ footer{background:var(--ink);border-radius:var(--radius-card) var(--radius-card)
 .next-project h2 em{font-style:italic;color:var(--lavender);}
 .btn-primary{display:inline-block;background:var(--lavender);color:var(--ink);padding:16px 36px;border-radius:100px;font-weight:600;font-size:0.95rem;text-decoration:none;transition:transform 0.2s,background 0.2s;}
 .btn-primary:hover{transform:translateY(-2px);background:var(--lavender-bg);}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start;max-width:1100px;margin:0 auto;padding:48px 40px;}
+.two-col .col-text h2{font-family:'DM Serif Display',serif;font-size:clamp(24px,4vw,36px);letter-spacing:-0.02em;color:var(--ink);margin:0 0 16px;}
+.two-col .col-text p{font-size:16px;color:var(--ink-60);line-height:1.8;margin-bottom:16px;}
+.two-col .col-text p:last-child{margin-bottom:0;}
+.two-col .col-img img{width:100%;display:block;border-radius:12px;}
+@media(max-width:768px){.two-col{grid-template-columns:1fr;gap:32px;padding:40px 20px;}}
 @media(max-width:720px){.cs-metrics{grid-template-columns:1fr 1fr;}.cs-metric{border-right:none;border-bottom:1px solid rgba(255,255,255,0.06);}.cs-meta{gap:20px;}.nav-links a:not(.nav-cta){display:none;}.stats-bar{grid-template-columns:1fr;}.stat{border-right:none;border-bottom:1px solid rgba(26,26,20,0.15);}.stat:last-child{border-bottom:none;}.callout{padding:60px 20px;}.next-project{padding:60px 20px;}}
 </style>
 </head>
@@ -118,17 +124,14 @@ footer{background:var(--ink);border-radius:var(--radius-card) var(--radius-card)
     </div>
 </section>
 
-<div class="container">
-  <div class="cs-cover">
+<div class="two-col">
+  <div class="col-text">
+    <h2>The problem</h2>
+    <p>Flo Recruit was the leading platform for law firms to manage recruiting pipelines — but the candidate side was an afterthought. Law students had no dedicated product experience. They were navigating a firm-facing interface that wasn't built for them. I was brought on contract to design the candidate portal from scratch, ship it in four months, and make it good enough to close enterprise deals with Am Law 100 firms. The core challenge: candidates needed to see what was coming, understand what was expected, and join their interviews without friction.</p>
+  </div>
+  <div class="col-img">
     <img src="images/flo-hub.png" alt="Flo Recruit — Career Hub desktop dashboard" />
   </div>
-</div>
-
-<div class="cs-body">
-
-  <h2>The problem</h2>
-  <p>Flo Recruit was the leading platform for law firms to manage recruiting pipelines — but the candidate side was an afterthought. Law students had no dedicated product experience. They were navigating a firm-facing interface that wasn't built for them. I was brought on contract to design the candidate portal from scratch, ship it in four months, and make it good enough to close enterprise deals with Am Law 100 firms. The core challenge: candidates needed to see what was coming, understand what was expected, and join their interviews without friction.</p>
-
 </div>
 
 <div class="callout">
