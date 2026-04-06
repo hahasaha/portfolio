@@ -81,23 +81,23 @@ nav{
 .nav-cta:hover{background:white!important;border-color:rgba(26,26,20,0.15)!important;transform:translateY(-1px);box-shadow:0 3px 14px rgba(0,0,0,0.08);}
 
 /* ── HERO ── */
-.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:120px 40px 80px;text-align:center;background:var(--cream);}
+.hero{padding:48px 0 0;text-align:center;background:var(--cream);}
 .hero-pre{
-  display:inline-block;font-size:11px;font-weight:600;
+  display:inline-block;font-size:12px;font-weight:600;
   letter-spacing:0.08em;text-transform:uppercase;
   color:var(--ink-35);margin-bottom:24px;
-  border:1px solid var(--rule);padding:5px 12px;border-radius:var(--radius-btn);
+  border:1px solid var(--rule);padding:6px 14px;border-radius:var(--radius-btn);
 }
 .hero h1{
   font-family:'DM Serif Display',serif;
-  font-size:clamp(2.8rem,6vw,5.5rem);
+  font-size:clamp(32px,6vw,66px);
   line-height:1.06;letter-spacing:-0.02em;
   color:var(--ink);margin-bottom:20px;
 }
 .hero h1 em{font-style:italic;color:var(--lavender-dark);}
 .hero-sub{
-  font-size:1.1rem;color:var(--ink-60);
-  max-width:500px;margin:0 auto 36px;
+  font-size:18px;color:var(--ink-60);
+  max-width:520px;margin:0 auto 36px;
   line-height:1.65;font-weight:400;
 }
 .hero-sub strong{color:var(--ink);font-weight:600;}
@@ -367,8 +367,6 @@ h2.display em{font-style:italic;color:var(--ink-60);}
 
 /* ── RESPONSIVE ── */
 @media(max-width:720px){
-  .hero{padding:100px 20px 60px;}
-  .hero h1{font-size:clamp(2.5rem,8vw,4rem);}
   .stats-card{grid-template-columns:1fr 1fr;gap:24px;}
   .stat+.stat{border-left:none;}
   .stat:nth-child(3),.stat:nth-child(4){border-top:1px solid rgba(255,255,255,0.08);}
@@ -441,6 +439,7 @@ h2.display em{font-style:italic;color:var(--ink-60);}
 
 <!-- HERO -->
 <section class="hero">
+  <div class="container">
     <div class="hero-pre fade-up d1">Senior Product Designer · 10+ Years</div>
     <h1 class="fade-up d2">Hiring for <em>great design?</em></h1>
     <p class="hero-sub fade-up d3">
@@ -460,6 +459,7 @@ h2.display em{font-style:italic;color:var(--ink-60);}
       </a>
     </div>
     <div class="hero-note fade-up d4" style="animation-delay:0.7s">Open to senior IC roles · Remote or San Francisco Bay Area</div>
+  </div>
 </section>
 
 <!-- STATS -->
