@@ -411,7 +411,7 @@ h2.display em{font-style:italic;color:var(--ink-60);}
 .d3{animation-delay:0.34s}
 .d4{animation-delay:0.46s}
 
-.theme-dot{width:22px;height:22px;border-radius:50%;border:2px solid rgba(245,240,226,0.3);cursor:pointer;transition:transform 0.15s,border-color 0.15s;padding:0;position:relative;}
+.theme-dot{width:16px;height:16px;border-radius:50%;border:2px solid rgba(245,240,226,0.3);cursor:pointer;transition:transform 0.15s,border-color 0.15s;padding:0;position:relative;}
 .theme-dot:hover{transform:scale(1.25);}
 .theme-dot.active{border-color:var(--on-green);transform:scale(1.15);}
 .theme-dot.active:hover{transform:scale(1.25);}
@@ -442,7 +442,7 @@ h2.display em{font-style:italic;color:var(--ink-60);}
 <nav>
   <a href="#" class="nav-logo" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">Sahand<em>.</em></a>
   <div id="theme-bar" style="display:flex;align-items:center;gap:8px;">
-    <span style="font-size:12px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--on-green-muted);margin-right:6px;">Pick your theme!</span>
+    <span style="font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--on-green-muted);margin-right:4px;">Pick your theme!</span>
     <button onclick="setTheme('sahand')" class="theme-dot" style="background:#c4aff0;" data-label="Purple Rain" aria-label="Purple Rain theme"></button>
     <button onclick="setTheme('noir')" class="theme-dot" style="background:#0a0a0a;" data-label="Noir" aria-label="Noir theme"></button>
     <button onclick="setTheme('forest')" class="theme-dot" style="background:#1a3d2e;" data-label="Deep Forest" aria-label="Deep Forest theme"></button>
