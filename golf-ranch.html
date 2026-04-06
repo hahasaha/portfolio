@@ -267,6 +267,29 @@
       border-radius: 12px;
     }
 
+    .mobile-pair {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .mobile-pair img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 20px;
+    }
+
+    .image-caption {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-35);
+      text-align: center;
+      margin-top: 12px;
+    }
+
     .image-caption {
       font-size: 0.75rem;
       color: var(--ink-muted);
@@ -405,6 +428,7 @@
       .section { padding: 60px 20px; }
       .two-col { grid-template-columns: 1fr; gap: 40px; }
       .image-grid { grid-template-columns: 1fr; }
+      .mobile-pair { grid-template-columns: 1fr; }
       .callout { padding: 60px 20px; }
       .next-project { padding: 60px 20px; }
     }
@@ -427,7 +451,7 @@
 
   <!-- HERO -->
   <section class="hero">
-    <div class="hero-label">Case Study — Golf Ranch</div>
+    <div class="hero-label">Web Design · Growth</div>
     <h1>A website that actually <em>converts.</em></h1>
     <p class="hero-sub">Golf Ranch operates six premium driving range locations across the US — but their site wasn't keeping up. 90% of traffic was mobile. Lead capture was broken. I rebuilt it from the ground up.</p>
     <div class="hero-tags">
@@ -503,9 +527,10 @@
   <div class="section reveal">
     <div class="section-label">The Site</div>
     <h2>Mobile-first, <em>always.</em></h2>
-    <p>With 90% of visitors coming in on phone, every design decision started on a 390px canvas. The desktop experience followed — not the other way around.</p>
-    <div class="full-bleed" style="margin-top: 48px;">
-      <img src="images/golf-ranch-home.png" alt="Golf Ranch homepage" />
+    <p>90% of visitors came in on mobile. Every screen was designed at 390px first.</p>
+    <div class="mobile-pair" style="margin-top: 48px;">
+      <img src="images/golf-ranch-home-mobile.png" alt="Golf Ranch homepage — mobile" />
+      <img src="images/golf-ranch-location-mobile.png" alt="Golf Ranch location page — mobile" />
     </div>
   </div>
 
@@ -541,14 +566,42 @@
     <div class="section-label">Membership</div>
     <h2>4× more members — from one page <em>redesign.</em></h2>
     <div class="two-col">
-      <div class="full-bleed">
-        <img src="images/golf-ranch-membership.png" alt="Ranch Pass membership page" />
-      </div>
       <div>
         <p>The Ranch Pass membership page was the second major conversion surface. The original version buried the value prop. Pricing was unclear. There was no urgency and no social proof.</p>
         <p>I redesigned it from the ground up — <strong>leading with the savings math</strong>, surfacing testimonials, and making the sign-up flow frictionless on mobile.</p>
         <p>Membership signups quadrupled.</p>
       </div>
+      <div class="full-bleed">
+        <img src="images/golf-ranch-membership.png" alt="Ranch Pass membership page" />
+      </div>
+    </div>
+    <div class="full-bleed" style="margin-top: 32px;">
+      <img src="images/golf-ranch-membership-value.png" alt="Ranch Pass value breakdown" />
+    </div>
+    <p class="image-caption">Ranch Pass value breakdown</p>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- OFFERS -->
+  <div class="section reveal">
+    <div class="section-label">Conversion</div>
+    <h2>Offers built to <em>convert.</em></h2>
+    <p>Each location launch needed a dedicated offer page — urgency, clear value, and a frictionless mobile signup. I designed and built each one in Webflow.</p>
+    <div class="full-bleed" style="margin-top: 48px;">
+      <img src="images/golf-ranch-offers.png" alt="Golf Ranch offer pages" />
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- SOCIAL PROOF -->
+  <div class="section reveal">
+    <div class="section-label">Trust</div>
+    <h2>8,500+ golfers obsessed with <em>Ranch Pass.</em></h2>
+    <p>Social proof wasn't an afterthought — it was a core conversion element. Reviews, ratings, and member counts surfaced throughout the site.</p>
+    <div class="full-bleed" style="margin-top: 48px;">
+      <img src="images/golf-ranch-social-proof.png" alt="Golf Ranch social proof and reviews" />
     </div>
   </div>
 
