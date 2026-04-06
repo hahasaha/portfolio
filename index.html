@@ -168,6 +168,7 @@ h2.display em{font-style:italic;color:var(--ink-60);}
 /* Featured project cards — dark floating */
 .proj-card{
   background:var(--ink);border-radius:var(--radius-card);
+  border:1px solid var(--rule);
   overflow:hidden;margin-bottom:12px;
 }
 .proj-card-header{
@@ -415,7 +416,7 @@ h2.display em{font-style:italic;color:var(--ink-60);}
 .theme-dot.active{border-color:var(--on-green);transform:scale(1.15);}
 .theme-dot.active:hover{transform:scale(1.25);}
 .theme-dot::after{content:attr(data-label);position:absolute;top:36px;left:50%;transform:translateX(-50%);font-size:10px;font-weight:600;letter-spacing:0.04em;padding:4px 10px;border-radius:8px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity 0.1s;color:white;background:#8b70d0;}
-.theme-dot[data-label="Espresso"]::after{color:#e8c4a0;background:#1a1210;border:1px solid rgba(212,165,116,0.2);}
+.theme-dot[data-label="Noir"]::after{color:#c4aff0;background:#0a0a0a;border:1px solid rgba(196,175,240,0.2);}
 .theme-dot[data-label="Deep Forest"]::after{color:#c5dfa8;background:#1a3d2e;}
 .theme-dot[data-label="Golden Hour"]::after{color:#4a2c10;background:#f5d0a0;}
 .theme-dot[data-label="Ocean Breeze"]::after{color:white;background:#0d6fa8;}
@@ -443,7 +444,7 @@ h2.display em{font-style:italic;color:var(--ink-60);}
   <div id="theme-bar" style="display:flex;align-items:center;gap:8px;">
     <span style="font-size:12px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--on-green-muted);margin-right:6px;">Pick your theme!</span>
     <button onclick="setTheme('sahand')" class="theme-dot" style="background:#c4aff0;" data-label="Purple Rain" aria-label="Purple Rain theme"></button>
-    <button onclick="setTheme('espresso')" class="theme-dot" style="background:#3d2b1f;" data-label="Espresso" aria-label="Espresso theme"></button>
+    <button onclick="setTheme('noir')" class="theme-dot" style="background:#0a0a0a;" data-label="Noir" aria-label="Noir theme"></button>
     <button onclick="setTheme('forest')" class="theme-dot" style="background:#1a3d2e;" data-label="Deep Forest" aria-label="Deep Forest theme"></button>
     <button onclick="setTheme('golden')" class="theme-dot" style="background:#e8a040;" data-label="Golden Hour" aria-label="Golden Hour theme"></button>
     <button onclick="setTheme('ocean')" class="theme-dot" style="background:#38b2e8;" data-label="Ocean Breeze" aria-label="Ocean Breeze theme"></button>
@@ -892,7 +893,7 @@ document.addEventListener('mousemove', e => {
 
 const themes = {
   sahand:   { '--cream':'#f5f0e2', '--cream-2':'#ede8d8', '--ink':'#1a1a14', '--ink-60':'rgba(26,26,20,0.6)', '--ink-35':'rgba(26,26,20,0.35)', '--ink-15':'rgba(26,26,20,0.12)', '--green':'#1a3d2e', '--green-2':'#224d3a', '--lavender':'#c4aff0', '--lavender-bg':'#d8ccf8', '--lavender-dark':'#8b70d0', '--amber':'#e8a040', '--rule':'rgba(26,26,20,0.1)', '--on-green':'#f5f0e2', '--on-green-muted':'rgba(245,240,226,0.55)', '--on-green-faint':'rgba(245,240,226,0.3)', '--on-dark':'#f5f0e2', '--on-dark-muted':'rgba(245,240,226,0.55)', '--on-dark-faint':'rgba(245,240,226,0.25)' },
-  espresso: { '--cream':'#1a1210', '--cream-2':'#2a1f1a', '--ink':'#f0e6d8', '--ink-60':'rgba(240,230,216,0.6)', '--ink-35':'rgba(240,230,216,0.35)', '--ink-15':'rgba(240,230,216,0.1)', '--green':'#3d2b1f', '--green-2':'#4a3628', '--lavender':'#d4a574', '--lavender-bg':'#5c3d2a', '--lavender-dark':'#e8c4a0', '--amber':'#d4a574', '--rule':'rgba(240,230,216,0.1)', '--on-green':'#f0e6d8', '--on-green-muted':'rgba(240,230,216,0.6)', '--on-green-faint':'rgba(240,230,216,0.3)', '--on-dark':'#f0e6d8', '--on-dark-muted':'rgba(240,230,216,0.55)', '--on-dark-faint':'rgba(240,230,216,0.25)' },
+  noir:     { '--cream':'#0a0a0a', '--cream-2':'#141414', '--ink':'#1a1a1a', '--ink-60':'rgba(255,255,255,0.6)', '--ink-35':'rgba(255,255,255,0.35)', '--ink-15':'rgba(255,255,255,0.08)', '--green':'#111111', '--green-2':'#1a1a1a', '--lavender':'#c4aff0', '--lavender-bg':'#2a2440', '--lavender-dark':'#c4aff0', '--amber':'#e8a040', '--rule':'rgba(255,255,255,0.08)', '--on-green':'#ffffff', '--on-green-muted':'rgba(255,255,255,0.6)', '--on-green-faint':'rgba(255,255,255,0.2)', '--on-dark':'#ffffff', '--on-dark-muted':'rgba(255,255,255,0.6)', '--on-dark-faint':'rgba(255,255,255,0.25)' },
   forest:   { '--cream':'#f0f7f0', '--cream-2':'#ddeedd', '--ink':'#0d3b22', '--ink-60':'rgba(13,59,34,0.6)', '--ink-35':'rgba(13,59,34,0.35)', '--ink-15':'rgba(13,59,34,0.1)', '--green':'#1f6b40', '--green-2':'#2a8a52', '--lavender':'#7cb96a', '--lavender-bg':'#c5dfa8', '--lavender-dark':'#3d7a2e', '--amber':'#e8a040', '--rule':'rgba(13,59,34,0.1)', '--on-green':'#f0f7f0', '--on-green-muted':'rgba(240,247,240,0.6)', '--on-green-faint':'rgba(240,247,240,0.3)', '--on-dark':'#f0f7f0', '--on-dark-muted':'rgba(240,247,240,0.55)', '--on-dark-faint':'rgba(240,247,240,0.25)' },
   golden:   { '--cream':'#fef8f0', '--cream-2':'#f8edd8', '--ink':'#4a2c10', '--ink-60':'rgba(74,44,16,0.6)', '--ink-35':'rgba(74,44,16,0.35)', '--ink-15':'rgba(74,44,16,0.1)', '--green':'#6b3a1a', '--green-2':'#7d4824', '--lavender':'#e8a050', '--lavender-bg':'#f5d0a0', '--lavender-dark':'#c07830', '--amber':'#e8a050', '--rule':'rgba(74,44,16,0.1)', '--on-green':'#fef8f0', '--on-green-muted':'rgba(254,248,240,0.65)', '--on-green-faint':'rgba(254,248,240,0.3)', '--on-dark':'#fef8f0', '--on-dark-muted':'rgba(254,248,240,0.55)', '--on-dark-faint':'rgba(254,248,240,0.25)' },
   ocean:    { '--cream':'#e0f4ff', '--cream-2':'#c0e8f8', '--ink':'#03254c', '--ink-60':'rgba(3,37,76,0.6)', '--ink-35':'rgba(3,37,76,0.35)', '--ink-15':'rgba(3,37,76,0.1)', '--green':'#0d6fa8', '--green-2':'#1a82bb', '--lavender':'#38b2e8', '--lavender-bg':'#96d5f5', '--lavender-dark':'#0d6fa8', '--amber':'#f59e0b', '--rule':'rgba(3,37,76,0.1)', '--on-green':'#e0f4ff', '--on-green-muted':'rgba(224,244,255,0.65)', '--on-green-faint':'rgba(224,244,255,0.3)', '--on-dark':'#e0f4ff', '--on-dark-muted':'rgba(224,244,255,0.55)', '--on-dark-faint':'rgba(224,244,255,0.25)' },
