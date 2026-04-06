@@ -45,7 +45,7 @@ html{scroll-behavior:smooth;background:var(--cream);transition:background 0.4s e
 body{
   font-family:'DM Sans',system-ui,sans-serif;
   background:var(--cream);
-  color:var(--ink);
+  color:var(--text, var(--ink));
   line-height:1.6;
   overflow-x:hidden;
   transition:background 0.4s ease, color 0.4s ease;
@@ -111,7 +111,7 @@ nav{
 .btn-pair{display:flex;justify-content:center;align-items:center;gap:12px;flex-wrap:wrap;}
 .btn-filled{
   display:inline-flex;align-items:center;gap:8px;
-  background:var(--lavender-bg);color:var(--ink);
+  background:var(--lavender-bg);color:var(--text, var(--ink));
   font-size:15px;font-weight:600;font-family:'DM Sans',sans-serif;
   padding:14px 32px;border-radius:var(--radius-btn);
   border:1.5px solid var(--on-green-faint);
@@ -157,7 +157,7 @@ h2.display{
   font-family:'DM Serif Display',serif;
   font-size:clamp(30px,5vw,50px);
   line-height:1.1;letter-spacing:-0.02em;
-  color:var(--ink);margin-bottom:10px;
+  color:var(--text, var(--ink));margin-bottom:10px;
 }
 h2.display em{font-style:italic;color:var(--ink-60);}
 .section-sub{font-size:16px;color:var(--ink-60);margin-bottom:40px;font-weight:400;}
@@ -222,7 +222,7 @@ h2.display em{font-style:italic;color:var(--ink-60);}
   transition:all 0.25s cubic-bezier(0.16,1,0.3,1);
 }
 .proj-cta:hover{background:var(--on-dark);color:var(--cream);border-color:transparent;transform:translateY(-2px);box-shadow:0 4px 20px rgba(0,0,0,0.08);}
-.proj-cta.lavender{background:var(--lavender-bg);color:var(--ink);border-color:transparent;}
+.proj-cta.lavender{background:var(--lavender-bg);color:var(--text, var(--ink));border-color:transparent;}
 .proj-cta.lavender:hover{background:var(--on-dark);color:var(--cream);transform:translateY(-2px);box-shadow:0 4px 20px rgba(0,0,0,0.08);}
 
 /* Right panel inside project card */
@@ -246,7 +246,7 @@ h2.display em{font-style:italic;color:var(--ink-60);}
 }
 .mini-card:hover{background:var(--cream-2);box-shadow:0 6px 28px rgba(0,0,0,0.15);transform:translateY(-3px);border-color:var(--lavender);}
 .mini-num{font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-35);margin-bottom:8px;}
-.mini-name{font-family:'DM Serif Display',serif;font-size:22px;color:var(--ink);letter-spacing:-0.01em;margin-bottom:6px;}
+.mini-name{font-family:'DM Serif Display',serif;font-size:22px;color:var(--text, var(--ink));letter-spacing:-0.01em;margin-bottom:6px;}
 .mini-tag{font-size:11px;color:var(--ink-35);margin-bottom:10px;font-weight:400;}
 .mini-desc{font-size:13px;color:var(--ink-60);line-height:1.55;}
 .mini-arrow{margin-top:16px;font-size:13px;color:var(--ink-35);transition:color 0.25s, transform 0.25s cubic-bezier(0.16,1,0.3,1);}
@@ -294,7 +294,7 @@ h2.display em{font-style:italic;color:var(--ink-60);}
 }
 .btn-dark-filled{
   display:inline-flex;align-items:center;gap:8px;
-  background:var(--lavender-bg);color:var(--ink);
+  background:var(--lavender-bg);color:var(--text, var(--ink));
   font-size:14px;font-weight:600;font-family:'DM Sans',sans-serif;
   padding:13px 28px;border-radius:var(--radius-btn);
   border:1.5px solid transparent;
@@ -893,7 +893,7 @@ document.addEventListener('mousemove', e => {
 
 const themes = {
   sahand:   { '--cream':'#f5f0e2', '--cream-2':'#ede8d8', '--ink':'#1a1a14', '--ink-60':'rgba(26,26,20,0.6)', '--ink-35':'rgba(26,26,20,0.35)', '--ink-15':'rgba(26,26,20,0.12)', '--green':'#1a3d2e', '--green-2':'#224d3a', '--lavender':'#c4aff0', '--lavender-bg':'#d8ccf8', '--lavender-dark':'#8b70d0', '--amber':'#e8a040', '--rule':'rgba(26,26,20,0.1)', '--on-green':'#f5f0e2', '--on-green-muted':'rgba(245,240,226,0.55)', '--on-green-faint':'rgba(245,240,226,0.3)', '--on-dark':'#f5f0e2', '--on-dark-muted':'rgba(245,240,226,0.55)', '--on-dark-faint':'rgba(245,240,226,0.25)' },
-  noir:     { '--cream':'#0a0a0a', '--cream-2':'#141414', '--ink':'#e8e8e8', '--ink-60':'rgba(232,232,232,0.6)', '--ink-35':'rgba(232,232,232,0.35)', '--ink-15':'rgba(232,232,232,0.08)', '--green':'#111111', '--green-2':'#1a1a1a', '--lavender':'#c4aff0', '--lavender-bg':'#2a2440', '--lavender-dark':'#c4aff0', '--amber':'#e8a040', '--rule':'rgba(255,255,255,0.1)', '--on-green':'#ffffff', '--on-green-muted':'rgba(255,255,255,0.6)', '--on-green-faint':'rgba(255,255,255,0.2)', '--on-dark':'#ffffff', '--on-dark-muted':'rgba(255,255,255,0.6)', '--on-dark-faint':'rgba(255,255,255,0.25)' },
+  noir:     { '--cream':'#0a0a0a', '--cream-2':'#141414', '--ink':'#181818', '--text':'#e8e8e8', '--ink-60':'rgba(255,255,255,0.6)', '--ink-35':'rgba(255,255,255,0.35)', '--ink-15':'rgba(255,255,255,0.08)', '--green':'#111111', '--green-2':'#1a1a1a', '--lavender':'#c4aff0', '--lavender-bg':'#2a2440', '--lavender-dark':'#c4aff0', '--amber':'#e8a040', '--rule':'rgba(255,255,255,0.1)', '--on-green':'#ffffff', '--on-green-muted':'rgba(255,255,255,0.6)', '--on-green-faint':'rgba(255,255,255,0.2)', '--on-dark':'#ffffff', '--on-dark-muted':'rgba(255,255,255,0.6)', '--on-dark-faint':'rgba(255,255,255,0.25)' },
   forest:   { '--cream':'#f0f7f0', '--cream-2':'#ddeedd', '--ink':'#0d3b22', '--ink-60':'rgba(13,59,34,0.6)', '--ink-35':'rgba(13,59,34,0.35)', '--ink-15':'rgba(13,59,34,0.1)', '--green':'#1f6b40', '--green-2':'#2a8a52', '--lavender':'#7cb96a', '--lavender-bg':'#c5dfa8', '--lavender-dark':'#3d7a2e', '--amber':'#e8a040', '--rule':'rgba(13,59,34,0.1)', '--on-green':'#f0f7f0', '--on-green-muted':'rgba(240,247,240,0.6)', '--on-green-faint':'rgba(240,247,240,0.3)', '--on-dark':'#f0f7f0', '--on-dark-muted':'rgba(240,247,240,0.55)', '--on-dark-faint':'rgba(240,247,240,0.25)' },
   golden:   { '--cream':'#fef8f0', '--cream-2':'#f8edd8', '--ink':'#4a2c10', '--ink-60':'rgba(74,44,16,0.6)', '--ink-35':'rgba(74,44,16,0.35)', '--ink-15':'rgba(74,44,16,0.1)', '--green':'#6b3a1a', '--green-2':'#7d4824', '--lavender':'#e8a050', '--lavender-bg':'#f5d0a0', '--lavender-dark':'#c07830', '--amber':'#e8a050', '--rule':'rgba(74,44,16,0.1)', '--on-green':'#fef8f0', '--on-green-muted':'rgba(254,248,240,0.65)', '--on-green-faint':'rgba(254,248,240,0.3)', '--on-dark':'#fef8f0', '--on-dark-muted':'rgba(254,248,240,0.55)', '--on-dark-faint':'rgba(254,248,240,0.25)' },
   ocean:    { '--cream':'#e0f4ff', '--cream-2':'#c0e8f8', '--ink':'#03254c', '--ink-60':'rgba(3,37,76,0.6)', '--ink-35':'rgba(3,37,76,0.35)', '--ink-15':'rgba(3,37,76,0.1)', '--green':'#0d6fa8', '--green-2':'#1a82bb', '--lavender':'#38b2e8', '--lavender-bg':'#96d5f5', '--lavender-dark':'#0d6fa8', '--amber':'#f59e0b', '--rule':'rgba(3,37,76,0.1)', '--on-green':'#e0f4ff', '--on-green-muted':'rgba(224,244,255,0.65)', '--on-green-faint':'rgba(224,244,255,0.3)', '--on-dark':'#e0f4ff', '--on-dark-muted':'rgba(224,244,255,0.55)', '--on-dark-faint':'rgba(224,244,255,0.25)' },
@@ -903,6 +903,7 @@ const themes = {
 function setTheme(name) {
   const vars = themes[name];
   const root = document.documentElement.style;
+  if (!vars['--text']) root.removeProperty('--text');
   Object.entries(vars).forEach(([k,v]) => root.setProperty(k, v));
   document.querySelectorAll('.theme-dot').forEach((d,i) => d.classList.remove('active'));
   const idx = Object.keys(themes).indexOf(name);
