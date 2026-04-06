@@ -396,7 +396,7 @@ h2.display em{font-style:italic;color:var(--ink-60);}
 .theme-dot.active{border-color:var(--cream);transform:scale(1.15);}
 .theme-dot.active:hover{transform:scale(1.25);}
 .theme-dot::after{content:attr(data-label);position:absolute;top:36px;left:50%;transform:translateX(-50%);font-size:10px;font-weight:600;letter-spacing:0.04em;padding:4px 10px;border-radius:8px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity 0.1s;color:white;background:#8b70d0;}
-.theme-dot[data-label="Midnight"]::after{color:#a5b4fc;background:#0d0d1a;border:1px solid rgba(165,180,252,0.2);}
+.theme-dot[data-label="Espresso"]::after{color:#e8c4a0;background:#1a1210;border:1px solid rgba(212,165,116,0.2);}
 .theme-dot[data-label="Deep Forest"]::after{color:#c5dfa8;background:#1a3d2e;}
 .theme-dot[data-label="Golden Hour"]::after{color:#7a4500;background:#ffd88a;}
 .theme-dot[data-label="Ocean Breeze"]::after{color:white;background:#0d6fa8;}
@@ -424,7 +424,7 @@ h2.display em{font-style:italic;color:var(--ink-60);}
   <div id="theme-bar" style="display:flex;align-items:center;gap:8px;">
     <span style="font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:rgba(245,240,226,0.5);margin-right:4px;">Pick your theme!</span>
     <button onclick="setTheme('sahand')" class="theme-dot" style="background:#c4aff0;" data-label="Purple Rain"></button>
-    <button onclick="setTheme('midnight')" class="theme-dot" style="background:#1a1a14;" data-label="Midnight"></button>
+    <button onclick="setTheme('espresso')" class="theme-dot" style="background:#3d2b1f;" data-label="Espresso"></button>
     <button onclick="setTheme('forest')" class="theme-dot" style="background:#1a3d2e;" data-label="Deep Forest"></button>
     <button onclick="setTheme('golden')" class="theme-dot" style="background:#e8a040;" data-label="Golden Hour"></button>
     <button onclick="setTheme('ocean')" class="theme-dot" style="background:#38b2e8;" data-label="Ocean Breeze"></button>
@@ -877,7 +877,7 @@ document.addEventListener('mousemove', e => {
 
 const themes = {
   sahand:   { '--cream':'#f5f0e2', '--cream-2':'#ede8d8', '--ink':'#1a1a14', '--ink-60':'rgba(26,26,20,0.6)', '--ink-35':'rgba(26,26,20,0.35)', '--ink-15':'rgba(26,26,20,0.12)', '--green':'#1a3d2e', '--green-2':'#224d3a', '--lavender':'#c4aff0', '--lavender-bg':'#d8ccf8', '--lavender-dark':'#8b70d0', '--amber':'#e8a040', '--rule':'rgba(26,26,20,0.1)' },
-  midnight: { '--cream':'#0d0d1a', '--cream-2':'#1a1a3e', '--ink':'#e0e0f0', '--ink-60':'rgba(224,224,240,0.6)', '--ink-35':'rgba(224,224,240,0.35)', '--ink-15':'rgba(224,224,240,0.1)', '--green':'#2d2b55', '--green-2':'#3a3870', '--lavender':'#7c73e6', '--lavender-bg':'#3730a3', '--lavender-dark':'#a5b4fc', '--amber':'#f59e0b', '--rule':'rgba(224,224,240,0.1)' },
+  espresso: { '--cream':'#1a1210', '--cream-2':'#2a1f1a', '--ink':'#f0e6d8', '--ink-60':'rgba(240,230,216,0.6)', '--ink-35':'rgba(240,230,216,0.35)', '--ink-15':'rgba(240,230,216,0.1)', '--green':'#3d2b1f', '--green-2':'#4a3628', '--lavender':'#d4a574', '--lavender-bg':'#5c3d2a', '--lavender-dark':'#e8c4a0', '--amber':'#d4a574', '--rule':'rgba(240,230,216,0.1)' },
   forest:   { '--cream':'#f0f7f0', '--cream-2':'#ddeedd', '--ink':'#0d3b22', '--ink-60':'rgba(13,59,34,0.6)', '--ink-35':'rgba(13,59,34,0.35)', '--ink-15':'rgba(13,59,34,0.1)', '--green':'#1f6b40', '--green-2':'#2a8a52', '--lavender':'#7cb96a', '--lavender-bg':'#c5dfa8', '--lavender-dark':'#3d7a2e', '--amber':'#e8a040', '--rule':'rgba(13,59,34,0.1)' },
   golden:   { '--cream':'#fffbf0', '--cream-2':'#fff0cc', '--ink':'#7a4500', '--ink-60':'rgba(122,69,0,0.6)', '--ink-35':'rgba(122,69,0,0.35)', '--ink-15':'rgba(122,69,0,0.1)', '--green':'#c47a1a', '--green-2':'#d4892a', '--lavender':'#f5a623', '--lavender-bg':'#ffd88a', '--lavender-dark':'#c47a1a', '--amber':'#e8a040', '--rule':'rgba(122,69,0,0.1)' },
   ocean:    { '--cream':'#e0f4ff', '--cream-2':'#c0e8f8', '--ink':'#03254c', '--ink-60':'rgba(3,37,76,0.6)', '--ink-35':'rgba(3,37,76,0.35)', '--ink-15':'rgba(3,37,76,0.1)', '--green':'#0d6fa8', '--green-2':'#1a82bb', '--lavender':'#38b2e8', '--lavender-bg':'#96d5f5', '--lavender-dark':'#0d6fa8', '--amber':'#f59e0b', '--rule':'rgba(3,37,76,0.1)' },
