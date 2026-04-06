@@ -53,6 +53,8 @@ body{
   cursor:none;
 }
 a{color:inherit;text-decoration:none;}
+:focus-visible{outline:2px solid var(--lavender);outline-offset:3px;border-radius:4px;}
+.theme-dot:focus-visible{outline-offset:4px;border-radius:50%;}
 nav,.hero,.stats-card,.proj-card,.about-dark,.mini-card,.cta-dark,footer,.progress-bar{transition:background 0.4s ease, color 0.4s ease, border-color 0.4s ease;}
 
 /* ── LAYOUT ── */
@@ -420,19 +422,19 @@ h2.display em{font-style:italic;color:var(--ink-60);}
 <body>
 <div class="cursor" id="cur"></div>
 <div class="cursor-ring" id="ring"></div>
-<div class="progress-bar" id="progress"></div>
+<div class="progress-bar" id="progress" role="progressbar" aria-label="Page scroll progress"></div>
 
 <!-- NAV -->
 <nav>
   <a href="#" class="nav-logo" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">Sahand<em>.</em></a>
   <div id="theme-bar" style="display:flex;align-items:center;gap:8px;">
     <span style="font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:rgba(245,240,226,0.5);margin-right:4px;">Pick your theme!</span>
-    <button onclick="setTheme('sahand')" class="theme-dot" style="background:#c4aff0;" data-label="Purple Rain"></button>
-    <button onclick="setTheme('espresso')" class="theme-dot" style="background:#3d2b1f;" data-label="Espresso"></button>
-    <button onclick="setTheme('forest')" class="theme-dot" style="background:#1a3d2e;" data-label="Deep Forest"></button>
-    <button onclick="setTheme('golden')" class="theme-dot" style="background:#e8a040;" data-label="Golden Hour"></button>
-    <button onclick="setTheme('ocean')" class="theme-dot" style="background:#38b2e8;" data-label="Ocean Breeze"></button>
-    <button onclick="setTheme('rose')" class="theme-dot" style="background:#d4907c;" data-label="Soft Rose"></button>
+    <button onclick="setTheme('sahand')" class="theme-dot" style="background:#c4aff0;" data-label="Purple Rain" aria-label="Purple Rain theme"></button>
+    <button onclick="setTheme('espresso')" class="theme-dot" style="background:#3d2b1f;" data-label="Espresso" aria-label="Espresso theme"></button>
+    <button onclick="setTheme('forest')" class="theme-dot" style="background:#1a3d2e;" data-label="Deep Forest" aria-label="Deep Forest theme"></button>
+    <button onclick="setTheme('golden')" class="theme-dot" style="background:#e8a040;" data-label="Golden Hour" aria-label="Golden Hour theme"></button>
+    <button onclick="setTheme('ocean')" class="theme-dot" style="background:#38b2e8;" data-label="Ocean Breeze" aria-label="Ocean Breeze theme"></button>
+    <button onclick="setTheme('rose')" class="theme-dot" style="background:#d4907c;" data-label="Soft Rose" aria-label="Soft Rose theme"></button>
   </div>
   <div class="nav-links">
     <a href="#contact" class="nav-cta">Get in touch</a>
@@ -697,7 +699,7 @@ h2.display em{font-style:italic;color:var(--ink-60);}
     <div class="about-dark">
       <div class="about-dark-header">
         <h2>Hi! I'm <em>Sahand.</em></h2>
-        <p>Right now I'm really into AI tools and learning how they can help my design craft (I actually built this page with Claude Code). <br><br>Outside of work I'm a passionate home-barista (<a href="https://instagram.com/thebrownbarista" target="_blank" style="color:var(--lavender);text-decoration:none;font-weight:500;transition:color 0.15s;" onmouseenter="this.style.color='white'" onmouseleave="this.style.color='var(--lavender)'">@thebrownbarista</a>), motorcycle enthusiast ("haji-moto"), and dog dad (<a href="https://www.instagram.com/ziggy.moto" target="_blank" style="color:var(--lavender);text-decoration:none;font-weight:500;transition:color 0.15s;" onmouseenter="this.style.color='white'" onmouseleave="this.style.color='var(--lavender)'">hey Ziggy!</a>).</p>
+        <p>Right now I'm really into AI tools and learning how they can help my design craft (I actually built this page with Claude Code). <br><br>Outside of work I'm a passionate home-barista (<a href="https://instagram.com/thebrownbarista" target="_blank" rel="noopener noreferrer" style="color:var(--lavender);text-decoration:none;font-weight:500;transition:color 0.15s;" onmouseenter="this.style.color='white'" onmouseleave="this.style.color='var(--lavender)'">@thebrownbarista</a>), motorcycle enthusiast ("haji-moto"), and dog dad (<a href="https://www.instagram.com/ziggy.moto" target="_blank" rel="noopener noreferrer" style="color:var(--lavender);text-decoration:none;font-weight:500;transition:color 0.15s;" onmouseenter="this.style.color='white'" onmouseleave="this.style.color='var(--lavender)'">hey Ziggy!</a>).</p>
       </div>
       <div id="collage-wrap" style="margin:0 -40px 0;overflow:hidden;border-top:1px solid rgba(255,255,255,0.06);">
         <img src="images/three-phones.png" alt="Mobile design work across Flo Recruit, Evernote, and Golf Ranch" style="width:100%;display:block;object-fit:cover;object-position:center top;max-height:420px;">
@@ -758,7 +760,7 @@ h2.display em{font-style:italic;color:var(--ink-60);}
       <h2 style="max-width:420px;margin:0 auto 16px;"><em>Ready to build</em> something great?</h2>
       <div class="btn-pair" style="margin-top:32px;display:flex;gap:12px;flex-wrap:wrap;justify-content:center;">
         <!--email_off--><a href="mailto:sahandhajizadeh@gmail.com" class="btn-dark-filled">Email me →</a><!--/email_off-->
-        <a href="resume.pdf" target="_blank" class="btn-dark-outline">Download resume</a>
+        <a href="resume.pdf" target="_blank" rel="noopener noreferrer" class="btn-dark-outline">Download resume</a>
       </div>
     </div>
     <div class="cta-footer">
@@ -766,9 +768,9 @@ h2.display em{font-style:italic;color:var(--ink-60);}
       <div class="foot-links">
         <a href="#work">Work</a>
         <a href="#about">About</a>
-        <a href="https://linkedin.com/in/sahandh" target="_blank">LinkedIn</a>
+        <a href="https://linkedin.com/in/sahandh" target="_blank" rel="noopener noreferrer">LinkedIn</a>
         <!--email_off--><a href="mailto:sahandhajizadeh@gmail.com">Email</a><!--/email_off-->
-        <a href="resume.pdf" target="_blank">Resume</a>
+        <a href="resume.pdf" target="_blank" rel="noopener noreferrer">Resume</a>
       </div>
       <div class="foot-note">© 2026 Sahand Hajizadeh</div>
     </div>

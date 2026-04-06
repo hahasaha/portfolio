@@ -298,14 +298,6 @@
       margin-top: 12px;
     }
 
-    .image-caption {
-      font-size: 0.75rem;
-      color: var(--ink-muted);
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      text-align: center;
-      margin-top: 16px;
-    }
 
     /* IMAGE GRID */
     .image-grid {
@@ -414,6 +406,13 @@
     }
     .btn-primary:hover { transform: translateY(-2px); background: var(--lavender-light); }
 
+    footer{background:var(--green);border-radius:24px 24px 0 0;padding:48px 32px;text-align:center;margin-top:0;}
+    .foot-logo{font-family:'DM Serif Display',serif;font-size:18px;color:rgba(245,240,226,0.3);margin-bottom:16px;}
+    .foot-logo em{color:rgba(196,175,240,0.4);font-style:italic;}
+    .foot-links{display:flex;justify-content:center;gap:24px;}
+    .foot-links a{font-size:13px;color:rgba(245,240,226,0.45);transition:color 0.15s;font-weight:500;}
+    .foot-links a:hover{color:rgba(245,240,226,0.8);}
+
     /* SCROLL REVEAL */
     .reveal {
       opacity: 0;
@@ -449,7 +448,7 @@
 
   <!-- NAV -->
   <nav>
-    <a href="index.html" class="nav-logo">Sahand.</a>
+    <a href="index.html" class="nav-logo">Sahand<em>.</em></a>
     <div class="nav-links">
       <a href="index.html#work">Work</a>
       <a href="about.html">About</a>
@@ -540,8 +539,8 @@
         <p>Every screen was designed at 320px — the smallest viewport in use. When you design small first, everything scales up cleanly. Most teams design big and try to squeeze it down. That never works.</p>
       </div>
       <div class="mobile-pair" style="margin-top:0;">
-        <img src="images/golf-ranch-home-mobile.png" alt="Golf Ranch homepage — mobile" />
-        <img src="images/golf-ranch-location-mobile.png" alt="Golf Ranch location page — mobile" />
+        <img src="images/golf-ranch-home-mobile.png" alt="Golf Ranch homepage — mobile" loading="lazy" />
+        <img src="images/golf-ranch-location-mobile.png" alt="Golf Ranch location page — mobile" loading="lazy" />
       </div>
     </div>
   </div>
@@ -566,7 +565,7 @@
         <p>The result: over 10,000 new leads per month, consistently.</p>
       </div>
       <div class="full-bleed">
-        <img src="images/golf-ranch-free-bucket.png" alt="Free bucket lead capture" />
+        <img src="images/golf-ranch-free-bucket.png" alt="Free bucket lead capture" loading="lazy" />
       </div>
     </div>
   </div>
@@ -584,7 +583,7 @@
         <p>Membership signups quadrupled.</p>
       </div>
       <div class="full-bleed">
-        <img src="images/golf-ranch-membership.png" alt="Ranch Pass membership page" />
+        <img src="images/golf-ranch-membership.png" alt="Ranch Pass membership page" loading="lazy" />
       </div>
     </div>
   </div>
@@ -600,7 +599,7 @@
         <p>The Ranch Pass value page breaks down exactly what members get — discounts, free club rentals, weekly challenges, and more. Designed to convert fence-sitters.</p>
       </div>
       <div class="full-bleed">
-        <img src="images/golf-ranch-membership-value.png" alt="Ranch Pass value breakdown" />
+        <img src="images/golf-ranch-membership-value.png" alt="Ranch Pass value breakdown" loading="lazy" />
       </div>
     </div>
   </div>
@@ -613,7 +612,7 @@
     <h2>Offers built to <em>convert.</em></h2>
     <p>Each location launch needed a dedicated offer page — urgency, clear value, and a frictionless mobile signup. I designed and built each one in Webflow.</p>
     <div class="full-bleed" style="margin-top: 48px;">
-      <img src="images/golf-ranch-offers.png" alt="Golf Ranch offer pages" />
+      <img src="images/golf-ranch-offers.png" alt="Golf Ranch offer pages" loading="lazy" />
     </div>
   </div>
 
@@ -628,7 +627,7 @@
         <p>Reviews and ratings were everywhere on the site — not tucked away at the bottom. People trust people.</p>
       </div>
       <div class="full-bleed">
-        <img src="images/golf-ranch-social-proof.png" alt="Golf Ranch social proof and reviews" />
+        <img src="images/golf-ranch-social-proof.png" alt="Golf Ranch social proof and reviews" loading="lazy" />
       </div>
     </div>
   </div>
@@ -642,7 +641,7 @@
     <p>Each Golf Ranch location needed its own SEO-optimized page — structured for local search, consistent in design, and fast to publish as new locations open. I designed a scalable location page template in Webflow that the team can replicate in minutes.</p>
     <p>The SEO push launched in March 2026. <strong>Organic traffic is already up 25%</strong> in the first weeks post-launch.</p>
     <div class="full-bleed" style="margin-top: 48px;">
-      <img src="images/golf-ranch-location.png" alt="Golf Ranch location page" />
+      <img src="images/golf-ranch-location.png" alt="Golf Ranch location page" loading="lazy" />
     </div>
   </div>
 
@@ -661,6 +660,17 @@
     <h2>Evernote — 8M+ <em>users.</em></h2>
     <a href="evernote.html" class="btn-primary">View case study →</a>
   </div>
+
+  <footer>
+    <div class="foot-logo">Sahand<em>.</em></div>
+    <div class="foot-links">
+      <a href="index.html">Work</a>
+      <a href="about.html">About</a>
+      <a href="https://linkedin.com/in/sahandh" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      <a href="mailto:sahandhajizadeh@gmail.com">Email</a>
+      <a href="resume.pdf" target="_blank" rel="noopener noreferrer">Resume</a>
+    </div>
+  </footer>
 
   <script>
     // Cursor
