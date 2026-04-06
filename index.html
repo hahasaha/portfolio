@@ -92,8 +92,8 @@ nav{
 .hero-pre{
   display:inline-block;font-size:12px;font-weight:600;
   letter-spacing:0.08em;text-transform:uppercase;
-  color:var(--on-green-muted);margin-bottom:24px;
-  border:1px solid var(--on-green-faint);padding:6px 14px;border-radius:var(--radius-btn);
+  color:var(--on-green);opacity:0.7;margin-bottom:24px;
+  border:1px solid var(--on-green-muted);padding:6px 14px;border-radius:var(--radius-btn);
 }
 .hero h1{
   font-family:'DM Serif Display',serif;
@@ -389,7 +389,6 @@ h2.display em{font-style:italic;color:var(--ink-60);}
   .about-cta-row .btn-dark-filled, .about-cta-row .btn-dark-outline{width:100%;justify-content:center;}
   nav{padding:14px 20px;flex-wrap:wrap;gap:8px;}
   #theme-bar{order:3;width:100%;justify-content:center;padding-top:8px;border-top:1px solid var(--on-green-faint);}
-  #theme-bar span{display:none;}
   .hero{padding:80px 20px 40px;}
   .hero-pre{font-size:10px;padding:5px 10px;}
   .btn-pair{flex-direction:column;align-items:stretch;}
@@ -438,7 +437,7 @@ h2.display em{font-style:italic;color:var(--ink-60);}
 <nav>
   <a href="#" class="nav-logo" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">Sahand<em>.</em></a>
   <div id="theme-bar" style="display:flex;align-items:center;gap:8px;">
-    <span style="font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:rgba(245,240,226,0.5);margin-right:4px;">Pick your theme!</span>
+    <span style="font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--on-green-muted);margin-right:4px;">Pick your theme!</span>
     <button onclick="setTheme('sahand')" class="theme-dot" style="background:#c4aff0;" data-label="Purple Rain" aria-label="Purple Rain theme"></button>
     <button onclick="setTheme('espresso')" class="theme-dot" style="background:#3d2b1f;" data-label="Espresso" aria-label="Espresso theme"></button>
     <button onclick="setTheme('forest')" class="theme-dot" style="background:#1a3d2e;" data-label="Deep Forest" aria-label="Deep Forest theme"></button>
