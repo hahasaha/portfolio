@@ -80,7 +80,7 @@ nav{
 .nav-cta:hover{background:var(--lavender-bg)!important;}
 
 /* ── HERO ── */
-.hero{padding:130px 0 0;text-align:center;background:var(--cream);}
+.hero{padding:100px 0 48px;text-align:center;background:var(--cream);}
 .hero-pre{
   display:inline-block;font-size:12px;font-weight:600;
   letter-spacing:0.08em;text-transform:uppercase;
@@ -419,22 +419,20 @@ h2.display em{font-style:italic;color:var(--ink-60);}
 <!-- NAV -->
 <nav>
   <a href="#" class="nav-logo" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">Sahand<em>.</em></a>
+  <div id="theme-bar" style="display:flex;align-items:center;gap:8px;">
+    <button onclick="setTheme('sahand')" class="theme-dot" style="background:#c4aff0;" data-label="Purple Rain"></button>
+    <button onclick="setTheme('midnight')" class="theme-dot" style="background:#1a1a14;" data-label="Midnight"></button>
+    <button onclick="setTheme('forest')" class="theme-dot" style="background:#1a3d2e;" data-label="Deep Forest"></button>
+    <button onclick="setTheme('golden')" class="theme-dot" style="background:#e8a040;" data-label="Golden Hour"></button>
+    <button onclick="setTheme('ocean')" class="theme-dot" style="background:#38b2e8;" data-label="Ocean Breeze"></button>
+    <button onclick="setTheme('candy')" class="theme-dot" style="background:#ff6ba8;" data-label="Candy Pop"></button>
+  </div>
   <div class="nav-links">
     <a href="#work">Work</a>
     <a href="#about">About</a>
     <a href="#contact" class="nav-cta">Get in touch</a>
   </div>
 </nav>
-
-<div id="theme-bar" style="background:var(--green);border-bottom:1px solid rgba(245,240,226,0.1);padding:0 24px;height:36px;display:flex;align-items:center;justify-content:center;gap:8px;position:fixed;top:60px;left:0;right:0;z-index:99;">
-  <span style="font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:rgba(245,240,226,0.5);margin-right:4px;">Pick your theme!</span>
-  <button onclick="setTheme('sahand')" class="theme-dot" style="background:#c4aff0;" data-label="Purple Rain"></button>
-  <button onclick="setTheme('midnight')" class="theme-dot" style="background:#1a1a14;" data-label="Midnight"></button>
-  <button onclick="setTheme('forest')" class="theme-dot" style="background:#1a3d2e;" data-label="Deep Forest"></button>
-  <button onclick="setTheme('golden')" class="theme-dot" style="background:#e8a040;" data-label="Golden Hour"></button>
-  <button onclick="setTheme('ocean')" class="theme-dot" style="background:#38b2e8;" data-label="Ocean Breeze"></button>
-  <button onclick="setTheme('candy')" class="theme-dot" style="background:#ff6ba8;" data-label="Candy Pop"></button>
-</div>
 
 <!-- HERO -->
 <section class="hero">
