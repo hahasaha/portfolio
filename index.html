@@ -57,30 +57,30 @@ nav{
   position:fixed;top:0;left:0;right:0;z-index:100;
   display:flex;justify-content:space-between;align-items:center;
   padding:20px 40px;
-  background:var(--cream);
+  background:var(--green);
   transition:background 0.3s;
 }
 .nav-logo{
   font-family:'DM Serif Display',serif;
-  font-size:1.4rem;color:var(--ink);text-decoration:none;
+  font-size:1.4rem;color:#f5f0e2;text-decoration:none;
 }
-.nav-logo em{color:var(--green);font-style:italic;}
+.nav-logo em{color:var(--lavender);font-style:italic;}
 .nav-links{display:flex;gap:32px;align-items:center;}
 .nav-links a{
-  color:var(--ink-60);text-decoration:none;
+  color:rgba(245,240,226,0.7);text-decoration:none;
   font-size:0.9rem;font-weight:500;letter-spacing:0.02em;
   transition:color 0.2s;
 }
-.nav-links a:hover{color:var(--ink);}
+.nav-links a:hover{color:#f5f0e2;}
 .nav-cta{
-  background:var(--lavender-bg)!important;color:var(--ink)!important;
+  background:#f5f0e2!important;color:var(--green)!important;
   padding:8px 20px!important;border-radius:100px!important;font-weight:600!important;
   border:none!important;
 }
-.nav-cta:hover{background:var(--lavender)!important;}
+.nav-cta:hover{background:var(--lavender-bg)!important;}
 
 /* ── HERO ── */
-.hero{padding:100px 0 0;text-align:center;background:var(--cream);}
+.hero{padding:130px 0 0;text-align:center;background:var(--cream);}
 .hero-pre{
   display:inline-block;font-size:12px;font-weight:600;
   letter-spacing:0.08em;text-transform:uppercase;
@@ -391,7 +391,7 @@ h2.display em{font-style:italic;color:var(--ink-60);}
 
 .theme-dot{width:16px;height:16px;border-radius:50%;border:2px solid transparent;cursor:pointer;transition:transform 0.15s,border-color 0.15s;padding:0;position:relative;}
 .theme-dot:hover{transform:scale(1.25);}
-.theme-dot.active{border-color:var(--ink);transform:scale(1.15);}
+.theme-dot.active{border-color:#f5f0e2;transform:scale(1.15);}
 .theme-dot.active:hover{transform:scale(1.25);}
 .theme-dot::after{content:attr(data-label);position:absolute;top:36px;left:50%;transform:translateX(-50%);font-size:10px;font-weight:600;letter-spacing:0.04em;padding:4px 10px;border-radius:8px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity 0.1s;color:white;background:#8b70d0;}
 .theme-dot[data-label="Midnight"]::after{color:#a5b4fc;background:#0d0d1a;border:1px solid rgba(165,180,252,0.2);}
@@ -426,8 +426,8 @@ h2.display em{font-style:italic;color:var(--ink-60);}
   </div>
 </nav>
 
-<div id="theme-bar" style="background:var(--cream);border-bottom:1px solid var(--rule);padding:0 24px;height:36px;display:flex;align-items:center;justify-content:center;gap:8px;position:sticky;top:60px;z-index:99;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);">
-  <span style="font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-35);margin-right:4px;">Pick your theme!</span>
+<div id="theme-bar" style="background:var(--green);border-bottom:1px solid rgba(245,240,226,0.1);padding:0 24px;height:36px;display:flex;align-items:center;justify-content:center;gap:8px;position:fixed;top:60px;left:0;right:0;z-index:99;">
+  <span style="font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:rgba(245,240,226,0.5);margin-right:4px;">Pick your theme!</span>
   <button onclick="setTheme('sahand')" class="theme-dot" style="background:#c4aff0;" data-label="Purple Rain"></button>
   <button onclick="setTheme('midnight')" class="theme-dot" style="background:#1a1a14;" data-label="Midnight"></button>
   <button onclick="setTheme('forest')" class="theme-dot" style="background:#1a3d2e;" data-label="Deep Forest"></button>
