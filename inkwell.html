@@ -217,5 +217,6 @@ const progress=document.getElementById('progress');
 window.addEventListener('scroll',()=>{const pct=window.scrollY/(document.body.scrollHeight-window.innerHeight)*100;progress.style.width=pct+'%';});
 document.querySelectorAll('.gate,.callout,.next-project,footer').forEach(el=>{el.addEventListener('mouseenter',()=>{cur.classList.add('on-dark');ring.classList.add('on-dark');});el.addEventListener('mouseleave',()=>{cur.classList.remove('on-dark');ring.classList.remove('on-dark');});});
 </script>
+<script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>

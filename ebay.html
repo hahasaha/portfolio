@@ -130,5 +130,6 @@ document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.le
 document.querySelectorAll('a,button').forEach(el=>{el.addEventListener('mouseenter',()=>{ring.classList.add('big');cur.classList.add('on-dark');});el.addEventListener('mouseleave',()=>{ring.classList.remove('big');cur.classList.remove('on-dark');});});
 document.querySelectorAll('.cs-metrics,.cs-cover,.recog-card,footer').forEach(el=>{el.addEventListener('mouseenter',()=>{cur.classList.add('on-dark');ring.classList.add('on-dark');});el.addEventListener('mouseleave',()=>{cur.classList.remove('on-dark');ring.classList.remove('on-dark');});});
 </script>
+<script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>
