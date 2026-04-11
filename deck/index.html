@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sahand Hajizadeh — Portfolio Deck</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #f5f0e2;
+    --ink: #1a1a14;
+    --lavender: #c4aff0;
+    --lavender-dark: #8b70d0;
+    --green: #1a3a2a;
+    --green-mid: #224d38;
+    --green-accent: #4a9e6a;
+    --muted: #888880;
+    --slide-w: 1200px;
+    --slide-h: 675px;
+  }
+
+  html, body {
+    background: #111;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .slide {
+    display: none;
+    width: var(--slide-w);
+    height: var(--slide-h);
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  .slide.active        { display: grid; }
+  .slide-chapter.active,
+  .slide-close.active,
+  .slide-fullimg.active,
+  .slide-statement.active { display: flex; }
+  .slide-scroll.active { display: grid; }
+
+  /* ─── SHARED UTILS ─── */
+  .eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+  .pg { position: absolute; bottom: 22px; right: 28px; font-family: 'DM Mono', monospace; font-size: 10px; color: rgba(26,26,20,0.2); }
+  .pg.light { color: rgba(245,240,226,0.18); }
+
+  /* ─────────────────────────────────────
+     SLIDE TYPE: TITLE (01)
+  ───────────────────────────────────── */
+  .slide-title { background: var(--cream); grid-template-columns: 1fr 1fr; }
+  .slide-title .left {
+    padding: 72px 64px; display: flex; flex-direction: column;
+    justify-content: space-between; border-right: 1.5px solid rgba(26,26,20,0.12);
+  }
+  .slide-title .eyebrow { color: var(--muted); }
+  .slide-title h1 { font-family: 'DM Serif Display', serif; font-size: 68px; line-height: 1.0; color: var(--ink); font-weight: 400; }
+  .slide-title h1 em { font-style: italic; color: var(--lavender-dark); display: block; text-decoration: underline; text-decoration-color: var(--lavender); text-underline-offset: 6px; }
+  .slide-title .meta { display: flex; flex-direction: column; gap: 4px; }
+  .slide-title .meta span { font-size: 12px; color: var(--muted); font-family: 'DM Mono', monospace; }
+  .slide-title .right { padding: 72px 64px; display: flex; flex-direction: column; justify-content: flex-end; gap: 28px; }
+  .stat-block { display: flex; flex-direction: column; gap: 4px; padding-bottom: 24px; border-bottom: 1px solid rgba(26,26,20,0.1); }
+  .stat-block:last-child { border-bottom: none; padding-bottom: 0; }
+  .stat-block .num { font-family: 'DM Serif Display', serif; font-size: 48px; line-height: 1; color: var(--ink); font-weight: 400; }
+  .stat-block .desc { font-size: 12px; color: var(--muted); max-width: 220px; line-height: 1.5; }
+
+  /* ─────────────────────────────────────
+     SLIDE TYPE: CHAPTER OPENER
+  ───────────────────────────────────── */
+  .slide-chapter { flex-direction: column; justify-content: flex-end; padding: 80px; }
+  .slide-chapter.golf-bg { background: var(--green); }
+  .slide-chapter.inkwell-bg { background: #0e0e1a; }
+  .slide-chapter .chapter-eyebrow { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 24px; }
+  .golf-bg .chapter-eyebrow { color: var(--green-accent); }
+  .slide-chapter h2 { font-family: 'DM Serif Display', serif; font-size: 100px; line-height: 0.92; color: var(--cream); font-weight: 400; }
+  .golf-bg h2 em { font-style: italic; color: var(--green-accent); }
+  .slide-chapter .sub { margin-top: 36px; font-size: 15px; color: rgba(245,240,226,0.48); max-width: 520px; line-height: 1.65; font-weight: 300; }
+  .slide-chapter .tag-row { margin-top: 44px; display: flex; gap: 10px; flex-wrap: wrap; }
+  .tag { padding: 5px 13px; border: 1px solid rgba(245,240,226,0.18); font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(245,240,226,0.45); border-radius: 2px; }
+
+  /* ─────────────────────────────────────
+     SLIDE TYPE: TWO-COL (sidebar + main)
+  ───────────────────────────────────── */
+  .slide-twocol { background: var(--cream); grid-template-columns: 380px 1fr; }
+  .slide-twocol .sidebar { background: var(--ink); padding: 60px 48px; display: flex; flex-direction: column; justify-content: space-between; }
+  .slide-twocol .sidebar .s-eyebrow { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--green-accent); }
+  .slide-twocol .sidebar h3 { font-family: 'DM Serif Display', serif; font-size: 38px; line-height: 1.1; color: var(--cream); font-weight: 400; margin-top: 14px; }
+  .slide-twocol .sidebar p { font-size: 13px; color: rgba(245,240,226,0.52); line-height: 1.75; font-weight: 300; margin-top: 16px; }
+  .slide-twocol .sidebar .pill-row { display: flex; flex-wrap: wrap; gap: 8px; }
+  .pill { padding: 4px 11px; background: rgba(74,158,106,0.12); border: 1px solid rgba(74,158,106,0.22); font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.08em; color: var(--green-accent); border-radius: 100px; }
+  .slide-twocol .main { padding: 56px 52px; display: flex; flex-direction: column; justify-content: space-between; overflow: hidden; }
+  .source-note { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--muted); letter-spacing: 0.06em; margin-top: 16px; }
+
+  /* ─────────────────────────────────────
+     SLIDE TYPE: METRICS GRID
+  ───────────────────────────────────── */
+  .insight-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: rgba(26,26,20,0.1); border: 1px solid rgba(26,26,20,0.1); flex: 1; margin-top: 14px; }
+  .insight-cell { background: var(--cream); padding: 28px 30px; display: flex; flex-direction: column; gap: 8px; }
+  .insight-cell .ic-num { font-family: 'DM Serif Display', serif; font-size: 40px; color: var(--ink); font-weight: 400; line-height: 1; }
+  .insight-cell .ic-label { font-size: 12px; color: var(--muted); line-height: 1.5; max-width: 180px; }
+  .insight-cell.accent-green { background: var(--green); }
+  .insight-cell.accent-green .ic-num { color: var(--cream); }
+  .insight-cell.accent-green .ic-label { color: rgba(245,240,226,0.55); }
+  .insight-cell.accent-lavender { background: var(--lavender); }
+  .insight-cell.accent-lavender .ic-num, .insight-cell.accent-lavender .ic-label { color: var(--ink); }
+
+  /* ─────────────────────────────────────
+     SLIDE TYPE: FULL IMAGE
+  ───────────────────────────────────── */
+  .slide-fullimg {
+    background: var(--ink);
+    flex-direction: row;
+    align-items: stretch;
+  }
+  .fullimg-text {
+    width: 340px;
+    flex-shrink: 0;
+    padding: 60px 52px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-right: 1px solid rgba(245,240,226,0.06);
+  }
+  .fullimg-text .f-eyebrow { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--green-accent); }
+  .fullimg-text h3 { font-family: 'DM Serif Display', serif; font-size: 34px; line-height: 1.1; color: var(--cream); font-weight: 400; margin-top: 14px; }
+  .fullimg-text h3 em { font-style: italic; color: var(--green-accent); }
+  .fullimg-text p { font-size: 13px; color: rgba(245,240,226,0.48); line-height: 1.7; font-weight: 300; margin-top: 14px; }
+  .fullimg-text .hint { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(245,240,226,0.2); }
+  .fullimg-visual {
+    flex: 1;
+    overflow: hidden;
+    position: relative;
+  }
+  .fullimg-visual img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+    display: block;
+  }
+
+  /* ─────────────────────────────────────
+     SLIDE TYPE: MOBILE SHOWCASE (phone frame)
+  ───────────────────────────────────── */
+  .slide-mobile { background: var(--green-mid); grid-template-columns: 1fr 1fr; }
+  .slide-mobile .mob-left {
+    padding: 60px 56px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .slide-mobile .mob-eyebrow { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--green-accent); }
+  .slide-mobile h3 { font-family: 'DM Serif Display', serif; font-size: 52px; line-height: 1.0; color: var(--cream); font-weight: 400; margin-top: 16px; }
+  .slide-mobile h3 em { font-style: italic; color: var(--green-accent); }
+  .slide-mobile p { font-size: 14px; color: rgba(245,240,226,0.5); line-height: 1.7; font-weight: 300; max-width: 380px; }
+  .slide-mobile .mob-stat { margin-top: 32px; }
+  .slide-mobile .mob-stat .big { font-family: 'DM Serif Display', serif; font-size: 52px; color: var(--cream); line-height: 1; }
+  .slide-mobile .mob-stat .small { font-size: 12px; color: rgba(245,240,226,0.4); font-family: 'DM Mono', monospace; letter-spacing: 0.06em; margin-top: 4px; }
+
+  /* Phone frame container */
+  .slide-mobile .mob-right {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px 0;
+  }
+  .phone-frame {
+    position: relative;
+    width: 224px;
+    height: 580px;
+    background: #0a0a0a;
+    border-radius: 44px;
+    box-shadow:
+      0 0 0 2px #3a3a3a,
+      0 0 0 4px #1a1a1a,
+      0 24px 64px rgba(0,0,0,0.5);
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  /* Notch */
+  .phone-frame::before {
+    content: '';
+    position: absolute;
+    top: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 72px;
+    height: 22px;
+    background: #0a0a0a;
+    border-radius: 12px;
+    z-index: 10;
+  }
+  /* Side buttons */
+  .phone-frame::after {
+    content: '';
+    position: absolute;
+    right: -5px;
+    top: 120px;
+    width: 4px;
+    height: 52px;
+    background: #2a2a2a;
+    border-radius: 2px;
+    box-shadow: 0 -70px 0 #2a2a2a, 0 -46px 0 #2a2a2a;
+  }
+  .phone-screen {
+    position: absolute;
+    inset: 0;
+    border-radius: 44px;
+    overflow-y: scroll;
+    scrollbar-width: none;
+    cursor: ns-resize;
+  }
+  .phone-screen::-webkit-scrollbar { display: none; }
+  .phone-screen img {
+    width: 100%;
+    display: block;
+    /* No object-fit — let the image render at full natural height */
+  }
+
+  /* ─────────────────────────────────────
+     SLIDE TYPE: SCROLLABLE PAGE PREVIEW
+  ───────────────────────────────────── */
+  .slide-scroll { background: var(--ink); grid-template-columns: 320px 1fr; }
+  .slide-scroll .scroll-text {
+    padding: 60px 48px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-right: 1px solid rgba(245,240,226,0.06);
+  }
+  .slide-scroll .scroll-text .sc-eyebrow { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--green-accent); }
+  .slide-scroll .scroll-text h3 { font-family: 'DM Serif Display', serif; font-size: 34px; line-height: 1.1; color: var(--cream); font-weight: 400; margin-top: 14px; }
+  .slide-scroll .scroll-text h3 em { font-style: italic; color: var(--green-accent); }
+  .slide-scroll .scroll-text p { font-size: 13px; color: rgba(245,240,226,0.48); line-height: 1.7; font-weight: 300; margin-top: 14px; }
+  .slide-scroll .scroll-text .sc-hint { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(245,240,226,0.2); }
+
+  .slide-scroll .scroll-preview {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 28px 40px;
+    background: #0d1a14;
+  }
+
+  /* Browser chrome mockup */
+  .browser-frame {
+    width: 100%;
+    max-width: 620px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+  }
+  .browser-bar {
+    background: #1e1e1e;
+    padding: 8px 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+  }
+  .browser-dots { display: flex; gap: 5px; }
+  .browser-dot { width: 9px; height: 9px; border-radius: 50%; }
+  .browser-dot.red   { background: #ff5f57; }
+  .browser-dot.yellow { background: #febc2e; }
+  .browser-dot.green { background: #28c840; }
+  .browser-url {
+    flex: 1;
+    background: #2a2a2a;
+    border-radius: 4px;
+    padding: 3px 10px;
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    color: rgba(255,255,255,0.35);
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .browser-content {
+    flex: 1;
+    overflow-y: scroll;
+    scrollbar-width: none;
+    background: #fff;
+    cursor: ns-resize;
+  }
+  .browser-content::-webkit-scrollbar { display: none; }
+  .browser-content img {
+    width: 100%;
+    display: block;
+  }
+  .scroll-badge {
+    position: absolute;
+    bottom: 36px;
+    right: 52px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(74,158,106,0.15);
+    border: 1px solid rgba(74,158,106,0.3);
+    padding: 5px 12px;
+    border-radius: 100px;
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--green-accent);
+    pointer-events: none;
+  }
+
+  /* ─────────────────────────────────────
+     SLIDE TYPE: COMPARE (before/after)
+  ───────────────────────────────────── */
+  .slide-compare { background: var(--cream); grid-template-columns: 1fr 1fr; }
+  .compare-pane { display: flex; flex-direction: column; gap: 16px; padding: 48px 48px; position: relative; overflow: hidden; }
+  .compare-pane:first-child { border-right: 1.5px solid rgba(26,26,20,0.08); }
+  .compare-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; }
+  .compare-label.before { color: #b05a3f; }
+  .compare-label.after  { color: var(--green-accent); }
+  .compare-img-wrap { flex: 1; border-radius: 6px; overflow: hidden; border: 1px solid rgba(26,26,20,0.08); }
+  .compare-img-wrap img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; }
+  .compare-note { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--muted); letter-spacing: 0.04em; }
+
+  /* ─────────────────────────────────────
+     SLIDE TYPE: STATEMENT (big quote)
+  ───────────────────────────────────── */
+  .slide-statement {
+    background: var(--cream);
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 80px 96px;
+    border-left: 5px solid var(--green-accent);
+  }
+  .slide-statement .st-eyebrow { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--green-accent); margin-bottom: 28px; }
+  .slide-statement blockquote { font-family: 'DM Serif Display', serif; font-size: 52px; line-height: 1.1; color: var(--ink); font-weight: 400; max-width: 900px; }
+  .slide-statement blockquote em { font-style: italic; color: var(--green-accent); }
+  .slide-statement .st-sub { font-size: 14px; color: var(--muted); max-width: 540px; line-height: 1.65; margin-top: 32px; font-weight: 300; }
+
+  /* ─────────────────────────────────────
+     SLIDE TYPE: CLOSE
+  ───────────────────────────────────── */
+  .slide-close { background: var(--ink); align-items: center; justify-content: center; flex-direction: column; gap: 32px; }
+  .slide-close .big-line { font-family: 'DM Serif Display', serif; font-size: 88px; line-height: 0.95; color: var(--cream); font-weight: 400; text-align: center; }
+  .slide-close .big-line em { font-style: italic; color: var(--lavender); }
+  .slide-close .contact-row { display: flex; gap: 48px; margin-top: 16px; }
+  .slide-close .contact-item { display: flex; flex-direction: column; gap: 4px; align-items: center; }
+  .slide-close .contact-item .c-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(245,240,226,0.3); }
+  .slide-close .contact-item .c-val { font-size: 13px; color: var(--cream); }
+
+  /* ─────────────────────────────────────
+     NAV CHROME
+  ───────────────────────────────────── */
+  #progress-bar { position: fixed; top: 0; left: 0; height: 3px; background: var(--lavender-dark); transition: width 0.3s ease, background 0.5s ease; z-index: 100; }
+  #nav { position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 14px; background: rgba(17,17,17,0.88); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.08); padding: 9px 20px; border-radius: 100px; z-index: 100; transition: border-color 0.5s ease; }
+  #nav button { background: none; border: none; color: rgba(255,255,255,0.5); font-size: 18px; cursor: pointer; padding: 4px 6px; transition: color 0.15s; line-height: 1; font-family: inherit; }
+  #nav button:hover { color: #fff; }
+  #nav button:disabled { opacity: 0.2; cursor: default; }
+  #slide-counter { font-family: 'DM Mono', monospace; font-size: 11px; color: rgba(255,255,255,0.4); letter-spacing: 0.1em; min-width: 52px; text-align: center; }
+  .nav-divider { width: 1px; height: 14px; background: rgba(255,255,255,0.1); }
+  #slide-type { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; padding: 3px 10px; border-radius: 100px; background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.3); transition: background 0.5s, color 0.5s; white-space: nowrap; }
+  #toc-btn { font-family: 'DM Mono', monospace !important; font-size: 10px !important; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.3); cursor: pointer; padding: 4px 6px; transition: color 0.15s; }
+  #toc-btn:hover { color: rgba(255,255,255,0.7); }
+
+  body.atmo-evernote #progress-bar { background: var(--lavender-dark); }
+  body.atmo-evernote #nav          { border-color: rgba(139,112,208,0.25); }
+  body.atmo-evernote #slide-type   { background: rgba(139,112,208,0.14); color: rgba(196,175,240,0.85); }
+  body.atmo-golf    #progress-bar { background: var(--green-accent); }
+  body.atmo-golf    #nav          { border-color: rgba(74,158,106,0.25); }
+  body.atmo-golf    #slide-type   { background: rgba(74,158,106,0.14); color: rgba(74,158,106,0.85); }
+  body.atmo-inkwell #progress-bar { background: var(--lavender); }
+  body.atmo-inkwell #nav          { border-color: rgba(196,175,240,0.2); }
+  body.atmo-inkwell #slide-type   { background: rgba(196,175,240,0.12); color: rgba(196,175,240,0.8); }
+  body.atmo-close   #progress-bar { background: var(--lavender); }
+  body.atmo-close   #nav          { border-color: rgba(196,175,240,0.2); }
+  body.atmo-close   #slide-type   { background: rgba(196,175,240,0.1); color: rgba(196,175,240,0.7); }
+
+  /* ─────────────────────────────────────
+     TOC
+  ───────────────────────────────────── */
+  #toc-overlay { display: none; position: fixed; inset: 0; background: rgba(10,10,10,0.93); backdrop-filter: blur(16px); z-index: 200; align-items: center; justify-content: center; flex-direction: column; }
+  #toc-overlay.open { display: flex; }
+  #toc-header { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.25); margin-bottom: 36px; }
+  .toc-columns { display: flex; gap: 0; align-items: flex-start; }
+  .toc-col-main { min-width: 520px; }
+  .toc-col-divider { width: 1px; background: rgba(255,255,255,0.06); align-self: stretch; margin: 0 40px; }
+  .toc-col-appendix { min-width: 280px; opacity: 0.55; }
+  .toc-col-appendix .toc-title { font-size: 20px; }
+  .toc-section { margin-bottom: 4px; }
+  .toc-section-label { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.18); padding-left: 16px; margin-top: 20px; margin-bottom: 4px; display: block; }
+  .toc-item { display: flex; align-items: baseline; gap: 16px; cursor: pointer; padding: 9px 16px; border-radius: 4px; transition: background 0.15s; }
+  .toc-item:hover { background: rgba(255,255,255,0.05); }
+  .toc-item.current { background: rgba(196,175,240,0.08); }
+  .toc-num { font-family: 'DM Mono', monospace; font-size: 10px; color: rgba(255,255,255,0.2); min-width: 22px; }
+  .toc-title { font-family: 'DM Serif Display', serif; font-size: 26px; color: rgba(255,255,255,0.75); font-weight: 400; line-height: 1; }
+  .toc-item.current .toc-title { color: var(--lavender); }
+  .toc-sub-item { display: flex; align-items: center; gap: 12px; cursor: pointer; padding: 5px 16px 5px 52px; border-radius: 4px; transition: background 0.15s; }
+  .toc-sub-item:hover { background: rgba(255,255,255,0.04); }
+  .toc-sub-item.current .toc-sub-title { color: rgba(255,255,255,0.6); }
+  .toc-sub-num { font-family: 'DM Mono', monospace; font-size: 9px; color: rgba(255,255,255,0.15); }
+  .toc-sub-title { font-family: 'DM Sans', sans-serif; font-size: 12px; color: rgba(255,255,255,0.35); }
+  #toc-close { margin-top: 32px; font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.2); background: none; border: none; cursor: pointer; transition: color 0.15s; }
+  #toc-close:hover { color: rgba(255,255,255,0.5); }
+
+  /* ─────────────────────────────────────
+     LIGHTBOX
+  ───────────────────────────────────── */
+  .zoomable { cursor: zoom-in; transition: opacity 0.2s, transform 0.2s; }
+  .zoomable:hover { opacity: 0.85; transform: scale(1.015); }
+  #lightbox { display: none; position: fixed; inset: 0; z-index: 300; align-items: center; justify-content: center; cursor: zoom-out; flex-direction: column; gap: 20px; }
+  #lightbox.open { display: flex; }
+  #lightbox::before { content: ''; position: fixed; inset: 0; background: rgba(0,0,0,0.92); backdrop-filter: blur(28px); opacity: 0; transition: opacity 0.3s ease; }
+  #lightbox.open::before { opacity: 1; }
+  #lightbox img { position: relative; max-width: 88vw; max-height: 80vh; object-fit: contain; border-radius: 6px; box-shadow: 0 40px 100px rgba(0,0,0,0.8); transform-origin: center center; opacity: 0; transform: scale(0.12); transition: opacity 0s, transform 0s; }
+  #lightbox img.lb-animating { transition: opacity 0.32s cubic-bezier(0.16, 1, 0.3, 1), transform 0.32s cubic-bezier(0.16, 1, 0.3, 1); }
+  #lightbox img.lb-open { opacity: 1; transform: scale(1); }
+  #lightbox img.lb-closing { transition: opacity 0.2s ease, transform 0.2s cubic-bezier(0.4,0,1,1); opacity: 0; transform: scale(0.12); }
+  #lightbox-caption { position: relative; font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.25); text-align: center; opacity: 0; transform: translateY(8px); transition: opacity 0.3s ease 0.2s, transform 0.3s ease 0.2s; }
+  #lightbox.open #lightbox-caption { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body class="atmo-intro">
+
+<!-- ═══════════════════════════════════════
+     01 — TITLE
+═══════════════════════════════════════ -->
+<div class="slide slide-title" data-section="intro" data-type="Intro">
+  <div class="left">
+    <span class="eyebrow" style="color:var(--muted)">Senior Product Designer — Interview Presentation</span>
+    <h1>Design that<br>moves the<br><em>needle.</em></h1>
+    <div class="meta">
+      <span>Sahand Hajizadeh</span>
+      <span>10+ years · Evernote · eBay · Golf Ranch · Inkwell</span>
+    </div>
+  </div>
+  <div class="right">
+    <div class="stat-block"><span class="num">4×</span><span class="desc">membership signup increase, Golf Ranch</span></div>
+    <div class="stat-block"><span class="num">8M+</span><span class="desc">monthly active users on redesigned Evernote iOS/Android</span></div>
+    <div class="stat-block"><span class="num">$1M</span><span class="desc">revenue at launch, Flo Recruit candidate portal</span></div>
+  </div>
+  <span class="pg">01</span>
+</div>
+
+<!-- ═══════════════════════════════════════
+     02 — EVERNOTE (supporting mention)
+═══════════════════════════════════════ -->
+<div class="slide slide-fullimg" data-section="evernote" data-type="Evernote">
+  <div class="fullimg-text" style="background:#0f0f0f; border-right-color:rgba(255,255,255,0.05);">
+    <div>
+      <span class="f-eyebrow" style="color:var(--lavender)">Previous work</span>
+      <h3 style="color:var(--cream);">5 years.<br>8M+ users.<br><em style="color:var(--lavender)">iOS + Android.</em></h3>
+      <p style="color:rgba(245,240,226,0.45);">Led the full Evernote mobile redesign — iOS, Android, and iPad. Built a 240+ component design system that scaled across platforms and teams.</p>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:8px;">
+      <span style="font-family:'DM Mono',monospace; font-size:9px; letter-spacing:0.1em; text-transform:uppercase; color:rgba(245,240,226,0.18);">8M+ MAU · 240+ components · 5 years</span>
+    </div>
+  </div>
+  <div class="fullimg-visual" style="background:#0f0f0f; display:flex; align-items:center; justify-content:center; padding:32px;">
+    <img
+      src="../images/Evernote-Redesign.gif"
+      alt="Evernote mobile redesign"
+      style="max-height:580px; width:auto; border-radius:4px; box-shadow: 0 24px 64px rgba(0,0,0,0.7);"
+    />
+  </div>
+  <span class="pg light">02</span>
+</div>
+
+<!-- ═══════════════════════════════════════
+     03 — GOLF RANCH CHAPTER
+═══════════════════════════════════════ -->
+<div class="slide slide-chapter golf-bg" data-section="golf" data-type="Case Study">
+  <span class="chapter-eyebrow">Case Study 01 of 02</span>
+  <h2>Golf<br><em>Ranch.</em></h2>
+  <p class="sub">Six premium driving range locations across the US. 90% mobile traffic. A site that wasn't keeping up. I rebuilt it from the ground up.</p>
+  <div class="tag-row">
+    <span class="tag">Conversion</span>
+    <span class="tag">Mobile-first</span>
+    <span class="tag">Lead gen</span>
+    <span class="tag">Design system</span>
+    <span class="tag">SEO</span>
+    <span class="tag">Webflow</span>
+  </div>
+  <span class="pg light">03</span>
+</div>
+
+<!-- ═══════════════════════════════════════
+     04 — THE PROBLEM
+═══════════════════════════════════════ -->
+<div class="slide slide-statement" data-section="golf" data-type="The Problem">
+  <span class="st-eyebrow">The problem</span>
+  <blockquote>The site looked like a<br>brochure, not a<br><em>growth tool.</em></blockquote>
+  <p class="st-sub">No clear CTA above the fold. No lead capture. No local SEO. 90% mobile traffic hitting a desktop-first layout. Every visitor the business earned was leaking straight out.</p>
+  <span class="pg">04</span>
+</div>
+
+<!-- ═══════════════════════════════════════
+     05 — MOBILE FIRST
+═══════════════════════════════════════ -->
+<div class="slide slide-mobile" data-section="golf" data-type="Mobile First">
+  <div class="mob-left">
+    <div>
+      <span class="mob-eyebrow">Design principle</span>
+      <h3>Mobile<br><em>first.</em><br>Always.</h3>
+    </div>
+    <p>Every screen was designed at 390px. When you design small first, everything scales up cleanly. Most teams design big and try to squeeze it down. That never works.</p>
+    <div class="mob-stat">
+      <div class="big">90%</div>
+      <div class="small">of Golf Ranch traffic is mobile</div>
+    </div>
+  </div>
+  <div class="mob-right">
+    <div class="phone-frame">
+      <div class="phone-screen">
+        <img
+          src="../images/golf-ranch-home-mobile.webp"
+          alt="Golf Ranch homepage — mobile"
+        />
+      </div>
+    </div>
+  </div>
+  <span class="pg light">05</span>
+</div>
+
+<!-- ═══════════════════════════════════════
+     06 — LEAD GENERATION
+═══════════════════════════════════════ -->
+<div class="slide slide-fullimg" data-section="golf" data-type="Lead Gen">
+  <div class="fullimg-text">
+    <div>
+      <span class="f-eyebrow">Lead generation</span>
+      <h3>One button.<br>10K leads<br><em>a month.</em></h3>
+      <p>The free bucket offer was always visible. One CTA, always driving to one destination. Simple idea — the details made it. Copy, placement, what the thank-you page did next. We got all of it right.</p>
+    </div>
+    <span class="hint">Click image to zoom</span>
+  </div>
+  <div class="fullimg-visual">
+    <img
+      class="zoomable"
+      src="../images/golf-ranch-free-bucket.webp"
+      alt="Free bucket lead capture"
+      data-caption="Golf Ranch · Free Bucket page · 10K+ leads/month · #1 page on site"
+    />
+  </div>
+  <span class="pg light">06</span>
+</div>
+
+<!-- ═══════════════════════════════════════
+     07 — MEMBERSHIP
+═══════════════════════════════════════ -->
+<div class="slide slide-fullimg" data-section="golf" data-type="Membership">
+  <div class="fullimg-text">
+    <div>
+      <span class="f-eyebrow">Membership</span>
+      <h3>4× members<br>from one<br><em>page redesign.</em></h3>
+      <p>The original buried the value prop. Pricing was unclear. No urgency, no social proof. I redesigned it leading with the savings math, surfacing testimonials, and making signup frictionless on mobile.</p>
+    </div>
+    <span class="hint">Click image to zoom</span>
+  </div>
+  <div class="fullimg-visual">
+    <img
+      class="zoomable"
+      src="../images/golf-ranch-membership.webp"
+      alt="Ranch Pass membership page"
+      data-caption="Golf Ranch · Ranch Pass membership page · 4× signup increase"
+    />
+  </div>
+  <span class="pg light">07</span>
+</div>
+
+<!-- ═══════════════════════════════════════
+     08 — OFFERS + SOCIAL PROOF
+═══════════════════════════════════════ -->
+<div class="slide slide-compare" data-section="golf" data-type="Offers + Trust">
+  <div class="compare-pane">
+    <span class="compare-label" style="color:var(--green-accent); font-family:'DM Mono',monospace; font-size:10px; letter-spacing:0.14em; text-transform:uppercase;">↳ Offer pages</span>
+    <div class="compare-img-wrap">
+      <img
+        class="zoomable"
+        src="../images/golf-ranch-offers.webp"
+        alt="Golf Ranch offer pages"
+        data-caption="Golf Ranch · Location offer pages · urgency + mobile CTA"
+      />
+    </div>
+    <span class="compare-note">Each location launch needed a dedicated page — urgency, clear value, frictionless mobile signup.</span>
+  </div>
+  <div class="compare-pane">
+    <span class="compare-label" style="color:var(--green-accent); font-family:'DM Mono',monospace; font-size:10px; letter-spacing:0.14em; text-transform:uppercase;">↳ Social proof</span>
+    <div class="compare-img-wrap">
+      <img
+        class="zoomable"
+        src="../images/golf-ranch-social-proof.webp"
+        alt="Golf Ranch social proof and reviews"
+        data-caption="Golf Ranch · Reviews and ratings · 8,500+ Ranch Pass members"
+      />
+    </div>
+    <span class="compare-note">Reviews weren't tucked away at the bottom. People trust people. Placed where it converts.</span>
+  </div>
+  <span class="pg">08</span>
+</div>
+
+<!-- ═══════════════════════════════════════
+     09 — LOCATION PAGES + SEO (scrollable preview)
+═══════════════════════════════════════ -->
+<div class="slide slide-scroll" data-section="golf" data-type="SEO + Location">
+  <div class="scroll-text">
+    <div>
+      <span class="sc-eyebrow">SEO + Location pages</span>
+      <h3>Built to<br>rank.<br><em>And scale.</em></h3>
+      <p>Each location needed its own SEO-optimized page — structured for local search, consistent in design, fast to publish as new locations open. Launched March 2026. Already up 25%.</p>
+    </div>
+    <span class="sc-hint">↕ Scroll to explore the full page</span>
+  </div>
+  <div class="scroll-preview">
+    <div class="browser-frame">
+      <div class="browser-bar">
+        <div class="browser-dots">
+          <div class="browser-dot red"></div>
+          <div class="browser-dot yellow"></div>
+          <div class="browser-dot green"></div>
+        </div>
+        <div class="browser-url">golfranch.com/locations/dallas</div>
+      </div>
+      <div class="browser-content">
+        <img
+          src="../images/golf-ranch-location.webp"
+          alt="Golf Ranch location page"
+        />
+      </div>
+    </div>
+    <div class="scroll-badge">↕ Scroll</div>
+  </div>
+  <span class="pg light">09</span>
+</div>
+
+<!-- ═══════════════════════════════════════
+     10 — RESULTS
+═══════════════════════════════════════ -->
+<div class="slide slide-twocol" data-section="golf" data-type="Results">
+  <div class="sidebar">
+    <div>
+      <span class="s-eyebrow">The outcome</span>
+      <h3>Results that compound.</h3>
+      <p>SEO launched March 2026. Metrics already outpacing projections. The free bucket page became the #1 page on site — outperforming the homepage.</p>
+    </div>
+    <div class="pill-row">
+      <span class="pill">Webflow</span>
+      <span class="pill">SEO</span>
+      <span class="pill">Analytics</span>
+      <span class="pill">Mobile-first</span>
+    </div>
+  </div>
+  <div class="main">
+    <div class="insight-grid">
+      <div class="insight-cell accent-green">
+        <span class="ic-num">10K+</span>
+        <span class="ic-label">free bucket leads per month</span>
+      </div>
+      <div class="insight-cell">
+        <span class="ic-num">4×</span>
+        <span class="ic-label">membership signup increase</span>
+      </div>
+      <div class="insight-cell">
+        <span class="ic-num">+25%</span>
+        <span class="ic-label">organic traffic growth</span>
+      </div>
+      <div class="insight-cell">
+        <span class="ic-num">#1</span>
+        <span class="ic-label">page on site — 11.9% of all pageviews</span>
+      </div>
+    </div>
+    <span class="source-note">↳ Data as of April 2026 · SEO launched March 2026 · ongoing</span>
+  </div>
+  <span class="pg">10</span>
+</div>
+
+<!-- ═══════════════════════════════════════
+     11 — WHAT'S NEXT (Swing app bridge)
+═══════════════════════════════════════ -->
+<div class="slide slide-statement" data-section="golf" data-type="What's Next">
+  <span class="st-eyebrow">What's next</span>
+  <blockquote>The web results opened<br>the door to a<br><em>bigger conversation.</em></blockquote>
+  <p class="st-sub">Now designing the Swing by Golf Ranch mobile app — a companion experience for members with session tracking, leaderboards, and location tools. 0→1, in progress. The site was the foundation.</p>
+  <span class="pg">11</span>
+</div>
+
+<!-- ═══════════════════════════════════════
+     12 — INKWELL CHAPTER
+═══════════════════════════════════════ -->
+<div class="slide slide-chapter inkwell-bg" data-section="inkwell" data-type="Case Study">
+  <span class="chapter-eyebrow" style="color:var(--lavender)">Case Study 02 of 02</span>
+  <h2 style="color:var(--cream)">Inkwell<br><span style="font-style:italic;color:var(--lavender)">/ WDI.</span></h2>
+  <p class="sub">Enterprise UX for a major entertainment client. Joined mid-flight, diagnosed fast, shipped meaningful interaction improvements under a tight deadline.</p>
+  <div class="tag-row">
+    <span class="tag">Enterprise UX</span>
+    <span class="tag">Interaction design</span>
+    <span class="tag">In-flight</span>
+    <span class="tag">NDA</span>
+  </div>
+  <span class="pg light">12</span>
+</div>
+
+<!-- ═══════════════════════════════════════
+     13 — CLOSE
+═══════════════════════════════════════ -->
+<div class="slide slide-close" data-section="close" data-type="Close">
+  <p class="big-line">Let's build<br>something<br><em>great.</em></p>
+  <div class="contact-row">
+    <div class="contact-item"><span class="c-label">Email</span><span class="c-val">sahandhajizadeh@gmail.com</span></div>
+    <div class="contact-item"><span class="c-label">Portfolio</span><span class="c-val">sahand-hajizadeh.vercel.app</span></div>
+    <div class="contact-item"><span class="c-label">LinkedIn</span><span class="c-val">linkedin.com/in/sahandh</span></div>
+  </div>
+  <span class="pg light">13</span>
+</div>
+
+<!-- ═══════════════════════════════════════
+     APPENDIX — future case study expansions
+═══════════════════════════════════════ -->
+
+<!-- A1 — EVERNOTE (placeholder — to be built out) -->
+<div class="slide slide-fullimg" data-section="evernote" data-type="Evernote" data-appendix="true">
+  <div class="fullimg-text" style="background:#0f0f0f; border-right-color:rgba(255,255,255,0.05);">
+    <div>
+      <span class="f-eyebrow" style="color:var(--lavender)">Previous work</span>
+      <h3 style="color:var(--cream);">5 years.<br>8M+ users.<br><em style="color:var(--lavender)">iOS + Android.</em></h3>
+      <p style="color:rgba(245,240,226,0.45);">Led the full Evernote mobile redesign — iOS, Android, and iPad. Built a 240+ component design system that scaled across platforms and teams.</p>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:8px;">
+      <span style="font-family:'DM Mono',monospace; font-size:9px; letter-spacing:0.1em; text-transform:uppercase; color:rgba(245,240,226,0.18);">8M+ MAU · 240+ components · 5 years</span>
+    </div>
+  </div>
+  <div class="fullimg-visual" style="background:#0f0f0f; display:flex; align-items:center; justify-content:center; padding:32px;">
+    <img
+      src="../images/Evernote-Redesign.gif"
+      alt="Evernote mobile redesign"
+      style="max-height:580px; width:auto; border-radius:4px; box-shadow: 0 24px 64px rgba(0,0,0,0.7);"
+    />
+  </div>
+  <span class="pg light">A1</span>
+</div>
+
+<!-- ── CHROME ── -->
+<div id="progress-bar"></div>
+<div id="nav">
+  <button id="prev-btn" disabled>←</button>
+  <span id="slide-counter">01 / 13</span>
+  <button id="next-btn">→</button>
+  <div class="nav-divider"></div>
+  <span id="slide-type">Intro</span>
+  <div class="nav-divider"></div>
+  <button id="toc-btn">Contents</button>
+</div>
+
+<!-- ── TOC ── -->
+<div id="toc-overlay">
+  <p id="toc-header">Presentation Contents</p>
+
+  <div class="toc-columns">
+    <div class="toc-col-main">
+      <div class="toc-section">
+        <span class="toc-section-label">Opening</span>
+        <div class="toc-item" data-slide="0"><span class="toc-num">01</span><div><div class="toc-title">Introduction</div></div></div>
+      </div>
+
+      <div class="toc-section">
+        <span class="toc-section-label">Case Study 01 — Golf Ranch</span>
+        <div class="toc-item" data-slide="2"><span class="toc-num">03</span><div><div class="toc-title">Golf Ranch</div></div></div>
+        <div class="toc-sub-item" data-slide="3"><span class="toc-sub-num">↳</span><span class="toc-sub-title">The problem</span></div>
+        <div class="toc-sub-item" data-slide="4"><span class="toc-sub-num">↳</span><span class="toc-sub-title">Mobile first</span></div>
+        <div class="toc-sub-item" data-slide="5"><span class="toc-sub-num">↳</span><span class="toc-sub-title">Lead generation</span></div>
+        <div class="toc-sub-item" data-slide="6"><span class="toc-sub-num">↳</span><span class="toc-sub-title">Membership</span></div>
+        <div class="toc-sub-item" data-slide="7"><span class="toc-sub-num">↳</span><span class="toc-sub-title">Offers + trust</span></div>
+        <div class="toc-sub-item" data-slide="8"><span class="toc-sub-num">↳</span><span class="toc-sub-title">SEO + location pages</span></div>
+        <div class="toc-sub-item" data-slide="9"><span class="toc-sub-num">↳</span><span class="toc-sub-title">Results</span></div>
+        <div class="toc-sub-item" data-slide="10"><span class="toc-sub-num">↳</span><span class="toc-sub-title">What's next</span></div>
+      </div>
+
+      <div class="toc-section">
+        <span class="toc-section-label">Case Study 02 — Inkwell</span>
+        <div class="toc-item" data-slide="11"><span class="toc-num">12</span><div><div class="toc-title">Inkwell</div></div></div>
+      </div>
+
+      <div class="toc-section">
+        <span class="toc-section-label">Close</span>
+        <div class="toc-item" data-slide="12"><span class="toc-num">13</span><div><div class="toc-title">Let's build something great</div></div></div>
+      </div>
+    </div>
+
+    <div class="toc-col-divider"></div>
+
+    <div class="toc-col-appendix">
+      <div class="toc-section">
+        <span class="toc-section-label">Appendix</span>
+        <div class="toc-item" data-slide="13"><span class="toc-num">A1</span><div><div class="toc-title">Evernote</div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <button id="toc-close">ESC to close</button>
+</div>
+
+<!-- ── LIGHTBOX ── -->
+<div id="lightbox">
+  <img id="lightbox-img" src="" alt="">
+  <p id="lightbox-caption"></p>
+</div>
+
+<script>
+  const slides     = document.querySelectorAll('.slide');
+  const total      = slides.length;
+  const mainTotal  = 13; // slides 0–12 are the main deck; 13+ are appendix
+  let current      = 0;
+
+  const prevBtn     = document.getElementById('prev-btn');
+  const nextBtn     = document.getElementById('next-btn');
+  const counter     = document.getElementById('slide-counter');
+  const progressBar = document.getElementById('progress-bar');
+  const slideType   = document.getElementById('slide-type');
+  const tocOverlay  = document.getElementById('toc-overlay');
+  const tocBtn      = document.getElementById('toc-btn');
+  const tocClose    = document.getElementById('toc-close');
+  const lightbox    = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightbox-img');
+  const lightboxCap = document.getElementById('lightbox-caption');
+
+  const allTocItems = document.querySelectorAll('.toc-item, .toc-sub-item');
+  const atmoMap = { intro:'atmo-intro', golf:'atmo-golf', evernote:'atmo-evernote', inkwell:'atmo-inkwell', close:'atmo-close' };
+
+  function goTo(n) {
+    slides[current].classList.remove('active');
+    allTocItems.forEach(i => { if (parseInt(i.dataset.slide) === current) i.classList.remove('current'); });
+    current = Math.max(0, Math.min(n, total - 1));
+    slides[current].classList.add('active');
+    allTocItems.forEach(i => { if (parseInt(i.dataset.slide) === current) i.classList.add('current'); });
+
+    // Counter: main deck shows "01 / 13", appendix shows "A1", "A2", etc.
+    if (current < mainTotal) {
+      counter.textContent = `${String(current+1).padStart(2,'0')} / ${String(mainTotal).padStart(2,'0')}`;
+    } else {
+      counter.textContent = `A${current - mainTotal + 1}`;
+    }
+
+    prevBtn.disabled = current === 0;
+    nextBtn.disabled = current === total - 1;
+
+    // Progress bar: based on main deck for main slides, full for appendix
+    if (current < mainTotal) {
+      progressBar.style.width = `${((current+1)/mainTotal)*100}%`;
+    } else {
+      progressBar.style.width = '100%';
+    }
+
+    slideType.textContent = slides[current].dataset.type || '';
+    document.body.className = atmoMap[slides[current].dataset.section] || 'atmo-intro';
+  }
+
+  prevBtn.addEventListener('click', () => goTo(current - 1));
+  nextBtn.addEventListener('click', () => goTo(current + 1));
+
+  document.addEventListener('keydown', e => {
+    if (lightbox.classList.contains('open') || lightbox.style.display==='flex') { if (e.key==='Escape') closeLightbox(); return; }
+    if (tocOverlay.classList.contains('open')) { if (e.key==='Escape') tocOverlay.classList.remove('open'); return; }
+    // Don't hijack arrow keys if user is scrolling inside a preview pane
+    const active = document.activeElement;
+    if (active && (active.classList.contains('browser-content') || active.classList.contains('phone-screen'))) return;
+    if (['ArrowRight','ArrowDown',' '].includes(e.key)) { e.preventDefault(); goTo(current+1); }
+    if (['ArrowLeft','ArrowUp'].includes(e.key)) { e.preventDefault(); goTo(current-1); }
+    if (e.key==='t'||e.key==='T') tocOverlay.classList.toggle('open');
+  });
+
+  tocBtn.addEventListener('click', () => tocOverlay.classList.toggle('open'));
+  tocClose.addEventListener('click', () => tocOverlay.classList.remove('open'));
+  tocOverlay.addEventListener('click', e => { if (e.target===tocOverlay) tocOverlay.classList.remove('open'); });
+  allTocItems.forEach(item => item.addEventListener('click', () => { goTo(parseInt(item.dataset.slide)); tocOverlay.classList.remove('open'); }));
+
+  // Lightbox
+  function openLightbox(img) {
+    const rect = img.getBoundingClientRect();
+    const vw = window.innerWidth, vh = window.innerHeight;
+    const originX = ((rect.left + rect.width/2) / vw * 100).toFixed(1) + 'vw';
+    const originY = ((rect.top + rect.height/2) / vh * 100).toFixed(1) + 'vh';
+    lightboxImg.src = img.src;
+    lightboxImg.style.transformOrigin = `${originX} ${originY}`;
+    lightboxCap.textContent = img.dataset.caption || '';
+    lightboxImg.classList.remove('lb-animating','lb-open','lb-closing');
+    lightbox.classList.add('open');
+    lightboxImg.offsetHeight;
+    lightboxImg.classList.add('lb-animating','lb-open');
+  }
+
+  function closeLightbox() {
+    lightboxImg.classList.remove('lb-open');
+    lightboxImg.classList.add('lb-closing');
+    lightbox.classList.remove('open');
+    lightbox.style.display = 'flex';
+    lightbox.style.pointerEvents = 'none';
+    setTimeout(() => {
+      lightbox.style.display = '';
+      lightbox.style.pointerEvents = '';
+      lightboxImg.classList.remove('lb-animating','lb-closing');
+      lightboxImg.src = '';
+    }, 220);
+  }
+
+  lightbox.addEventListener('click', () => closeLightbox());
+  document.querySelectorAll('img.zoomable').forEach(img => {
+    img.addEventListener('click', e => { e.stopPropagation(); openLightbox(img); });
+  });
+
+  goTo(0);
+</script>
+</body>
+</html>
