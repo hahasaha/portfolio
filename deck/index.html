@@ -711,6 +711,11 @@
       0 0 0 4px rgba(74,158,106,0.15),
       0 8px 24px rgba(0,0,0,0.35);
   }
+  /* Hide the hover frame (press H to toggle). Tooltip and connector stay. */
+  .slide-annotated.no-frames .hotspot:hover {
+    background: transparent;
+    box-shadow: none;
+  }
   .ann-tooltip {
     width: 100%;
     max-width: 304px;
@@ -2021,6 +2026,11 @@ document.addEventListener('keydown', e => {
   }
   if (e.key==='t'||e.key==='T') tocOverlay.classList.toggle('open');
   if (e.key==='n'||e.key==='N') notesOverlay.classList.toggle('open');
+  if (e.key==='h'||e.key==='H') {
+    // Toggle hotspot hover-frame visibility on the annotated slide
+    const ann = document.querySelector('.slide-annotated');
+    if (ann) ann.classList.toggle('no-frames');
+  }
   if (e.key==='f'||e.key==='F') {
     if (!document.fullscreenElement) {
       document.documentElement.requestFullscreen().catch(() => {});
