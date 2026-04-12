@@ -1154,8 +1154,8 @@
 // ═══════════════════════════════════════
 // Change this value to set the deck password.
 // The gate stores a hash in localStorage so you don't re-enter each visit.
-const DECK_PASSWORD = 'designsahand'; // ← change me
-const PASSWORD_KEY  = 'deck-unlocked-v1';
+const DECK_PASSWORD = 'ziggy';
+const PASSWORD_KEY  = 'deck-unlocked-v2';
 
 async function sha256(str) {
   const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
