@@ -605,6 +605,27 @@
     padding: 40px 44px 40px 32px;
     position: relative;
   }
+  /* Connector SVG overlay — draws a dashed line from the hovered
+     hotspot to the tooltip. Lives in slide-local coords (0 0 1200 675). */
+  .ann-connector {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 50;
+    opacity: 0;
+    transition: opacity 0.22s ease;
+  }
+  .ann-connector.visible { opacity: 1; }
+  .ann-connector line {
+    stroke: var(--green-accent);
+    stroke-width: 1.5;
+    stroke-dasharray: 4 5;
+  }
+  .ann-connector circle {
+    fill: var(--green-accent);
+  }
   .ann-phone-wrap {
     position: relative;
     display: inline-block;
@@ -1261,6 +1282,11 @@
       <span class="tip-body">Each region of the Ranch Pass page has a reason. Hover a section to see it.</span>
     </div>
   </div>
+  <svg class="ann-connector" id="ann-connector" viewBox="0 0 1200 675" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+    <line id="ann-line" x1="0" y1="0" x2="0" y2="0" />
+    <circle id="ann-dot-start" cx="0" cy="0" r="3.5" />
+    <circle id="ann-dot-end"   cx="0" cy="0" r="3.5" />
+  </svg>
 </div>
 
 <!-- ═══════════════════════════════════════
@@ -2015,16 +2041,43 @@ document.querySelectorAll('img.zoomable').forEach(img => {
   img.addEventListener('click', e => { e.stopPropagation(); openLightbox(img); });
 });
 
-// Annotated slide hotspots — tooltip is pinned to the right column,
-// we only update content and toggle visibility on hover.
+// Annotated slide hotspots — tooltip pinned right column + SVG connector
 function initAnnotations() {
   const tooltip = document.getElementById('ann-tooltip');
   if (!tooltip) return;
   const tipHeadline = tooltip.querySelector('.tip-headline');
   const tipBody = tooltip.querySelector('.tip-body');
-  // Preserve the idle placeholder so we can restore it on mouseleave
   const idleHeadline = tipHeadline.textContent;
   const idleBody = tipBody.textContent;
+
+  const connector = document.getElementById('ann-connector');
+  const lineEl    = document.getElementById('ann-line');
+  const dotStart  = document.getElementById('ann-dot-start');
+  const dotEnd    = document.getElementById('ann-dot-end');
+
+  function drawConnector(spot) {
+    const slideEl = spot.closest('.slide');
+    if (!slideEl) return;
+    const slideRect = slideEl.getBoundingClientRect();
+    const scale = slideRect.width / 1200;
+    const hotRect = spot.getBoundingClientRect();
+    const tipRect = tooltip.getBoundingClientRect();
+    // Hotspot center (slide-local coords)
+    const x1 = (hotRect.left + hotRect.width / 2 - slideRect.left) / scale;
+    const y1 = (hotRect.top + hotRect.height / 2 - slideRect.top) / scale;
+    // Tooltip left edge, vertically at the tip's vertical center
+    const x2 = (tipRect.left - slideRect.left) / scale;
+    const y2 = (tipRect.top + tipRect.height / 2 - slideRect.top) / scale;
+
+    lineEl.setAttribute('x1', x1);
+    lineEl.setAttribute('y1', y1);
+    lineEl.setAttribute('x2', x2);
+    lineEl.setAttribute('y2', y2);
+    dotStart.setAttribute('cx', x1);
+    dotStart.setAttribute('cy', y1);
+    dotEnd.setAttribute('cx', x2);
+    dotEnd.setAttribute('cy', y2);
+  }
 
   document.querySelectorAll('.hotspot').forEach(spot => {
     spot.addEventListener('mouseenter', () => {
@@ -2045,12 +2098,15 @@ function initAnnotations() {
       }
       tooltip.classList.remove('idle');
       tooltip.classList.add('visible');
+      drawConnector(spot);
+      connector.classList.add('visible');
     });
     spot.addEventListener('mouseleave', () => {
       tooltip.classList.remove('visible');
       tooltip.classList.add('idle');
       tipHeadline.textContent = idleHeadline;
       tipBody.textContent = idleBody;
+      connector.classList.remove('visible');
     });
   });
 }
