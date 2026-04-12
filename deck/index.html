@@ -902,6 +902,16 @@
     background: transparent;
     box-shadow: none;
   }
+  /* While the phone is actively scrolling, disable hotspot interaction so
+     the hover border doesn't linger against stale content. Pointer-events
+     off ensures any active :hover state drops. */
+  .ann-image-wrap.scrolling .hotspot {
+    pointer-events: none;
+  }
+  .ann-image-wrap.scrolling .hotspot:hover {
+    background: transparent;
+    box-shadow: none;
+  }
   .ann-tooltip {
     width: 100%;
     max-width: 304px;
@@ -2398,10 +2408,18 @@ function initAnnotations() {
   }
 
   // Hide the tooltip + connector as soon as the phone scrolls — otherwise
-  // the connector line points at the old hotspot position (stale)
+  // the connector line points at the old hotspot position (stale). Also
+  // adds a 'scrolling' class on the image wrap so hotspot hover styles
+  // drop (pointer-events: none) while scroll is in flight.
+  let scrollIdleTimer = null;
   if (screen) {
     screen.addEventListener('scroll', () => {
       if (activeSpot) deactivate();
+      if (imgWrap) {
+        imgWrap.classList.add('scrolling');
+        clearTimeout(scrollIdleTimer);
+        scrollIdleTimer = setTimeout(() => imgWrap.classList.remove('scrolling'), 150);
+      }
     }, { passive: true });
   }
 
@@ -2549,6 +2567,7 @@ function initAnnotations() {
   }
   function nudge(delta, which = 'top') {
     if (!editSelected) return;
+    snapshot();
     const st = getHotspotState(editSelected);
     const next = Math.max(0, Math.min(100, st[which] + delta));
     editSelected.style[which] = next + '%';
@@ -2596,6 +2615,7 @@ function initAnnotations() {
   btnDel.addEventListener('click', () => deleteSelectedHotspot());
   btnDup.addEventListener('click', () => {
     if (!editSelected) return;
+    snapshot();
     const src = editSelected;
     const clone = src.cloneNode(false);
     clone.className = 'hotspot';
@@ -2647,6 +2667,7 @@ function initAnnotations() {
   let dragSpot  = null;
 
   function beginDrag(spot, e, mode) {
+    snapshot();
     const slideEl = spot.closest('.slide');
     const slideRect = slideEl.getBoundingClientRect();
     const scale = slideRect.width / 1200;
@@ -2725,6 +2746,7 @@ function initAnnotations() {
 
   function createHotspotAtCursor() {
     if (!imgWrap) return;
+    snapshot();
     const spot = document.createElement('div');
     spot.className = 'hotspot';
     const w = 10, h = 4; // default size in %
@@ -2745,10 +2767,58 @@ function initAnnotations() {
 
   function deleteSelectedHotspot() {
     if (!editSelected) return;
+    snapshot();
     const spot = editSelected;
     editSelected = null;
     spot.remove();
     refreshHotspots();
+    updateReadout();
+    saveHotspots();
+    deactivate();
+  }
+
+  // ── Undo stack ──
+  // Each snapshot captures the full state of all hotspots (style + data).
+  // Snapshots are pushed BEFORE any mutating operation so undo returns to
+  // the pre-op state.
+  const historyStack = [];
+  const HISTORY_MAX = 60;
+
+  function snapshot() {
+    const all = getHotspots();
+    const state = {
+      spots: all.map(spot => ({
+        style: spot.getAttribute('style') || '',
+        tip: spot.dataset.tip || '',
+        headline: spot.dataset.headline || ''
+      })),
+      selectedIdx: editSelected ? all.indexOf(editSelected) : -1
+    };
+    historyStack.push(state);
+    if (historyStack.length > HISTORY_MAX) historyStack.shift();
+  }
+
+  function undo() {
+    if (historyStack.length === 0) return;
+    const state = historyStack.pop();
+    // Remove existing
+    getHotspots().forEach(s => s.remove());
+    // Recreate from snapshot
+    state.spots.forEach(s => {
+      const spot = document.createElement('div');
+      spot.className = 'hotspot';
+      if (s.style) spot.setAttribute('style', s.style);
+      if (s.tip) spot.dataset.tip = s.tip;
+      if (s.headline) spot.dataset.headline = s.headline;
+      imgWrap.appendChild(spot);
+    });
+    refreshHotspots();
+    hotspots.forEach((spot, i) => decorateHotspot(spot, i));
+    editSelected = null;
+    if (state.selectedIdx >= 0 && hotspots[state.selectedIdx]) {
+      editSelected = hotspots[state.selectedIdx];
+      editSelected.classList.add('selected');
+    }
     updateReadout();
     saveHotspots();
     deactivate();
@@ -2822,6 +2892,13 @@ function initAnnotations() {
     // Copy / Reset
     if (e.key === 'c' || e.key === 'C') { e.preventDefault(); e.stopImmediatePropagation(); copyHotspotsToClipboard(); }
     if (e.key === 'r' || e.key === 'R') { e.preventDefault(); e.stopImmediatePropagation(); resetHotspots(); }
+    // Cmd/Ctrl+Z → undo (runs even if editSelected is null)
+    if ((e.metaKey || e.ctrlKey) && (e.key === 'z' || e.key === 'Z')) {
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      undo();
+      return;
+    }
     // Number keys 1-9 to select hotspot by index
     if (/^[1-9]$/.test(e.key)) {
       const idx = parseInt(e.key, 10) - 1;
