@@ -108,7 +108,7 @@
   ───────────────────────────────────── */
   .slide-title { background: var(--ink); grid-template-columns: 1fr 1fr; }
   .slide-title .left {
-    padding: 72px 64px; display: flex; flex-direction: column;
+    padding: 80px; display: flex; flex-direction: column;
     justify-content: space-between; border-right: 1.5px solid rgba(245,240,226,0.08);
   }
   .slide-title .eyebrow { color: rgba(245,240,226,0.4); }
@@ -116,7 +116,7 @@
   .slide-title h1 em { font-style: italic; color: var(--lavender); display: block; text-decoration: underline; text-decoration-color: var(--lavender-dark); text-underline-offset: 6px; }
   .slide-title .meta { display: flex; flex-direction: column; gap: 4px; }
   .slide-title .meta span { font-size: 12px; color: rgba(245,240,226,0.35); font-family: 'DM Mono', monospace; }
-  .slide-title .right { padding: 72px 64px; display: flex; flex-direction: column; justify-content: flex-end; gap: 28px; }
+  .slide-title .right { padding: 80px; display: flex; flex-direction: column; justify-content: flex-end; gap: 28px; }
   .stat-block { display: flex; flex-direction: column; gap: 4px; padding-bottom: 24px; border-bottom: 1px solid rgba(245,240,226,0.08); }
   .stat-block:last-child { border-bottom: none; padding-bottom: 0; }
   .stat-block .num { font-family: 'DM Serif Display', serif; font-size: 48px; line-height: 1; color: var(--cream); font-weight: 400; }
@@ -240,14 +240,14 @@
   }
   .phone-frame {
     position: relative;
-    width: 224px;
-    height: 580px;
+    width: 190px;
+    height: 500px;
     background: #0a0a0a;
-    border-radius: 44px;
+    border-radius: 38px;
     box-shadow:
       0 0 0 2px #3a3a3a,
       0 0 0 4px #1a1a1a,
-      0 24px 64px rgba(0,0,0,0.5);
+      0 20px 54px rgba(0,0,0,0.5);
     overflow: hidden;
     flex-shrink: 0;
   }
@@ -255,13 +255,13 @@
   .phone-frame::before {
     content: '';
     position: absolute;
-    top: 12px;
+    top: 10px;
     left: 50%;
     transform: translateX(-50%);
-    width: 72px;
-    height: 22px;
+    width: 62px;
+    height: 18px;
     background: #0a0a0a;
-    border-radius: 12px;
+    border-radius: 10px;
     z-index: 10;
   }
   /* Side buttons */
@@ -529,6 +529,22 @@
     width: 64px;
     height: 1px;
     background: rgba(196,175,240,0.4);
+  }
+  .void-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 96px;
+    line-height: 0.95;
+    color: var(--cream);
+    font-weight: 400;
+    margin-top: 4px;
+  }
+  .void-sub {
+    font-size: 14px;
+    color: rgba(245,240,226,0.45);
+    font-weight: 300;
+    max-width: 440px;
+    line-height: 1.6;
+    margin-top: 8px;
   }
 
   /* ─────────────────────────────────────
@@ -896,7 +912,7 @@
 ═══════════════════════════════════════ -->
 <div class="slide slide-statement" data-section="golf" data-type="The Audit" data-toc-group="Golf Ranch">
   <span class="st-eyebrow" style="color:var(--green-accent)">The audit</span>
-  <blockquote>The site had no CTA.<br>No lead capture.<br><em style="color:var(--green-accent)">No way to know if it was working.</em></blockquote>
+  <blockquote>The site had no CTA.<br>No lead capture.<br><em style="color:var(--green-accent)">No way to know if it was working.</em><br><span style="font-size:32px; color:rgba(245,240,226,0.4);">(It wasn't.)</span></blockquote>
   <p class="st-sub">No way to book, no way to sign up, no way to measure anything. Zero conversions tracked. The business ran entirely on walk-ins. We had no idea if the website was working — because it wasn't.</p>
 </div>
 
@@ -1118,7 +1134,7 @@
       </div>
       <div class="browser-content">
         <img
-          src="../images/golf-ranch-location.webp"
+          src="../images/golf-ranch-locations-full.png"
           alt="Golf Ranch location page"
         />
       </div>
@@ -1193,8 +1209,8 @@
       <span class="pill">AI Coach</span>
     </div>
   </div>
-  <div class="fullimg-visual" style="background:#0d2a1f; display:flex; align-items:center; justify-content:center; padding:32px 48px;">
-    <img src="../images/golf-ranch-swing-app.png" alt="Swing by Golf Ranch app" style="max-height:88%; width:auto; object-fit:contain; display:block;" />
+  <div class="fullimg-visual" style="background:#0d2a1f; display:flex; align-items:center; justify-content:center; padding:24px 32px; min-height:0; overflow:hidden;">
+    <img src="../images/golf-ranch-swing-app.png" alt="Swing by Golf Ranch app" style="max-width:100%; max-height:100%; width:auto; height:auto; object-fit:contain; display:block;" />
   </div>
 </div>
 
@@ -1208,6 +1224,8 @@
   <div class="void-content">
     <span class="void-label">Case Study 02</span>
     <div class="void-line"></div>
+    <h2 class="void-title">Inkwell.</h2>
+    <p class="void-sub">Enterprise due diligence. NDA client. In-flight rescue.</p>
   </div>
 </div>
 
@@ -1643,31 +1661,36 @@ function goTo(n) {
   if (transitioning) return;
 
   // Cinematic transition when landing on a chapter slide:
-  // Fade out current (300ms), brief pause (150ms), then show chapter.
-  // Chrome is snapped instantly (no CSS transition) at the start so the
-  // progress bar doesn't visibly slide during or after the fade.
+  // Fade out current (300ms). At the END of that fade — when the old slide
+  // is gone but the new one isn't visible yet — we update the chrome with
+  // all transitions disabled so progress bar, colors, and label snap
+  // cleanly in the "black" moment. Then we show the new slide.
   const isChapterTarget = slides[targetIndex].classList.contains('slide-chapter');
   if (isChapterTarget && current !== targetIndex) {
     transitioning = true;
     const outgoing = slides[current];
-
-    // Temporarily disable progress bar transition so it snaps, not slides
-    const prevTransition = progressBar.style.transition;
-    progressBar.style.transition = 'none';
-    _updateChrome(targetIndex);
-    progressBar.offsetHeight; // force reflow
-    progressBar.style.transition = prevTransition;
-
     outgoing.style.transition = 'opacity 0.3s ease';
     outgoing.style.opacity = '0';
     setTimeout(() => {
       outgoing.classList.remove('active');
       outgoing.style.transition = '';
       outgoing.style.opacity = '';
+
+      // Snap chrome with all transitions suppressed
+      const prevPB = progressBar.style.transition;
+      const prevSL = sectionLabel.style.transition;
+      progressBar.style.transition = 'none';
+      sectionLabel.style.transition = 'none';
+      _updateChrome(targetIndex);
+      progressBar.offsetHeight; // force reflow
+      sectionLabel.offsetHeight;
+      progressBar.style.transition = prevPB;
+      sectionLabel.style.transition = prevSL;
+
       setTimeout(() => {
         transitioning = false;
         _applySlide(targetIndex, { chromeAlreadyUpdated: true });
-      }, 150);
+      }, 100);
     }, 300);
     return;
   }
