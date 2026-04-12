@@ -2160,47 +2160,11 @@ function initAnnotations() {
     connector.classList.remove('visible');
   }
 
-  // Hover activation
+  // Hover activation only — no scroll-based auto-pick
   hotspots.forEach(spot => {
-    spot.addEventListener('mouseenter', () => {
-      hoverSpot = spot;
-      activate(spot);
-    });
-    spot.addEventListener('mouseleave', () => {
-      hoverSpot = null;
-      // Fall back to scroll-pick (or deactivate)
-      pickBestFromScroll();
-    });
+    spot.addEventListener('mouseenter', () => activate(spot));
+    spot.addEventListener('mouseleave', () => deactivate());
   });
-
-  // Scroll-driven activation — picks hotspot whose center is closest to
-  // the phone viewport center. Hover takes priority when active.
-  function pickBestFromScroll() {
-    if (hoverSpot) return; // hover wins
-    if (!screen) return;
-    const screenRect = screen.getBoundingClientRect();
-    const viewportCenter = screenRect.top + screenRect.height / 2;
-    let closest = null;
-    let closestDist = Infinity;
-    hotspots.forEach(spot => {
-      const rect = spot.getBoundingClientRect();
-      const center = rect.top + rect.height / 2;
-      // Only consider hotspots whose center sits inside the phone viewport
-      if (center < screenRect.top || center > screenRect.bottom) return;
-      const dist = Math.abs(center - viewportCenter);
-      if (dist < closestDist) {
-        closestDist = dist;
-        closest = spot;
-      }
-    });
-    if (closest) activate(closest); else deactivate();
-  }
-
-  if (screen) {
-    screen.addEventListener('scroll', pickBestFromScroll, { passive: true });
-    // Initial pick on load
-    setTimeout(pickBestFromScroll, 50);
-  }
 
   // ── Edit mode ──
   const slideAnn = document.querySelector('.slide-annotated');
