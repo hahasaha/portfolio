@@ -605,6 +605,51 @@
     padding: 40px 44px 40px 32px;
     position: relative;
   }
+  /* Hotspot edit mode — press E to toggle. Outlines + labels + arrow
+     keys to nudge positions. Ephemeral, dev-only, no build step. */
+  .slide-annotated.edit-mode .hotspot {
+    background: rgba(196,175,240,0.18);
+    outline: 1.5px dashed rgba(196,175,240,0.9);
+    cursor: pointer;
+  }
+  .slide-annotated.edit-mode .hotspot.selected {
+    background: rgba(255,140,40,0.28);
+    outline: 2px solid #ff8c28;
+  }
+  .slide-annotated.edit-mode .hotspot::before {
+    content: attr(data-num);
+    position: absolute;
+    top: 2px;
+    left: 4px;
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    color: #fff;
+    background: rgba(0,0,0,0.7);
+    padding: 1px 5px;
+    border-radius: 3px;
+  }
+  #edit-hud {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0,0,0,0.85);
+    color: var(--cream);
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    padding: 10px 16px;
+    z-index: 300;
+    letter-spacing: 0.02em;
+    border-bottom: 1px solid rgba(196,175,240,0.3);
+  }
+  .slide-annotated.edit-mode #edit-hud {
+    display: flex;
+    justify-content: space-between;
+    gap: 24px;
+  }
+  #edit-hud .hud-label { color: rgba(245,240,226,0.5); }
+  #edit-hud .hud-val { color: #ff8c28; }
   /* Connector SVG overlay — draws a dashed line from the hovered
      hotspot to the tooltip. Lives in slide-local coords (0 0 1200 675). */
   .ann-connector {
@@ -1265,6 +1310,10 @@
     <circle id="ann-dot-start" cx="0" cy="0" r="3.5" />
     <circle id="ann-dot-end"   cx="0" cy="0" r="3.5" />
   </svg>
+  <div id="edit-hud">
+    <span><span class="hud-label">EDIT MODE</span> · click a hotspot, arrow keys to nudge top%, shift for 0.1%, [ / ] to change height, E to exit</span>
+    <span id="edit-hud-readout"><span class="hud-label">selected:</span> <span class="hud-val">—</span></span>
+  </div>
 </div>
 
 <!-- ═══════════════════════════════════════
@@ -2142,6 +2191,89 @@ function initAnnotations() {
     // Initial pick on load
     setTimeout(pickBestFromScroll, 50);
   }
+
+  // ── Edit mode ──
+  const slideAnn = document.querySelector('.slide-annotated');
+  const hudReadout = document.getElementById('edit-hud-readout');
+  let editMode = false;
+  let editSelected = null;
+
+  hotspots.forEach((spot, i) => spot.setAttribute('data-num', i + 1));
+
+  function parsePct(val) {
+    const n = parseFloat(val);
+    return isNaN(n) ? 0 : n;
+  }
+  function getHotspotState(spot) {
+    const s = spot.style;
+    return {
+      top: parsePct(s.top),
+      left: parsePct(s.left),
+      width: parsePct(s.width),
+      height: parsePct(s.height)
+    };
+  }
+  function updateReadout() {
+    if (!editSelected) {
+      hudReadout.innerHTML = '<span class="hud-label">selected:</span> <span class="hud-val">—</span>';
+      return;
+    }
+    const i = hotspots.indexOf(editSelected) + 1;
+    const st = getHotspotState(editSelected);
+    const str = `top:${st.top.toFixed(1)}%; left:${st.left}%; width:${st.width}%; height:${st.height.toFixed(1)}%`;
+    hudReadout.innerHTML = `<span class="hud-label">#${i}:</span> <span class="hud-val">${str}</span>`;
+  }
+  function nudge(delta, which = 'top') {
+    if (!editSelected) return;
+    const st = getHotspotState(editSelected);
+    const next = Math.max(0, Math.min(100, st[which] + delta));
+    editSelected.style[which] = next + '%';
+    updateReadout();
+  }
+
+  function enterEditMode() {
+    editMode = true;
+    slideAnn.classList.add('edit-mode');
+    updateReadout();
+  }
+  function exitEditMode() {
+    editMode = false;
+    slideAnn.classList.remove('edit-mode');
+    if (editSelected) { editSelected.classList.remove('selected'); editSelected = null; }
+  }
+
+  hotspots.forEach(spot => {
+    spot.addEventListener('click', e => {
+      if (!editMode) return;
+      e.stopPropagation();
+      if (editSelected) editSelected.classList.remove('selected');
+      editSelected = spot;
+      spot.classList.add('selected');
+      updateReadout();
+    });
+  });
+
+  document.addEventListener('keydown', e => {
+    // Only activate edit-mode key when the annotated slide is active
+    const onAnnotated = slideAnn.classList.contains('active');
+    if (e.key === 'e' || e.key === 'E') {
+      if (!onAnnotated) return;
+      if (document.getElementById('password-gate').classList.contains('open')) return;
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      editMode ? exitEditMode() : enterEditMode();
+      return;
+    }
+    if (!editMode) return;
+    const step = e.shiftKey ? 0.1 : 1;
+    if (e.key === 'ArrowUp')    { e.preventDefault(); e.stopImmediatePropagation(); nudge(-step, 'top'); }
+    if (e.key === 'ArrowDown')  { e.preventDefault(); e.stopImmediatePropagation(); nudge( step, 'top'); }
+    if (e.key === 'ArrowLeft')  { e.preventDefault(); e.stopImmediatePropagation(); nudge(-step, 'left'); }
+    if (e.key === 'ArrowRight') { e.preventDefault(); e.stopImmediatePropagation(); nudge( step, 'left'); }
+    if (e.key === '[')          { e.preventDefault(); nudge(-step, 'height'); }
+    if (e.key === ']')          { e.preventDefault(); nudge( step, 'height'); }
+    if (e.key === 'Escape')     { if (editSelected) { editSelected.classList.remove('selected'); editSelected = null; updateReadout(); } }
+  }, true); // capture phase so it runs before the slide navigation handler
 }
 initAnnotations();
 
