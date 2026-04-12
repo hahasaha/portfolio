@@ -240,22 +240,16 @@
   }
   .phone-frame {
     position: relative;
-    width: 190px;
-    height: 412px; /* matches 1170x2532 screenshot aspect ratio at 190 wide */
+    width: 240px;
+    height: 520px;
     background: #0a0a0a;
-    border-radius: 38px;
+    border-radius: 46px;
     box-shadow:
       0 0 0 2px #3a3a3a,
       0 0 0 4px #1a1a1a,
       0 20px 54px rgba(0,0,0,0.5);
     overflow: hidden;
     flex-shrink: 0;
-  }
-  /* Larger phone for slide-scroll (scroll-preview) context */
-  .slide-scroll .phone-frame {
-    width: 240px;
-    height: 520px;
-    border-radius: 46px;
   }
   /* Notch */
   .phone-frame::before {
