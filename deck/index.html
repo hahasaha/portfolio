@@ -41,6 +41,7 @@
   .slide.active        { display: grid; }
   .slide-chapter.active,
   .slide-close.active,
+  .slide-cover.active,
   .slide-fullimg.active,
   .slide-statement.active { display: flex; }
   .slide-scroll.active { display: grid; }
@@ -56,23 +57,55 @@
   .pg.light { color: rgba(245,240,226,0.18); }
 
   /* ─────────────────────────────────────
+     SLIDE TYPE: COVER
+  ───────────────────────────────────── */
+  .slide-cover {
+    background: var(--ink);
+    width: var(--slide-w);
+    height: var(--slide-h);
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding: 80px;
+  }
+  .slide-cover .cover-name {
+    font-family: 'DM Serif Display', serif;
+    font-size: 88px;
+    line-height: 0.95;
+    color: var(--cream);
+    font-weight: 400;
+    text-align: center;
+  }
+  .slide-cover .cover-name em { font-style: italic; color: var(--lavender); }
+  .slide-cover .cover-role {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(245,240,226,0.3);
+  }
+  .slide-cover .cover-divider { width: 48px; height: 1px; background: rgba(245,240,226,0.1); }
+  .slide-cover .cover-sub { font-size: 14px; color: rgba(245,240,226,0.35); font-weight: 300; letter-spacing: 0.02em; }
+
+  /* ─────────────────────────────────────
      SLIDE TYPE: TITLE (01)
   ───────────────────────────────────── */
-  .slide-title { background: var(--cream); grid-template-columns: 1fr 1fr; }
+  .slide-title { background: var(--ink); grid-template-columns: 1fr 1fr; }
   .slide-title .left {
     padding: 72px 64px; display: flex; flex-direction: column;
-    justify-content: space-between; border-right: 1.5px solid rgba(26,26,20,0.12);
+    justify-content: space-between; border-right: 1.5px solid rgba(245,240,226,0.08);
   }
-  .slide-title .eyebrow { color: var(--muted); }
-  .slide-title h1 { font-family: 'DM Serif Display', serif; font-size: 68px; line-height: 1.0; color: var(--ink); font-weight: 400; }
-  .slide-title h1 em { font-style: italic; color: var(--lavender-dark); display: block; text-decoration: underline; text-decoration-color: var(--lavender); text-underline-offset: 6px; }
+  .slide-title .eyebrow { color: rgba(245,240,226,0.4); }
+  .slide-title h1 { font-family: 'DM Serif Display', serif; font-size: 68px; line-height: 1.0; color: var(--cream); font-weight: 400; }
+  .slide-title h1 em { font-style: italic; color: var(--lavender); display: block; text-decoration: underline; text-decoration-color: var(--lavender-dark); text-underline-offset: 6px; }
   .slide-title .meta { display: flex; flex-direction: column; gap: 4px; }
-  .slide-title .meta span { font-size: 12px; color: var(--muted); font-family: 'DM Mono', monospace; }
+  .slide-title .meta span { font-size: 12px; color: rgba(245,240,226,0.35); font-family: 'DM Mono', monospace; }
   .slide-title .right { padding: 72px 64px; display: flex; flex-direction: column; justify-content: flex-end; gap: 28px; }
-  .stat-block { display: flex; flex-direction: column; gap: 4px; padding-bottom: 24px; border-bottom: 1px solid rgba(26,26,20,0.1); }
+  .stat-block { display: flex; flex-direction: column; gap: 4px; padding-bottom: 24px; border-bottom: 1px solid rgba(245,240,226,0.08); }
   .stat-block:last-child { border-bottom: none; padding-bottom: 0; }
-  .stat-block .num { font-family: 'DM Serif Display', serif; font-size: 48px; line-height: 1; color: var(--ink); font-weight: 400; }
-  .stat-block .desc { font-size: 12px; color: var(--muted); max-width: 220px; line-height: 1.5; }
+  .stat-block .num { font-family: 'DM Serif Display', serif; font-size: 48px; line-height: 1; color: var(--cream); font-weight: 400; }
+  .stat-block .desc { font-size: 12px; color: rgba(245,240,226,0.4); max-width: 220px; line-height: 1.5; }
 
   /* ─────────────────────────────────────
      SLIDE TYPE: CHAPTER OPENER
@@ -98,6 +131,7 @@
   .slide-twocol .sidebar p { font-size: 13px; color: rgba(245,240,226,0.52); line-height: 1.75; font-weight: 300; margin-top: 16px; }
   .slide-twocol .sidebar .pill-row { display: flex; flex-wrap: wrap; gap: 8px; }
   .pill { padding: 4px 11px; background: rgba(74,158,106,0.12); border: 1px solid rgba(74,158,106,0.22); font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.08em; color: var(--green-accent); border-radius: 100px; }
+  .pill.pill-lavender { background: rgba(196,175,240,0.1); border-color: rgba(196,175,240,0.25); color: var(--lavender); }
   .slide-twocol .main { padding: 56px 52px; display: flex; flex-direction: column; justify-content: space-between; overflow: hidden; }
   .source-note { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--muted); letter-spacing: 0.06em; margin-top: 16px; }
 
@@ -339,7 +373,7 @@
      SLIDE TYPE: STATEMENT (big quote)
   ───────────────────────────────────── */
   .slide-statement {
-    background: var(--cream);
+    background: var(--ink);
     flex-direction: column;
     align-items: flex-start;
     justify-content: center;
@@ -347,9 +381,15 @@
     border-left: 5px solid var(--green-accent);
   }
   .slide-statement .st-eyebrow { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--green-accent); margin-bottom: 28px; }
-  .slide-statement blockquote { font-family: 'DM Serif Display', serif; font-size: 52px; line-height: 1.1; color: var(--ink); font-weight: 400; max-width: 900px; }
+  .slide-statement blockquote { font-family: 'DM Serif Display', serif; font-size: 52px; line-height: 1.1; color: var(--cream); font-weight: 400; max-width: 900px; }
   .slide-statement blockquote em { font-style: italic; color: var(--green-accent); }
-  .slide-statement .st-sub { font-size: 14px; color: var(--muted); max-width: 540px; line-height: 1.65; margin-top: 32px; font-weight: 300; }
+  .slide-statement .st-sub { font-size: 14px; color: rgba(245,240,226,0.5); max-width: 540px; line-height: 1.65; margin-top: 32px; font-weight: 300; }
+
+  /* ─────────────────────────────────────
+     SLIDE TYPE: SWING APP
+  ───────────────────────────────────── */
+  .slide-swing { background: #0d2a1f; grid-template-columns: 420px 1fr; }
+  .slide-swing.active { display: grid; }
 
   /* ─────────────────────────────────────
      SLIDE TYPE: CLOSE
@@ -396,10 +436,8 @@
   #toc-overlay.open { display: flex; }
   #toc-header { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.25); margin-bottom: 36px; }
   .toc-columns { display: flex; gap: 0; align-items: flex-start; }
-  .toc-col-main { min-width: 520px; }
+  .toc-col { min-width: 440px; max-width: 480px; }
   .toc-col-divider { width: 1px; background: rgba(255,255,255,0.06); align-self: stretch; margin: 0 40px; }
-  .toc-col-appendix { min-width: 280px; opacity: 0.55; }
-  .toc-col-appendix .toc-title { font-size: 20px; }
   .toc-section { margin-bottom: 4px; }
   .toc-section-label { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.18); padding-left: 16px; margin-top: 20px; margin-bottom: 4px; display: block; }
   .toc-item { display: flex; align-items: baseline; gap: 16px; cursor: pointer; padding: 9px 16px; border-radius: 4px; transition: background 0.15s; }
@@ -436,11 +474,21 @@
 <body class="atmo-intro">
 
 <!-- ═══════════════════════════════════════
+     00 — COVER
+═══════════════════════════════════════ -->
+<div class="slide slide-cover" data-section="intro" data-type="Cover" data-toc-group="Opening" data-toc-main>
+  <p class="cover-name">Sahand<br><em>Hajizadeh.</em></p>
+  <div class="cover-divider"></div>
+  <span class="cover-role">Senior Product Designer</span>
+  <span class="cover-sub">Evernote · eBay · Golf Ranch · Inkwell</span>
+</div>
+
+<!-- ═══════════════════════════════════════
      01 — TITLE
 ═══════════════════════════════════════ -->
-<div class="slide slide-title" data-section="intro" data-type="Intro">
+<div class="slide slide-title" data-section="intro" data-type="Intro" data-toc-group="Opening">
   <div class="left">
-    <span class="eyebrow" style="color:var(--muted)">Senior Product Designer — Interview Presentation</span>
+    <span class="eyebrow">Senior Product Designer — Interview Presentation</span>
     <h1>Design that<br>moves the<br><em>needle.</em></h1>
     <div class="meta">
       <span>Sahand Hajizadeh</span>
@@ -452,13 +500,66 @@
     <div class="stat-block"><span class="num">8M+</span><span class="desc">monthly active users on redesigned Evernote iOS/Android</span></div>
     <div class="stat-block"><span class="num">$1M</span><span class="desc">revenue at launch, Flo Recruit candidate portal</span></div>
   </div>
-  <span class="pg">01</span>
 </div>
 
 <!-- ═══════════════════════════════════════
-     02 — EVERNOTE (supporting mention)
+     WHO I AM
 ═══════════════════════════════════════ -->
-<div class="slide slide-fullimg" data-section="evernote" data-type="Evernote">
+<div class="slide slide-twocol" data-section="intro" data-type="Who I Am" data-toc-group="Opening">
+  <div class="sidebar">
+    <div>
+      <span class="s-eyebrow">Designer + builder</span>
+      <h3>I move fast,<br>jam hard, and<br>care about the<br>last 20%.</h3>
+      <p>10+ years designing products people actually use. Mobile-first by default. AI-native by choice. I do the first 10%, let AI handle the middle 80, and own the last 10% — because that's where the craft lives.</p>
+    </div>
+    <div class="pill-row">
+      <span class="pill">Mobile-first</span>
+      <span class="pill">AI-native</span>
+      <span class="pill">Interaction design</span>
+      <span class="pill">Design systems</span>
+      <span class="pill">0→1</span>
+    </div>
+  </div>
+  <div class="main">
+    <div class="insight-grid">
+      <div class="insight-cell accent-green">
+        <span class="ic-num">10+</span>
+        <span class="ic-label">years of product design</span>
+      </div>
+      <div class="insight-cell">
+        <span class="ic-num">8M+</span>
+        <span class="ic-label">users on redesigned Evernote</span>
+      </div>
+      <div class="insight-cell">
+        <span class="ic-num">4×</span>
+        <span class="ic-label">membership growth, Golf Ranch</span>
+      </div>
+      <div class="insight-cell accent-lavender">
+        <span class="ic-num">$1M</span>
+        <span class="ic-label">revenue at launch, Flo Recruit</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     WHAT I BELIEVE
+═══════════════════════════════════════ -->
+<div class="slide slide-statement" data-section="intro" data-type="What I Believe" data-toc-group="Opening" style="border-left: 5px solid var(--lavender-dark);">
+  <span class="st-eyebrow" style="color:var(--lavender)">What I believe</span>
+  <div style="max-width:900px;">
+    <div style="font-family:'DM Serif Display',serif; font-size:36px; color:var(--cream); line-height:1.3; font-weight:400;">Affordances aren't optional. Confusion is a design failure.</div>
+    <div style="border-top:1px solid rgba(245,240,226,0.08); margin:28px 0;"></div>
+    <div style="font-family:'DM Serif Display',serif; font-size:36px; color:var(--cream); line-height:1.3; font-weight:400;">Design the moment it breaks, not the moment it works.</div>
+    <div style="border-top:1px solid rgba(245,240,226,0.08); margin:28px 0;"></div>
+    <div style="font-family:'DM Serif Display',serif; font-size:36px; color:var(--cream); line-height:1.3; font-weight:400;">A design system isn't a component library. It's the language users learn to trust.</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     EVERNOTE REDESIGN
+═══════════════════════════════════════ -->
+<div class="slide slide-fullimg" data-section="evernote" data-type="Evernote" data-toc-group="Opening">
   <div class="fullimg-text" style="background:#0f0f0f; border-right-color:rgba(255,255,255,0.05);">
     <div>
       <span class="f-eyebrow" style="color:var(--lavender)">Background</span>
@@ -476,13 +577,36 @@
       style="max-height:580px; width:auto; border-radius:4px; box-shadow: 0 24px 64px rgba(0,0,0,0.7);"
     />
   </div>
-  <span class="pg light">02</span>
 </div>
 
 <!-- ═══════════════════════════════════════
-     03 — GOLF RANCH CHAPTER
+     EVERNOTE DESIGN SYSTEM
 ═══════════════════════════════════════ -->
-<div class="slide slide-chapter golf-bg" data-section="golf" data-type="Case Study">
+<div class="slide slide-fullimg" data-section="evernote" data-type="Design System" data-toc-group="Opening">
+  <div class="fullimg-text" style="background:#0f0f0f; border-right-color:rgba(255,255,255,0.05);">
+    <div>
+      <span class="f-eyebrow" style="color:var(--lavender)">Design system</span>
+      <h3 style="color:var(--cream);">240+ components.<br>Every platform.<br><em style="color:var(--lavender)">One language.</em></h3>
+      <p style="color:rgba(245,240,226,0.45);">Built the Evernote design system from scratch — iOS, Android, iPad, Apple Watch, widgets. Not just a component library. A shared visual language that scaled across platforms and teams for years.</p>
+    </div>
+    <div style="display:flex; gap:32px; margin-top:20px;">
+      <div><span style="font-family:'DM Serif Display',serif; font-size:28px; color:var(--cream); display:block;">240+</span><span style="font-family:'DM Mono',monospace; font-size:9px; color:var(--muted); letter-spacing:0.06em;">components</span></div>
+      <div><span style="font-family:'DM Serif Display',serif; font-size:28px; color:var(--cream); display:block;">4</span><span style="font-family:'DM Mono',monospace; font-size:9px; color:var(--muted); letter-spacing:0.06em;">platforms</span></div>
+    </div>
+  </div>
+  <div class="fullimg-visual" style="background:#0f0f0f; display:flex; align-items:center; justify-content:center; padding:32px;">
+    <img
+      src="../images/evernote-components.png"
+      alt="Evernote design system components"
+      style="max-height:580px; width:auto; border-radius:4px; box-shadow: 0 24px 64px rgba(0,0,0,0.7);"
+    />
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     GOLF RANCH CHAPTER
+═══════════════════════════════════════ -->
+<div class="slide slide-chapter golf-bg" data-section="golf" data-type="Case Study" data-toc-group="Golf Ranch" data-toc-main>
   <span class="chapter-eyebrow">Case Study 01 of 02</span>
   <h2>Golf<br><em>Ranch.</em></h2>
   <p class="sub">Six premium driving range locations across the US. 90% mobile traffic. A site that wasn't keeping up. I rebuilt it from the ground up.</p>
@@ -494,23 +618,21 @@
     <span class="tag">SEO</span>
     <span class="tag">Webflow</span>
   </div>
-  <span class="pg light">03</span>
 </div>
 
 <!-- ═══════════════════════════════════════
      04 — THE PROBLEM
 ═══════════════════════════════════════ -->
-<div class="slide slide-statement" data-section="golf" data-type="The Problem">
+<div class="slide slide-statement" data-section="golf" data-type="The Problem" data-toc-group="Golf Ranch">
   <span class="st-eyebrow">The problem</span>
   <blockquote>The site looked like a<br>brochure, not a<br><em>growth tool.</em></blockquote>
   <p class="st-sub">No clear CTA above the fold. No lead capture. No local SEO. 90% mobile traffic hitting a desktop-first layout. Every visitor the business earned was leaking straight out.</p>
-  <span class="pg">04</span>
 </div>
 
 <!-- ═══════════════════════════════════════
      05 — MOBILE FIRST
 ═══════════════════════════════════════ -->
-<div class="slide slide-mobile" data-section="golf" data-type="Mobile First">
+<div class="slide slide-mobile" data-section="golf" data-type="Mobile First" data-toc-group="Golf Ranch">
   <div class="mob-left">
     <div>
       <span class="mob-eyebrow">Design principle</span>
@@ -532,13 +654,12 @@
       </div>
     </div>
   </div>
-  <span class="pg light">05</span>
 </div>
 
 <!-- ═══════════════════════════════════════
      06 — LEAD GENERATION
 ═══════════════════════════════════════ -->
-<div class="slide slide-fullimg" data-section="golf" data-type="Lead Gen">
+<div class="slide slide-fullimg" data-section="golf" data-type="Lead Gen" data-toc-group="Golf Ranch">
   <div class="fullimg-text">
     <div>
       <span class="f-eyebrow">Lead generation</span>
@@ -555,13 +676,12 @@
       data-caption="Golf Ranch · Free Bucket page · 10K+ leads/month · #1 page on site"
     />
   </div>
-  <span class="pg light">06</span>
 </div>
 
 <!-- ═══════════════════════════════════════
      07 — MEMBERSHIP
 ═══════════════════════════════════════ -->
-<div class="slide slide-fullimg" data-section="golf" data-type="Membership">
+<div class="slide slide-fullimg" data-section="golf" data-type="Membership" data-toc-group="Golf Ranch">
   <div class="fullimg-text">
     <div>
       <span class="f-eyebrow">Membership</span>
@@ -578,13 +698,12 @@
       data-caption="Golf Ranch · Ranch Pass membership page · 4× signup increase"
     />
   </div>
-  <span class="pg light">07</span>
 </div>
 
 <!-- ═══════════════════════════════════════
      08 — OFFERS + SOCIAL PROOF
 ═══════════════════════════════════════ -->
-<div class="slide slide-compare" data-section="golf" data-type="Offers + Trust">
+<div class="slide slide-compare" data-section="golf" data-type="Offers + Trust" data-toc-group="Golf Ranch">
   <div class="compare-pane">
     <span class="compare-label" style="color:var(--green-accent); font-family:'DM Mono',monospace; font-size:10px; letter-spacing:0.14em; text-transform:uppercase;">↳ Offer pages</span>
     <div class="compare-img-wrap">
@@ -609,13 +728,12 @@
     </div>
     <span class="compare-note">Reviews weren't tucked away at the bottom. People trust people. Placed where it converts.</span>
   </div>
-  <span class="pg">08</span>
 </div>
 
 <!-- ═══════════════════════════════════════
      09 — LOCATION PAGES + SEO (scrollable preview)
 ═══════════════════════════════════════ -->
-<div class="slide slide-scroll" data-section="golf" data-type="SEO + Location">
+<div class="slide slide-scroll" data-section="golf" data-type="SEO + Location" data-toc-group="Golf Ranch">
   <div class="scroll-text">
     <div>
       <span class="sc-eyebrow">SEO + Location pages</span>
@@ -643,13 +761,12 @@
     </div>
     <div class="scroll-badge">↕ Scroll</div>
   </div>
-  <span class="pg light">09</span>
 </div>
 
 <!-- ═══════════════════════════════════════
      10 — RESULTS
 ═══════════════════════════════════════ -->
-<div class="slide slide-twocol" data-section="golf" data-type="Results">
+<div class="slide slide-twocol" data-section="golf" data-type="Results" data-toc-group="Golf Ranch">
   <div class="sidebar">
     <div>
       <span class="s-eyebrow">The outcome</span>
@@ -684,23 +801,43 @@
     </div>
     <span class="source-note">↳ Data as of April 2026 · SEO launched March 2026 · ongoing</span>
   </div>
-  <span class="pg">10</span>
 </div>
 
 <!-- ═══════════════════════════════════════
      11 — WHAT'S NEXT (Swing app bridge)
 ═══════════════════════════════════════ -->
-<div class="slide slide-statement" data-section="golf" data-type="What's Next">
+<div class="slide slide-statement" data-section="golf" data-type="What's Next" data-toc-group="Golf Ranch">
   <span class="st-eyebrow">What's next</span>
   <blockquote>The web results opened<br>the door to a<br><em>bigger conversation.</em></blockquote>
   <p class="st-sub">Now designing the Swing by Golf Ranch mobile app — a companion experience for members with session tracking, leaderboards, and location tools. 0→1, in progress. The site was the foundation.</p>
-  <span class="pg">11</span>
 </div>
 
 <!-- ═══════════════════════════════════════
-     12 — INKWELL CHAPTER
+     12 — SWING APP
 ═══════════════════════════════════════ -->
-<div class="slide slide-chapter inkwell-bg" data-section="inkwell" data-type="Case Study">
+<div class="slide slide-swing" data-section="golf" data-type="Swing App" data-toc-group="Golf Ranch">
+  <div class="fullimg-text" style="background:#0d2a1f; border-right:1px solid rgba(245,240,226,0.06);">
+    <div>
+      <span class="f-eyebrow" style="color:var(--green-accent)">What's next</span>
+      <h3 style="color:var(--cream);">Swing by<br><em style="color:var(--green-accent)">Golf Ranch.</em></h3>
+      <p style="color:rgba(245,240,226,0.48);">0→1 mobile app. AI swing analysis, session tracking, leaderboards, and location tools. Designing the companion experience for Ranch Pass members.</p>
+    </div>
+    <div class="pill-row" style="display:flex; flex-wrap:wrap; gap:6px;">
+      <span class="pill">iOS</span>
+      <span class="pill">0→1</span>
+      <span class="pill">Mobile</span>
+      <span class="pill">AI Coach</span>
+    </div>
+  </div>
+  <div class="fullimg-visual" style="background:#0d2a1f; display:flex; align-items:center; justify-content:center; padding:32px 48px;">
+    <img src="../images/golf-ranch-swing-app.png" alt="Swing by Golf Ranch app" style="max-height:88%; width:auto; object-fit:contain; display:block;" />
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     13 — INKWELL CHAPTER
+═══════════════════════════════════════ -->
+<div class="slide slide-chapter inkwell-bg" data-section="inkwell" data-type="Case Study" data-toc-group="Inkwell" data-toc-main>
   <span class="chapter-eyebrow" style="color:var(--lavender)">Case Study 02 of 02</span>
   <h2 style="color:var(--cream)">Inkwell<br><span style="font-style:italic;color:var(--lavender)">/ WDI.</span></h2>
   <p class="sub">Enterprise UX for a major entertainment client. Joined mid-flight, diagnosed fast, shipped meaningful interaction improvements under a tight deadline.</p>
@@ -710,23 +847,21 @@
     <span class="tag">In-flight</span>
     <span class="tag">NDA</span>
   </div>
-  <span class="pg light">12</span>
 </div>
 
 <!-- ═══════════════════════════════════════
-     13 — THE SITUATION
+     14 — THE SITUATION
 ═══════════════════════════════════════ -->
-<div class="slide slide-statement" data-section="inkwell" data-type="The Situation" style="border-left-color:var(--lavender);">
+<div class="slide slide-statement" data-section="inkwell" data-type="The Situation" data-toc-group="Inkwell" style="border-left-color:var(--lavender);">
   <span class="st-eyebrow" style="color:var(--lavender)">The situation</span>
   <blockquote>Joined mid-flight.<br>No design handoff.<br><em style="color:var(--lavender)">One designer.</em></blockquote>
   <p class="st-sub">A due diligence platform for a major entertainment company. Complex GIS mapping, scenario comparison, flag annotation, AI assistant — all in flight. My job: assess fast, earn trust, ship meaningful work before the deadline.</p>
-  <span class="pg">13</span>
 </div>
 
 <!-- ═══════════════════════════════════════
-     14 — THE THINKING
+     15 — THE THINKING
 ═══════════════════════════════════════ -->
-<div class="slide slide-fullimg" data-section="inkwell" data-type="The Thinking">
+<div class="slide slide-fullimg" data-section="inkwell" data-type="The Thinking" data-toc-group="Inkwell">
   <div class="fullimg-text" style="background:#0e0e1a; border-right-color:rgba(255,255,255,0.05);">
     <div>
       <span class="f-eyebrow" style="color:var(--lavender)">Process</span>
@@ -744,13 +879,12 @@
       data-caption="Inkwell · Comparison View brainstorm · FigJam"
     />
   </div>
-  <span class="pg light">14</span>
 </div>
 
 <!-- ═══════════════════════════════════════
-     15 — COMPARISON VIEW
+     16 — COMPARISON VIEW
 ═══════════════════════════════════════ -->
-<div class="slide slide-compare" data-section="inkwell" data-type="Comparison View" style="background:var(--ink);">
+<div class="slide slide-compare" data-section="inkwell" data-type="Comparison View" data-toc-group="Inkwell" style="background:var(--ink);">
   <div class="compare-pane" style="border-right-color:rgba(245,240,226,0.06);">
     <span class="compare-label" style="color:var(--lavender)">↳ Before</span>
     <div class="compare-img-wrap">
@@ -777,13 +911,12 @@
     </div>
     <span class="compare-note" style="color:rgba(245,240,226,0.4)">Scenario Insights, Top Cost Drivers, Scores, full flag breakdown. Same data — completely different decision-making tool.</span>
   </div>
-  <span class="pg light">15</span>
 </div>
 
 <!-- ═══════════════════════════════════════
-     16 — VIOLATION MODAL
+     17 — VIOLATION MODAL
 ═══════════════════════════════════════ -->
-<div class="slide slide-fullimg" data-section="inkwell" data-type="Violation Modal">
+<div class="slide slide-fullimg" data-section="inkwell" data-type="Violation Modal" data-toc-group="Inkwell">
   <div class="fullimg-text" style="background:#0e0e1a; border-right-color:rgba(255,255,255,0.05);">
     <div>
       <span class="f-eyebrow" style="color:var(--lavender)">Interaction design</span>
@@ -801,13 +934,12 @@
       data-caption="Inkwell · Violation Details Modal · comments + pin + hide states"
     />
   </div>
-  <span class="pg light">16</span>
 </div>
 
 <!-- ═══════════════════════════════════════
-     17 — THE SYSTEM
+     18 — THE SYSTEM
 ═══════════════════════════════════════ -->
-<div class="slide slide-compare" data-section="inkwell" data-type="The System" style="background:var(--ink);">
+<div class="slide slide-compare" data-section="inkwell" data-type="The System" data-toc-group="Inkwell" style="background:var(--ink);">
   <div class="compare-pane" style="border-right-color:rgba(245,240,226,0.06);">
     <span class="compare-label" style="color:var(--lavender)">↳ Rulebook</span>
     <div class="compare-img-wrap">
@@ -834,24 +966,23 @@
     </div>
     <span class="compare-note" style="color:rgba(245,240,226,0.4)">Dynamic contextual toolbar. Different actions surface depending on what's selected — scenario, comparable, note, flag, GIS point. Fully specced for eng.</span>
   </div>
-  <span class="pg light">17</span>
 </div>
 
 <!-- ═══════════════════════════════════════
-     18 — THE PRODUCT
+     19 — THE PRODUCT
 ═══════════════════════════════════════ -->
-<div class="slide slide-fullimg" data-section="inkwell" data-type="The Product">
+<div class="slide slide-fullimg" data-section="inkwell" data-type="The Product" data-toc-group="Inkwell">
   <div class="fullimg-text" style="background:#0e0e1a; border-right-color:rgba(255,255,255,0.05);">
     <div>
       <span class="f-eyebrow" style="color:var(--lavender)">The product</span>
       <h3 style="color:var(--cream);">Dark. Dense.<br><em style="color:var(--lavender)">Deliberate.</em></h3>
       <p>The full product — GIS map, insights panel, AI assistant, action bar — all designed as a cohesive system. Enterprise tooling that analysts actually want to use.</p>
     </div>
-    <div class="tag-row">
-      <span class="tag" style="border-color:rgba(196,175,240,0.25); color:rgba(196,175,240,0.5)">GIS Mapping</span>
-      <span class="tag" style="border-color:rgba(196,175,240,0.25); color:rgba(196,175,240,0.5)">AI Assistant</span>
-      <span class="tag" style="border-color:rgba(196,175,240,0.25); color:rgba(196,175,240,0.5)">Enterprise UX</span>
-      <span class="tag" style="border-color:rgba(196,175,240,0.25); color:rgba(196,175,240,0.5)">Dark Mode</span>
+    <div class="pill-row" style="display:flex; flex-wrap:wrap; gap:6px;">
+      <span class="pill pill-lavender">GIS Mapping</span>
+      <span class="pill pill-lavender">AI Assistant</span>
+      <span class="pill pill-lavender">Enterprise UX</span>
+      <span class="pill pill-lavender">Dark Mode</span>
     </div>
   </div>
   <div class="fullimg-visual">
@@ -863,66 +994,37 @@
       data-caption="Inkwell · Full product · GIS map + AI Assistant panel"
     />
   </div>
-  <span class="pg light">18</span>
 </div>
 
 <!-- ═══════════════════════════════════════
-     19 — REFLECTION
+     20 — REFLECTION
 ═══════════════════════════════════════ -->
-<div class="slide slide-statement" data-section="inkwell" data-type="Reflection" style="border-left: 5px solid var(--lavender);">
+<div class="slide slide-statement" data-section="inkwell" data-type="Reflection" data-toc-group="Inkwell" style="border-left: 5px solid var(--lavender);">
   <span class="st-eyebrow" style="color:var(--lavender)">Reflection</span>
   <blockquote>Shipped meaningful work<br>in a system I<br><em style="color:var(--lavender)">didn't build.</em></blockquote>
   <p class="st-sub">Joined with no design handoff, no component library, no runway. Left with a specced, shipped, cohesive product that a Fortune 500 client relies on. That's the job.</p>
-  <span class="pg">19</span>
 </div>
 
 <!-- ═══════════════════════════════════════
-     20 — CLOSE
+     21 — CLOSE
 ═══════════════════════════════════════ -->
-<div class="slide slide-close" data-section="close" data-type="Close">
+<div class="slide slide-close" data-section="close" data-type="Close" data-toc-group="Close" data-toc-main>
   <p class="big-line">Let's build<br>something<br><em>great.</em></p>
   <div class="contact-row">
     <div class="contact-item"><span class="c-label">Email</span><span class="c-val">sahandhajizadeh@gmail.com</span></div>
     <div class="contact-item"><span class="c-label">Portfolio</span><span class="c-val">sahand-hajizadeh.vercel.app</span></div>
     <div class="contact-item"><span class="c-label">LinkedIn</span><span class="c-val">linkedin.com/in/sahandh</span></div>
   </div>
-  <span class="pg light">20</span>
-</div>
-
-<!-- ═══════════════════════════════════════
-     APPENDIX — future case study expansions
-═══════════════════════════════════════ -->
-
-<!-- A1 — EVERNOTE (placeholder — to be built out) -->
-<div class="slide slide-fullimg" data-section="evernote" data-type="Evernote" data-appendix="true">
-  <div class="fullimg-text" style="background:#0f0f0f; border-right-color:rgba(255,255,255,0.05);">
-    <div>
-      <span class="f-eyebrow" style="color:var(--lavender)">Background</span>
-      <h3 style="color:var(--cream);">5 years.<br>8M+ users.<br><em style="color:var(--lavender)">iOS + Android.</em></h3>
-      <p style="color:rgba(245,240,226,0.45);">Led the full Evernote mobile redesign — iOS, Android, and iPad. Built a 240+ component design system that scaled across platforms and teams.</p>
-    </div>
-    <div style="display:flex; flex-direction:column; gap:8px;">
-      <span style="font-family:'DM Mono',monospace; font-size:9px; letter-spacing:0.1em; text-transform:uppercase; color:rgba(245,240,226,0.18);">8M+ MAU · 240+ components · 5 years</span>
-    </div>
-  </div>
-  <div class="fullimg-visual" style="background:#0f0f0f; display:flex; align-items:center; justify-content:center; padding:32px;">
-    <img
-      src="../images/Evernote-Redesign.gif"
-      alt="Evernote mobile redesign"
-      style="max-height:580px; width:auto; border-radius:4px; box-shadow: 0 24px 64px rgba(0,0,0,0.7);"
-    />
-  </div>
-  <span class="pg light">A1</span>
 </div>
 
 <!-- ── CHROME ── -->
 <div id="progress-bar"></div>
 <div id="nav">
   <button id="prev-btn" disabled>←</button>
-  <span id="slide-counter">01 / 20</span>
+  <span id="slide-counter"></span>
   <button id="next-btn">→</button>
   <div class="nav-divider"></div>
-  <span id="slide-type">Intro</span>
+  <span id="slide-type"></span>
   <div class="nav-divider"></div>
   <button id="toc-btn">Contents</button>
 </div>
@@ -930,55 +1032,11 @@
 <!-- ── TOC ── -->
 <div id="toc-overlay">
   <p id="toc-header">Presentation Contents</p>
-
   <div class="toc-columns">
-    <div class="toc-col-main">
-      <div class="toc-section">
-        <span class="toc-section-label">Opening</span>
-        <div class="toc-item" data-slide="0"><span class="toc-num">01</span><div><div class="toc-title">Introduction</div></div></div>
-      </div>
-
-      <div class="toc-section">
-        <span class="toc-section-label">Case Study 01 — Golf Ranch</span>
-        <div class="toc-item" data-slide="2"><span class="toc-num">03</span><div><div class="toc-title">Golf Ranch</div></div></div>
-        <div class="toc-sub-item" data-slide="3"><span class="toc-sub-num">↳</span><span class="toc-sub-title">The problem</span></div>
-        <div class="toc-sub-item" data-slide="4"><span class="toc-sub-num">↳</span><span class="toc-sub-title">Mobile first</span></div>
-        <div class="toc-sub-item" data-slide="5"><span class="toc-sub-num">↳</span><span class="toc-sub-title">Lead generation</span></div>
-        <div class="toc-sub-item" data-slide="6"><span class="toc-sub-num">↳</span><span class="toc-sub-title">Membership</span></div>
-        <div class="toc-sub-item" data-slide="7"><span class="toc-sub-num">↳</span><span class="toc-sub-title">Offers + trust</span></div>
-        <div class="toc-sub-item" data-slide="8"><span class="toc-sub-num">↳</span><span class="toc-sub-title">SEO + location pages</span></div>
-        <div class="toc-sub-item" data-slide="9"><span class="toc-sub-num">↳</span><span class="toc-sub-title">Results</span></div>
-        <div class="toc-sub-item" data-slide="10"><span class="toc-sub-num">↳</span><span class="toc-sub-title">What's next</span></div>
-      </div>
-
-      <div class="toc-section">
-        <span class="toc-section-label">Case Study 02 — Inkwell</span>
-        <div class="toc-item" data-slide="11"><span class="toc-num">12</span><div><div class="toc-title">Inkwell</div></div></div>
-        <div class="toc-sub-item" data-slide="12"><span class="toc-sub-num">↳</span><span class="toc-sub-title">The situation</span></div>
-        <div class="toc-sub-item" data-slide="13"><span class="toc-sub-num">↳</span><span class="toc-sub-title">The thinking</span></div>
-        <div class="toc-sub-item" data-slide="14"><span class="toc-sub-num">↳</span><span class="toc-sub-title">Comparison view</span></div>
-        <div class="toc-sub-item" data-slide="15"><span class="toc-sub-num">↳</span><span class="toc-sub-title">Violation modal</span></div>
-        <div class="toc-sub-item" data-slide="16"><span class="toc-sub-num">↳</span><span class="toc-sub-title">The system</span></div>
-        <div class="toc-sub-item" data-slide="17"><span class="toc-sub-num">↳</span><span class="toc-sub-title">The product</span></div>
-        <div class="toc-sub-item" data-slide="18"><span class="toc-sub-num">↳</span><span class="toc-sub-title">Reflection</span></div>
-      </div>
-
-      <div class="toc-section">
-        <span class="toc-section-label">Close</span>
-        <div class="toc-item" data-slide="19"><span class="toc-num">20</span><div><div class="toc-title">Let's build something great</div></div></div>
-      </div>
-    </div>
-
+    <div class="toc-col" id="toc-col-left"></div>
     <div class="toc-col-divider"></div>
-
-    <div class="toc-col-appendix">
-      <div class="toc-section">
-        <span class="toc-section-label">Appendix</span>
-        <div class="toc-item" data-slide="20"><span class="toc-num">A1</span><div><div class="toc-title">Evernote</div></div></div>
-      </div>
-    </div>
+    <div class="toc-col" id="toc-col-right"></div>
   </div>
-
   <button id="toc-close">ESC to close</button>
 </div>
 
@@ -989,108 +1047,187 @@
 </div>
 
 <script>
-  const slides     = document.querySelectorAll('.slide');
-  const total      = slides.length;
-  const mainTotal  = 20; // slides 0–19 are the main deck; 20+ are appendix
-  let current      = 0;
+const slides     = document.querySelectorAll('.slide');
+const total      = slides.length;
+let current      = 0;
 
-  const prevBtn     = document.getElementById('prev-btn');
-  const nextBtn     = document.getElementById('next-btn');
-  const counter     = document.getElementById('slide-counter');
-  const progressBar = document.getElementById('progress-bar');
-  const slideType   = document.getElementById('slide-type');
-  const tocOverlay  = document.getElementById('toc-overlay');
-  const tocBtn      = document.getElementById('toc-btn');
-  const tocClose    = document.getElementById('toc-close');
-  const lightbox    = document.getElementById('lightbox');
-  const lightboxImg = document.getElementById('lightbox-img');
-  const lightboxCap = document.getElementById('lightbox-caption');
+const prevBtn     = document.getElementById('prev-btn');
+const nextBtn     = document.getElementById('next-btn');
+const counter     = document.getElementById('slide-counter');
+const progressBar = document.getElementById('progress-bar');
+const slideType   = document.getElementById('slide-type');
+const tocOverlay  = document.getElementById('toc-overlay');
+const tocBtn      = document.getElementById('toc-btn');
+const tocClose    = document.getElementById('toc-close');
+const lightbox    = document.getElementById('lightbox');
+const lightboxImg = document.getElementById('lightbox-img');
+const lightboxCap = document.getElementById('lightbox-caption');
 
-  const allTocItems = document.querySelectorAll('.toc-item, .toc-sub-item');
-  const atmoMap = { intro:'atmo-intro', golf:'atmo-golf', evernote:'atmo-evernote', inkwell:'atmo-inkwell', close:'atmo-close' };
+const atmoMap = { intro:'atmo-intro', golf:'atmo-golf', evernote:'atmo-evernote', inkwell:'atmo-inkwell', close:'atmo-close' };
 
-  function goTo(n) {
-    slides[current].classList.remove('active');
-    allTocItems.forEach(i => { if (parseInt(i.dataset.slide) === current) i.classList.remove('current'); });
-    current = Math.max(0, Math.min(n, total - 1));
-    slides[current].classList.add('active');
-    allTocItems.forEach(i => { if (parseInt(i.dataset.slide) === current) i.classList.add('current'); });
+// ── Auto-generate page numbers ──
+slides.forEach((s, i) => {
+  const pg = document.createElement('span');
+  const isLightBg = s.classList.contains('slide-compare') && !s.style.background;
+  const isTwocol = s.classList.contains('slide-twocol');
+  pg.className = (isLightBg || isTwocol) ? 'pg' : 'pg light';
+  pg.textContent = String(i + 1).padStart(2, '0');
+  s.appendChild(pg);
+});
 
-    // Counter: main deck shows "01 / 13", appendix shows "A1", "A2", etc.
-    if (current < mainTotal) {
-      counter.textContent = `${String(current+1).padStart(2,'0')} / ${String(mainTotal).padStart(2,'0')}`;
-    } else {
-      counter.textContent = `A${current - mainTotal + 1}`;
+// ── Auto-generate TOC ──
+// Split sections across two columns: left = Opening + Golf Ranch, right = Inkwell + Close
+const tocColumnMap = {
+  'Opening': 'left',
+  'Golf Ranch': 'left',
+  'Inkwell': 'right',
+  'Close': 'right'
+};
+
+const tocLabelMap = {
+  'Opening': 'Opening',
+  'Golf Ranch': 'Case Study 01',
+  'Inkwell': 'Case Study 02',
+  'Close': 'Close'
+};
+
+// Display name override for main chapter items (so "Case Study" becomes "Golf Ranch", etc.)
+const tocMainTitleMap = {
+  'Opening': 'Start',
+  'Golf Ranch': 'Golf Ranch',
+  'Inkwell': 'Inkwell',
+  'Close': "Let's build"
+};
+
+function buildTOC() {
+  const colLeft = document.getElementById('toc-col-left');
+  const colRight = document.getElementById('toc-col-right');
+  const sectionOrder = [];
+  const sections = {};
+
+  slides.forEach((s, i) => {
+    const group = s.dataset.tocGroup;
+    if (!group) return;
+    if (!sections[group]) {
+      sections[group] = [];
+      sectionOrder.push(group);
     }
-
-    prevBtn.disabled = current === 0;
-    nextBtn.disabled = current === total - 1;
-
-    // Progress bar: based on main deck for main slides, full for appendix
-    if (current < mainTotal) {
-      progressBar.style.width = `${((current+1)/mainTotal)*100}%`;
-    } else {
-      progressBar.style.width = '100%';
-    }
-
-    slideType.textContent = slides[current].dataset.type || '';
-    document.body.className = atmoMap[slides[current].dataset.section] || 'atmo-intro';
-  }
-
-  prevBtn.addEventListener('click', () => goTo(current - 1));
-  nextBtn.addEventListener('click', () => goTo(current + 1));
-
-  document.addEventListener('keydown', e => {
-    if (lightbox.classList.contains('open') || lightbox.style.display==='flex') { if (e.key==='Escape') closeLightbox(); return; }
-    if (tocOverlay.classList.contains('open')) { if (e.key==='Escape') tocOverlay.classList.remove('open'); return; }
-    // Don't hijack arrow keys if user is scrolling inside a preview pane
-    const active = document.activeElement;
-    if (active && (active.classList.contains('browser-content') || active.classList.contains('phone-screen'))) return;
-    if (['ArrowRight','ArrowDown',' '].includes(e.key)) { e.preventDefault(); goTo(current+1); }
-    if (['ArrowLeft','ArrowUp'].includes(e.key)) { e.preventDefault(); goTo(current-1); }
-    if (e.key==='t'||e.key==='T') tocOverlay.classList.toggle('open');
+    sections[group].push({ index: i, slide: s });
   });
 
-  tocBtn.addEventListener('click', () => tocOverlay.classList.toggle('open'));
-  tocClose.addEventListener('click', () => tocOverlay.classList.remove('open'));
-  tocOverlay.addEventListener('click', e => { if (e.target===tocOverlay) tocOverlay.classList.remove('open'); });
-  allTocItems.forEach(item => item.addEventListener('click', () => { goTo(parseInt(item.dataset.slide)); tocOverlay.classList.remove('open'); }));
+  sectionOrder.forEach(group => {
+    const target = tocColumnMap[group] === 'right' ? colRight : colLeft;
+    const sec = document.createElement('div');
+    sec.className = 'toc-section';
 
-  // Lightbox
-  function openLightbox(img) {
-    const rect = img.getBoundingClientRect();
-    const vw = window.innerWidth, vh = window.innerHeight;
-    const originX = ((rect.left + rect.width/2) / vw * 100).toFixed(1) + 'vw';
-    const originY = ((rect.top + rect.height/2) / vh * 100).toFixed(1) + 'vh';
-    lightboxImg.src = img.src;
-    lightboxImg.style.transformOrigin = `${originX} ${originY}`;
-    lightboxCap.textContent = img.dataset.caption || '';
-    lightboxImg.classList.remove('lb-animating','lb-open','lb-closing');
-    lightbox.classList.add('open');
-    lightboxImg.offsetHeight;
-    lightboxImg.classList.add('lb-animating','lb-open');
-  }
+    const label = document.createElement('span');
+    label.className = 'toc-section-label';
+    label.textContent = tocLabelMap[group] || group;
+    sec.appendChild(label);
 
-  function closeLightbox() {
-    lightboxImg.classList.remove('lb-open');
-    lightboxImg.classList.add('lb-closing');
-    lightbox.classList.remove('open');
-    lightbox.style.display = 'flex';
-    lightbox.style.pointerEvents = 'none';
-    setTimeout(() => {
-      lightbox.style.display = '';
-      lightbox.style.pointerEvents = '';
-      lightboxImg.classList.remove('lb-animating','lb-closing');
-      lightboxImg.src = '';
-    }, 220);
-  }
+    sections[group].forEach(({ index, slide }, i) => {
+      const isMain = slide.hasAttribute('data-toc-main');
+      const num = String(index + 1).padStart(2, '0');
+      const name = slide.dataset.type || '';
 
-  lightbox.addEventListener('click', () => closeLightbox());
-  document.querySelectorAll('img.zoomable').forEach(img => {
-    img.addEventListener('click', e => { e.stopPropagation(); openLightbox(img); });
+      if (isMain) {
+        const item = document.createElement('div');
+        item.className = 'toc-item';
+        item.dataset.slide = index;
+        // Use chapter-name override for main items when available
+        const displayName = tocMainTitleMap[group] || name;
+        item.innerHTML = '<span class="toc-num">' + num + '</span><div><div class="toc-title">' + displayName + '</div></div>';
+        item.addEventListener('click', () => { goTo(index); tocOverlay.classList.remove('open'); });
+        sec.appendChild(item);
+      } else {
+        const item = document.createElement('div');
+        item.className = 'toc-sub-item';
+        item.dataset.slide = index;
+        item.innerHTML = '<span class="toc-sub-num">↳</span><span class="toc-sub-title">' + name + '</span>';
+        item.addEventListener('click', () => { goTo(index); tocOverlay.classList.remove('open'); });
+        sec.appendChild(item);
+      }
+    });
+
+    target.appendChild(sec);
   });
+}
 
-  goTo(0);
+// ── Navigation ──
+let allTocItems; // populated after TOC build
+
+function goTo(n) {
+  slides[current].classList.remove('active');
+  if (allTocItems) allTocItems.forEach(i => { if (parseInt(i.dataset.slide) === current) i.classList.remove('current'); });
+  current = Math.max(0, Math.min(n, total - 1));
+  slides[current].classList.add('active');
+  if (allTocItems) allTocItems.forEach(i => { if (parseInt(i.dataset.slide) === current) i.classList.add('current'); });
+
+  counter.textContent = `${String(current+1).padStart(2,'0')} / ${String(total).padStart(2,'0')}`;
+
+  prevBtn.disabled = current === 0;
+  nextBtn.disabled = current === total - 1;
+
+  progressBar.style.width = `${((current+1)/total)*100}%`;
+
+  slideType.textContent = slides[current].dataset.type || '';
+  document.body.className = atmoMap[slides[current].dataset.section] || 'atmo-intro';
+}
+
+prevBtn.addEventListener('click', () => goTo(current - 1));
+nextBtn.addEventListener('click', () => goTo(current + 1));
+
+document.addEventListener('keydown', e => {
+  if (lightbox.classList.contains('open') || lightbox.style.display==='flex') { if (e.key==='Escape') closeLightbox(); return; }
+  if (tocOverlay.classList.contains('open')) { if (e.key==='Escape') tocOverlay.classList.remove('open'); return; }
+  const active = document.activeElement;
+  if (active && (active.classList.contains('browser-content') || active.classList.contains('phone-screen'))) return;
+  if (['ArrowRight','ArrowDown',' '].includes(e.key)) { e.preventDefault(); goTo(current+1); }
+  if (['ArrowLeft','ArrowUp'].includes(e.key)) { e.preventDefault(); goTo(current-1); }
+  if (e.key==='t'||e.key==='T') tocOverlay.classList.toggle('open');
+});
+
+tocBtn.addEventListener('click', () => tocOverlay.classList.toggle('open'));
+tocClose.addEventListener('click', () => tocOverlay.classList.remove('open'));
+tocOverlay.addEventListener('click', e => { if (e.target===tocOverlay) tocOverlay.classList.remove('open'); });
+
+// Lightbox (keep identical)
+function openLightbox(img) {
+  const rect = img.getBoundingClientRect();
+  const vw = window.innerWidth, vh = window.innerHeight;
+  const originX = ((rect.left + rect.width/2) / vw * 100).toFixed(1) + 'vw';
+  const originY = ((rect.top + rect.height/2) / vh * 100).toFixed(1) + 'vh';
+  lightboxImg.src = img.src;
+  lightboxImg.style.transformOrigin = `${originX} ${originY}`;
+  lightboxCap.textContent = img.dataset.caption || '';
+  lightboxImg.classList.remove('lb-animating','lb-open','lb-closing');
+  lightbox.classList.add('open');
+  lightboxImg.offsetHeight;
+  lightboxImg.classList.add('lb-animating','lb-open');
+}
+
+function closeLightbox() {
+  lightboxImg.classList.remove('lb-open');
+  lightboxImg.classList.add('lb-closing');
+  lightbox.classList.remove('open');
+  lightbox.style.display = 'flex';
+  lightbox.style.pointerEvents = 'none';
+  setTimeout(() => {
+    lightbox.style.display = '';
+    lightbox.style.pointerEvents = '';
+    lightboxImg.classList.remove('lb-animating','lb-closing');
+    lightboxImg.src = '';
+  }, 220);
+}
+
+lightbox.addEventListener('click', () => closeLightbox());
+document.querySelectorAll('img.zoomable').forEach(img => {
+  img.addEventListener('click', e => { e.stopPropagation(); openLightbox(img); });
+});
+
+buildTOC();
+allTocItems = document.querySelectorAll('.toc-item, .toc-sub-item');
+goTo(0);
 </script>
 </body>
 </html>
