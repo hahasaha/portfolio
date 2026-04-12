@@ -547,7 +547,7 @@
   ───────────────────────────────────── */
   .slide-annotated {
     background: var(--green-mid);
-    grid-template-columns: 380px 1fr;
+    grid-template-columns: 340px 1fr 380px;
   }
   .ann-left {
     padding: 60px 52px;
@@ -590,11 +590,19 @@
     text-transform: uppercase;
     color: rgba(245,240,226,0.25);
   }
-  .ann-right {
+  .ann-center {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 64px 0 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .ann-tip-col {
     display: flex;
     align-items: center;
-    justify-content: center;
-    padding: 24px;
+    justify-content: flex-start;
+    padding: 40px 44px 40px 32px;
     position: relative;
   }
   .ann-phone-wrap {
@@ -602,10 +610,16 @@
     display: inline-block;
   }
   .ann-phone {
-    width: 240px;
-    height: 520px;
+    width: 300px;
+    height: 651px;
     position: relative;
     z-index: 1;
+    border-radius: 52px;
+  }
+  .ann-phone::before {
+    width: 84px;
+    height: 22px;
+    top: 14px;
   }
   .ann-screen {
     overflow-y: auto;
@@ -632,8 +646,8 @@
       0 8px 24px rgba(0,0,0,0.35);
   }
   .ann-tooltip {
-    position: fixed;
-    max-width: 380px;
+    width: 100%;
+    max-width: 304px;
     background: #0f1a14;
     border: 1px solid rgba(74,158,106,0.35);
     border-left: 3px solid var(--green-accent);
@@ -642,16 +656,20 @@
     font-family: 'DM Sans', sans-serif;
     pointer-events: none;
     opacity: 0;
-    transform: translateY(6px);
+    transform: translateX(-8px);
     transition: opacity 0.22s ease, transform 0.22s ease;
-    z-index: 200;
     box-shadow:
       0 20px 56px rgba(0,0,0,0.65),
       0 0 0 1px rgba(74,158,106,0.12);
   }
   .ann-tooltip.visible {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateX(0);
+  }
+  /* Placeholder state when nothing is hovered yet */
+  .ann-tooltip.idle {
+    opacity: 0.5;
+    transform: translateX(0);
   }
   .ann-tooltip .tip-label {
     display: block;
@@ -1208,7 +1226,7 @@
       <span>↗ Hover to explore</span>
     </div>
   </div>
-  <div class="ann-right">
+  <div class="ann-center">
     <div class="ann-phone-wrap">
       <div class="phone-frame ann-phone">
         <div class="phone-screen ann-screen">
@@ -1234,11 +1252,13 @@
           </div>
         </div>
       </div>
-      <div class="ann-tooltip" id="ann-tooltip">
-        <span class="tip-label">Design decision</span>
-        <span class="tip-headline"></span>
-        <span class="tip-body"></span>
-      </div>
+    </div>
+  </div>
+  <div class="ann-tip-col">
+    <div class="ann-tooltip idle" id="ann-tooltip">
+      <span class="tip-label">Design decision</span>
+      <span class="tip-headline">Hover the phone.</span>
+      <span class="tip-body">Each region of the Ranch Pass page has a reason. Hover a section to see it.</span>
     </div>
   </div>
 </div>
@@ -1995,16 +2015,19 @@ document.querySelectorAll('img.zoomable').forEach(img => {
   img.addEventListener('click', e => { e.stopPropagation(); openLightbox(img); });
 });
 
-// Annotated slide hotspots
+// Annotated slide hotspots — tooltip is pinned to the right column,
+// we only update content and toggle visibility on hover.
 function initAnnotations() {
   const tooltip = document.getElementById('ann-tooltip');
   if (!tooltip) return;
   const tipHeadline = tooltip.querySelector('.tip-headline');
   const tipBody = tooltip.querySelector('.tip-body');
+  // Preserve the idle placeholder so we can restore it on mouseleave
+  const idleHeadline = tipHeadline.textContent;
+  const idleBody = tipBody.textContent;
+
   document.querySelectorAll('.hotspot').forEach(spot => {
     spot.addEventListener('mouseenter', () => {
-      // Split the tip on the first period: first sentence → serif headline,
-      // remainder → body copy. Uses data-headline if explicitly provided.
       const tip = spot.dataset.tip || '';
       const customHeadline = spot.dataset.headline;
       if (customHeadline) {
@@ -2020,14 +2043,14 @@ function initAnnotations() {
           tipBody.textContent = '';
         }
       }
+      tooltip.classList.remove('idle');
       tooltip.classList.add('visible');
-    });
-    spot.addEventListener('mousemove', e => {
-      tooltip.style.left = (e.clientX + 18) + 'px';
-      tooltip.style.top  = (e.clientY - 12) + 'px';
     });
     spot.addEventListener('mouseleave', () => {
       tooltip.classList.remove('visible');
+      tooltip.classList.add('idle');
+      tipHeadline.textContent = idleHeadline;
+      tipBody.textContent = idleBody;
     });
   });
 }
