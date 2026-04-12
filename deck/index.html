@@ -1353,7 +1353,7 @@
     <circle id="ann-dot-end"   cx="0" cy="0" r="3.5" />
   </svg>
   <div id="edit-hud">
-    <span><span class="hud-label">EDIT MODE</span> · click, ↑↓←→ move, shift=fine, − + height, , . width, esc deselect, E exit</span>
+    <span><span class="hud-label">EDIT MODE</span> · click/drag, ↑↓←→ shift=fine, − + height, , . width, C copy, R reset, esc deselect, E exit</span>
     <span id="edit-hud-readout"><span class="hud-label">selected:</span> <span class="hud-val">—</span></span>
   </div>
 </div>
@@ -2211,6 +2211,8 @@ function initAnnotations() {
 
   hotspots.forEach((spot, i) => {
     spot.setAttribute('data-num', i + 1);
+    // Cache original positions so we can reset later
+    spot.dataset.originalStyle = spot.getAttribute('style') || '';
     // Add 4 corner resize handles
     ['nw','ne','sw','se'].forEach(dir => {
       const h = document.createElement('div');
@@ -2219,6 +2221,68 @@ function initAnnotations() {
       spot.appendChild(h);
     });
   });
+
+  // ── Persistence ──
+  // Save hotspot positions to localStorage so edits survive reloads.
+  // Keyed by slide so each annotated slide can persist independently.
+  const STORAGE_KEY = 'deck-hotspots-' + (slideAnn.dataset.type || 'default');
+
+  function saveHotspots() {
+    const data = hotspots.map(spot => ({
+      top:    spot.style.top,
+      left:   spot.style.left,
+      width:  spot.style.width,
+      height: spot.style.height
+    }));
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); } catch (err) {}
+  }
+
+  function loadHotspots() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return;
+      const data = JSON.parse(raw);
+      if (!Array.isArray(data)) return;
+      data.forEach((d, i) => {
+        if (!hotspots[i] || !d) return;
+        if (d.top)    hotspots[i].style.top    = d.top;
+        if (d.left)   hotspots[i].style.left   = d.left;
+        if (d.width)  hotspots[i].style.width  = d.width;
+        if (d.height) hotspots[i].style.height = d.height;
+      });
+    } catch (err) {}
+  }
+
+  function resetHotspots() {
+    try { localStorage.removeItem(STORAGE_KEY); } catch (err) {}
+    hotspots.forEach(spot => {
+      spot.setAttribute('style', spot.dataset.originalStyle || '');
+    });
+    updateReadout();
+  }
+
+  function copyHotspotsToClipboard() {
+    const lines = hotspots.map(spot => {
+      const tip = spot.dataset.tip || '';
+      const headline = spot.dataset.headline;
+      const st = getHotspotState(spot);
+      const styleStr = `top:${st.top.toFixed(2)}%; left:${st.left.toFixed(2)}%; width:${st.width.toFixed(2)}%; height:${st.height.toFixed(2)}%;`;
+      const headlineAttr = headline ? ` data-headline="${headline.replace(/"/g,'&quot;')}"` : '';
+      return `            <div class="hotspot" style="${styleStr}"${headlineAttr}\n              data-tip="${tip.replace(/"/g,'&quot;')}"></div>`;
+    });
+    const out = lines.join('\n\n');
+    navigator.clipboard.writeText(out).then(() => {
+      // Flash the HUD so the user knows it worked
+      hudReadout.innerHTML = '<span class="hud-val">✓ Copied to clipboard</span>';
+      setTimeout(updateReadout, 1200);
+    }).catch(() => {
+      hudReadout.innerHTML = '<span class="hud-val">Clipboard blocked</span>';
+      setTimeout(updateReadout, 1200);
+    });
+  }
+
+  // Apply saved state on init
+  loadHotspots();
 
   function parsePct(val) {
     const n = parseFloat(val);
@@ -2249,6 +2313,7 @@ function initAnnotations() {
     const next = Math.max(0, Math.min(100, st[which] + delta));
     editSelected.style[which] = next + '%';
     updateReadout();
+    saveHotspots();
   }
 
   function enterEditMode() {
@@ -2342,7 +2407,11 @@ function initAnnotations() {
     dragSpot.style.height = height.toFixed(2) + '%';
     updateReadout();
   });
-  document.addEventListener('mouseup', () => { dragging = null; dragSpot = null; });
+  document.addEventListener('mouseup', () => {
+    if (dragging) saveHotspots();
+    dragging = null;
+    dragSpot = null;
+  });
 
   document.addEventListener('keydown', e => {
     // Only activate edit-mode key when the annotated slide is active
@@ -2368,6 +2437,9 @@ function initAnnotations() {
     if (e.key === ',')          { e.preventDefault(); e.stopImmediatePropagation(); nudge(-step, 'width'); }
     if (e.key === '.')          { e.preventDefault(); e.stopImmediatePropagation(); nudge( step, 'width'); }
     if (e.key === 'Escape')     { if (editSelected) { editSelected.classList.remove('selected'); editSelected = null; updateReadout(); } }
+    // Copy / Reset
+    if (e.key === 'c' || e.key === 'C') { e.preventDefault(); e.stopImmediatePropagation(); copyHotspotsToClipboard(); }
+    if (e.key === 'r' || e.key === 'R') { e.preventDefault(); e.stopImmediatePropagation(); resetHotspots(); }
   }, true); // capture phase so it runs before the slide navigation handler
 }
 initAnnotations();
