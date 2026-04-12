@@ -1729,8 +1729,8 @@ document.addEventListener('keydown', e => {
   if (tocOverlay.classList.contains('open')) { if (e.key==='Escape') tocOverlay.classList.remove('open'); return; }
   const active = document.activeElement;
   if (active && (active.classList.contains('browser-content') || active.classList.contains('phone-screen'))) return;
-  if (['ArrowRight','ArrowDown',' '].includes(e.key)) { e.preventDefault(); goTo(current+1); }
-  if (['ArrowLeft','ArrowUp'].includes(e.key)) { e.preventDefault(); goTo(current-1); }
+  if (['ArrowRight','ArrowDown',' ','d','D'].includes(e.key)) { e.preventDefault(); goTo(current+1); }
+  if (['ArrowLeft','ArrowUp','a','A'].includes(e.key)) { e.preventDefault(); goTo(current-1); }
   if (e.key==='t'||e.key==='T') tocOverlay.classList.toggle('open');
   if (e.key==='n'||e.key==='N') notesOverlay.classList.toggle('open');
   if (e.key==='f'||e.key==='F') {
