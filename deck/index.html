@@ -251,6 +251,12 @@
     overflow: hidden;
     flex-shrink: 0;
   }
+  /* Larger phone for slide-scroll (scroll-preview) context */
+  .slide-scroll .phone-frame {
+    width: 240px;
+    height: 520px;
+    border-radius: 46px;
+  }
   /* Notch */
   .phone-frame::before {
     content: '';
@@ -1731,8 +1737,29 @@ document.addEventListener('keydown', e => {
   if (active && (active.classList.contains('browser-content') || active.classList.contains('phone-screen'))) return;
   if (['ArrowRight','ArrowDown',' ','d','D'].includes(e.key)) { e.preventDefault(); goTo(current+1); }
   if (['ArrowLeft','ArrowUp','a','A'].includes(e.key)) { e.preventDefault(); goTo(current-1); }
-  if (e.key==='s'||e.key==='S') { e.preventDefault(); const b = sectionBounds[current]; if (b) goTo(b.start); }
-  if (e.key==='w'||e.key==='W') { e.preventDefault(); const b = sectionBounds[current]; if (b) goTo(b.end); }
+  if (e.key==='s'||e.key==='S') {
+    e.preventDefault();
+    const b = sectionBounds[current];
+    if (!b) return;
+    // If already at section start, jump to the previous section's start
+    if (current === b.start && b.start > 0) {
+      const prev = sectionBounds[b.start - 1];
+      goTo(prev ? prev.start : b.start - 1);
+    } else {
+      goTo(b.start);
+    }
+  }
+  if (e.key==='w'||e.key==='W') {
+    e.preventDefault();
+    const b = sectionBounds[current];
+    if (!b) return;
+    // If already at section end, jump to the next section's start
+    if (current === b.end && b.end < total - 1) {
+      goTo(b.end + 1);
+    } else {
+      goTo(b.end);
+    }
+  }
   if (e.key==='t'||e.key==='T') tocOverlay.classList.toggle('open');
   if (e.key==='n'||e.key==='N') notesOverlay.classList.toggle('open');
   if (e.key==='f'||e.key==='F') {
