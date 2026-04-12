@@ -136,6 +136,21 @@
   .slide-chapter .tag-row { margin-top: 44px; display: flex; gap: 10px; flex-wrap: wrap; }
   .tag { padding: 5px 13px; border: 1px solid rgba(245,240,226,0.18); font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(245,240,226,0.45); border-radius: 2px; }
 
+  /* Cinematic entry for chapter slides — fade + cascaded text rise */
+  .slide-chapter.active { animation: chapterFadeIn 0.6s ease both; }
+  .slide-chapter.active h2             { animation: chapterTextRise 0.7s ease-out 0.3s both; }
+  .slide-chapter.active .chapter-eyebrow { animation: chapterTextRise 0.7s ease-out 0.5s both; }
+  .slide-chapter.active .sub           { animation: chapterTextRise 0.7s ease-out 0.55s both; }
+  .slide-chapter.active .tag-row       { animation: chapterTextRise 0.7s ease-out 0.7s both; }
+  @keyframes chapterFadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+  @keyframes chapterTextRise {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
   /* ─────────────────────────────────────
      SLIDE TYPE: TWO-COL (sidebar + main)
   ───────────────────────────────────── */
@@ -401,6 +416,170 @@
   .slide-statement .st-sub { font-size: 14px; color: rgba(245,240,226,0.5); max-width: 540px; line-height: 1.65; margin-top: 32px; font-weight: 300; }
 
   /* ─────────────────────────────────────
+     SLIDE TYPE: THESIS (pure statement, extreme restraint)
+  ───────────────────────────────────── */
+  .slide-thesis {
+    background: var(--ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .slide-thesis.active { display: flex; }
+  .thesis-line {
+    font-family: 'DM Serif Display', serif;
+    font-size: 64px;
+    line-height: 1.1;
+    color: var(--cream);
+    text-align: center;
+    font-weight: 400;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.5s ease 0.2s, transform 0.5s ease 0.2s;
+  }
+  .slide-thesis.active .thesis-line {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ─────────────────────────────────────
+     SLIDE TYPE: BELIEFS (spatial typography composition)
+     Overrides .slide-statement defaults; uses absolute positioning.
+  ───────────────────────────────────── */
+  .slide-statement.beliefs-slide {
+    padding: 0;
+    overflow: hidden;
+    position: relative;
+    border-left: none;
+  }
+  .beliefs-slide .belief-1 {
+    position: absolute;
+    top: 80px;
+    left: 80px;
+    font-family: 'DM Serif Display', serif;
+    font-size: 42px;
+    line-height: 1.2;
+    max-width: 640px;
+    color: var(--cream);
+    opacity: 0.95;
+    font-weight: 400;
+  }
+  .beliefs-slide .belief-2 {
+    position: absolute;
+    bottom: 180px;
+    right: 80px;
+    font-family: 'DM Serif Display', serif;
+    font-size: 56px;
+    line-height: 1.15;
+    max-width: 560px;
+    text-align: right;
+    color: var(--cream);
+    opacity: 0.95;
+    font-weight: 400;
+  }
+  .beliefs-slide .belief-3 {
+    position: absolute;
+    bottom: 60px;
+    left: 80px;
+    font-size: 22px;
+    line-height: 1.5;
+    max-width: 480px;
+    color: rgba(245,240,226,0.45);
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.04em;
+  }
+  .beliefs-slide .belief-divider {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 1px;
+    height: 120px;
+    background: rgba(196,175,240,0.2);
+    transform: translateX(-50%) translateY(-50%);
+  }
+
+  /* ─────────────────────────────────────
+     SLIDE TYPE: VOID (negative space reveal before chapter)
+  ───────────────────────────────────── */
+  .slide-void {
+    background: #0a0a12;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-start;
+    padding: 72px 80px;
+  }
+  .slide-void.active { display: flex; }
+  .void-content {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.8s ease 0.3s, transform 0.8s ease 0.3s;
+  }
+  .slide-void.active .void-content {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .void-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(196,175,240,0.4);
+  }
+  .void-line {
+    width: 48px;
+    height: 1px;
+    background: rgba(196,175,240,0.25);
+  }
+
+  /* ─────────────────────────────────────
+     SLIDE TYPE: EXPLODED (4-quadrant brief)
+  ───────────────────────────────────── */
+  .slide-exploded {
+    background: var(--cream);
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    position: relative;
+  }
+  .slide-exploded.active { display: grid; }
+  .ex-zone {
+    padding: 56px 52px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    border: 1px solid rgba(26,26,20,0.06);
+  }
+  .ex-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--green-accent);
+  }
+  .ex-zone p {
+    font-size: 14px;
+    color: var(--ink);
+    line-height: 1.7;
+    font-weight: 300;
+    max-width: 380px;
+  }
+  .ex-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'DM Serif Display', serif;
+    font-size: 18px;
+    font-style: italic;
+    color: rgba(26,26,20,0.18);
+    letter-spacing: 0.06em;
+    pointer-events: none;
+    background: var(--cream);
+    padding: 8px 16px;
+  }
+
+  /* ─────────────────────────────────────
      SLIDE TYPE: SWING APP
   ───────────────────────────────────── */
   .slide-swing { background: #0d2a1f; grid-template-columns: 420px 1fr; }
@@ -613,6 +792,13 @@
 </div>
 
 <!-- ═══════════════════════════════════════
+     THESIS
+═══════════════════════════════════════ -->
+<div class="slide slide-thesis" data-section="intro" data-type="Thesis" data-toc-group="Opening">
+  <p class="thesis-line">I design for outcomes,<br>not artifacts.</p>
+</div>
+
+<!-- ═══════════════════════════════════════
      01 — TITLE
 ═══════════════════════════════════════ -->
 <div class="slide slide-title" data-section="intro" data-type="Intro" data-toc-group="Opening">
@@ -634,15 +820,11 @@
 <!-- ═══════════════════════════════════════
      WHAT I BELIEVE
 ═══════════════════════════════════════ -->
-<div class="slide slide-statement" data-section="intro" data-type="What I Believe" data-toc-group="Opening" style="border-left: 5px solid var(--lavender-dark);">
-  <span class="st-eyebrow" style="color:var(--lavender)">What I believe</span>
-  <div style="max-width:900px;">
-    <div style="font-family:'DM Serif Display',serif; font-size:36px; color:var(--cream); line-height:1.3; font-weight:400;">Affordances aren't optional. Confusion is a design failure.</div>
-    <div style="border-top:1px solid rgba(245,240,226,0.08); margin:28px 0;"></div>
-    <div style="font-family:'DM Serif Display',serif; font-size:36px; color:var(--cream); line-height:1.3; font-weight:400;">Design the moment it breaks, not the moment it works.</div>
-    <div style="border-top:1px solid rgba(245,240,226,0.08); margin:28px 0;"></div>
-    <div style="font-family:'DM Serif Display',serif; font-size:36px; color:var(--cream); line-height:1.3; font-weight:400;">A design system isn't a component library. It's the language users learn to trust.</div>
-  </div>
+<div class="slide slide-statement beliefs-slide" data-section="intro" data-type="What I Believe" data-toc-group="Opening">
+  <p class="belief-1">Affordances aren't optional. Confusion is a design failure.</p>
+  <p class="belief-2">Design the moment it breaks, not the moment it works.</p>
+  <p class="belief-3">A design system isn't a component library. It's the language users learn to trust.</p>
+  <div class="belief-divider"></div>
 </div>
 
 <!-- ═══════════════════════════════════════
@@ -710,12 +892,26 @@
 </div>
 
 <!-- ═══════════════════════════════════════
-     04 — THE PROBLEM
+     THE BRIEF (exploded 4-quadrant)
 ═══════════════════════════════════════ -->
-<div class="slide slide-statement" data-section="golf" data-type="The Problem" data-toc-group="Golf Ranch">
-  <span class="st-eyebrow">The problem</span>
-  <blockquote>The site looked like a<br>brochure, not a<br><em>growth tool.</em></blockquote>
-  <p class="st-sub">No clear CTA above the fold. No lead capture. No local SEO. 90% mobile traffic hitting a desktop-first layout. Every visitor the business earned was leaking straight out.</p>
+<div class="slide slide-exploded" data-section="golf" data-type="The Brief" data-toc-group="Golf Ranch">
+  <div class="ex-zone ex-tl">
+    <span class="ex-label">The problem</span>
+    <p>90% mobile traffic hitting a desktop-first site. No lead capture. No local SEO. Every visitor the business earned was leaking out.</p>
+  </div>
+  <div class="ex-zone ex-tr">
+    <span class="ex-label">The constraints</span>
+    <p>No in-house dev. Webflow only. Six locations, one design system. Had to ship fast and scale.</p>
+  </div>
+  <div class="ex-zone ex-bl">
+    <span class="ex-label">The decisions</span>
+    <p>Mobile-first by default. One CTA above fold. Lead capture before membership. SEO as a growth channel, not an afterthought.</p>
+  </div>
+  <div class="ex-zone ex-br">
+    <span class="ex-label">The outcome</span>
+    <p>10K+ leads/month. 4× membership growth. +25% organic traffic. #1 page on site.</p>
+  </div>
+  <div class="ex-center"><span>Golf Ranch</span></div>
 </div>
 
 <!-- ═══════════════════════════════════════
@@ -926,6 +1122,16 @@
 <!-- ═══════════════════════════════════════
      13 — INKWELL CHAPTER
 ═══════════════════════════════════════ -->
+<!-- ═══════════════════════════════════════
+     ENTERING INKWELL (negative space reveal)
+═══════════════════════════════════════ -->
+<div class="slide slide-void" data-section="inkwell" data-type="Entering Inkwell" data-toc-group="Inkwell">
+  <div class="void-content">
+    <span class="void-label">Case Study 02</span>
+    <div class="void-line"></div>
+  </div>
+</div>
+
 <div class="slide slide-chapter inkwell-bg" data-section="inkwell" data-type="Case Study" data-toc-group="Inkwell" data-toc-main data-notes="Second case study. NDA client — frame as enterprise due diligence platform for a major entertainment company. Emphasize: joined mid-flight, no handoff, shipped meaningful work under deadline.">
   <span class="chapter-eyebrow" style="color:var(--lavender)">Case Study 02 of 02</span>
   <h2 style="color:var(--cream)">Inkwell<br><span style="font-style:italic;color:var(--lavender)">/ WDI.</span></h2>
@@ -1332,11 +1538,39 @@ function buildTOC() {
 
 // ── Navigation ──
 let allTocItems; // populated after TOC build
+let transitioning = false;
 
 function goTo(n) {
+  const targetIndex = Math.max(0, Math.min(n, total - 1));
+  if (targetIndex === current && slides[current].classList.contains('active')) return;
+
+  // Cinematic transition when landing on a chapter slide:
+  // 300ms fade out of current → 200ms pause → 500ms fade in of chapter.
+  const isChapterTarget = slides[targetIndex].classList.contains('slide-chapter');
+  if (isChapterTarget && !transitioning && current !== targetIndex) {
+    transitioning = true;
+    const outgoing = slides[current];
+    outgoing.style.transition = 'opacity 0.3s ease';
+    outgoing.style.opacity = '0';
+    setTimeout(() => {
+      outgoing.classList.remove('active');
+      outgoing.style.transition = '';
+      outgoing.style.opacity = '';
+      setTimeout(() => {
+        transitioning = false;
+        _applySlide(targetIndex);
+      }, 200);
+    }, 300);
+    return;
+  }
+  if (transitioning) return;
+  _applySlide(targetIndex);
+}
+
+function _applySlide(targetIndex) {
   slides[current].classList.remove('active');
   if (allTocItems) allTocItems.forEach(i => { if (parseInt(i.dataset.slide) === current) i.classList.remove('current'); });
-  current = Math.max(0, Math.min(n, total - 1));
+  current = targetIndex;
   slides[current].classList.add('active');
   if (allTocItems) allTocItems.forEach(i => { if (parseInt(i.dataset.slide) === current) i.classList.add('current'); });
 
