@@ -611,6 +611,8 @@
   #section-label { position: absolute; top: 16px; left: 24px; min-width: 160px; font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.35); transition: color 0.5s ease; display: flex; align-items: center; gap: 10px; }
   #section-label .sl-num { color: rgba(255,255,255,0.2); }
   #section-label .sl-dot { width: 3px; height: 3px; border-radius: 50%; background: rgba(255,255,255,0.15); }
+  #section-label.no-num .sl-num,
+  #section-label.no-num .sl-dot { display: none; }
   body.atmo-golf    #section-label { color: rgba(74,158,106,0.75); }
   body.atmo-inkwell #section-label { color: rgba(196,175,240,0.75); }
   body.atmo-evernote #section-label { color: rgba(196,175,240,0.75); }
@@ -1507,6 +1509,23 @@ const notesBody    = document.getElementById('notes-body');
 
 const atmoMap = { intro:'atmo-intro', golf:'atmo-golf', evernote:'atmo-evernote', inkwell:'atmo-inkwell', close:'atmo-close' };
 
+// Build persistent section-label DOM once so we update text content,
+// not innerHTML — avoids the repaint flash ("skip") on every slide change.
+(function initSectionLabel() {
+  const numEl = document.createElement('span');
+  numEl.className = 'sl-num';
+  numEl.id = 'sl-num';
+  const dotEl = document.createElement('span');
+  dotEl.className = 'sl-dot';
+  const textEl = document.createElement('span');
+  textEl.id = 'sl-text';
+  sectionLabel.appendChild(numEl);
+  sectionLabel.appendChild(dotEl);
+  sectionLabel.appendChild(textEl);
+})();
+const slNumEl  = document.getElementById('sl-num');
+const slTextEl = document.getElementById('sl-text');
+
 // ── Auto-generate page numbers ──
 slides.forEach((s, i) => {
   const pg = document.createElement('span');
@@ -1684,18 +1703,23 @@ function _updateChrome(idx) {
   slideType.textContent = slides[idx].dataset.type || '';
   document.body.className = atmoMap[slides[idx].dataset.section] || 'atmo-intro';
 
-  // Section label (top-left) — pulls from tocLabelMap
+  // Section label (top-left) — update text content of persistent DOM
   const currentGroup = slides[idx].dataset.tocGroup;
   if (currentGroup && tocLabelMap[currentGroup]) {
     const label = tocLabelMap[currentGroup];
     const parts = label.split(' ');
     if (/^\d+$/.test(parts[0])) {
-      sectionLabel.innerHTML = '<span class="sl-num">' + parts[0] + '</span><span class="sl-dot"></span><span>' + parts.slice(1).join(' ') + '</span>';
+      slNumEl.textContent = parts[0];
+      slTextEl.textContent = parts.slice(1).join(' ');
+      sectionLabel.classList.remove('no-num');
     } else {
-      sectionLabel.textContent = label;
+      slNumEl.textContent = '';
+      slTextEl.textContent = label;
+      sectionLabel.classList.add('no-num');
     }
   } else {
-    sectionLabel.textContent = '';
+    slNumEl.textContent = '';
+    slTextEl.textContent = '';
   }
 
   // Deep linking — update URL hash without triggering scroll
