@@ -2019,7 +2019,12 @@ document.querySelectorAll('img.zoomable').forEach(img => {
   img.addEventListener('click', e => { e.stopPropagation(); openLightbox(img); });
 });
 
-// Annotated slide hotspots — tooltip pinned right column + SVG connector
+// Annotated slide hotspots — tooltip pinned right column + SVG connector.
+// Two activation paths:
+//   1. Hover a hotspot directly.
+//   2. Scroll the phone screen — the hotspot whose center is closest to
+//      the phone viewport center auto-activates (works for hotspots deep
+//      into the scrollable image that the user would otherwise miss).
 function initAnnotations() {
   const tooltip = document.getElementById('ann-tooltip');
   if (!tooltip) return;
@@ -2032,6 +2037,11 @@ function initAnnotations() {
   const lineEl    = document.getElementById('ann-line');
   const dotStart  = document.getElementById('ann-dot-start');
   const dotEnd    = document.getElementById('ann-dot-end');
+  const screen    = document.querySelector('.ann-screen');
+  const hotspots  = Array.from(document.querySelectorAll('.hotspot'));
+
+  let activeSpot = null;
+  let hoverSpot  = null; // explicit hover takes priority over scroll-pick
 
   function drawConnector(spot) {
     const slideEl = spot.closest('.slide');
@@ -2040,13 +2050,10 @@ function initAnnotations() {
     const scale = slideRect.width / 1200;
     const hotRect = spot.getBoundingClientRect();
     const tipRect = tooltip.getBoundingClientRect();
-    // Hotspot center (slide-local coords)
     const x1 = (hotRect.left + hotRect.width / 2 - slideRect.left) / scale;
     const y1 = (hotRect.top + hotRect.height / 2 - slideRect.top) / scale;
-    // Tooltip left edge, vertically at the tip's vertical center
     const x2 = (tipRect.left - slideRect.left) / scale;
     const y2 = (tipRect.top + tipRect.height / 2 - slideRect.top) / scale;
-
     lineEl.setAttribute('x1', x1);
     lineEl.setAttribute('y1', y1);
     lineEl.setAttribute('x2', x2);
@@ -2057,36 +2064,84 @@ function initAnnotations() {
     dotEnd.setAttribute('cy', y2);
   }
 
-  document.querySelectorAll('.hotspot').forEach(spot => {
-    spot.addEventListener('mouseenter', () => {
-      const tip = spot.dataset.tip || '';
-      const customHeadline = spot.dataset.headline;
-      if (customHeadline) {
-        tipHeadline.textContent = customHeadline;
-        tipBody.textContent = tip;
+  function setTooltipContent(spot) {
+    const tip = spot.dataset.tip || '';
+    const customHeadline = spot.dataset.headline;
+    if (customHeadline) {
+      tipHeadline.textContent = customHeadline;
+      tipBody.textContent = tip;
+    } else {
+      const match = tip.match(/^(.*?[.!?])\s*(.*)$/);
+      if (match) {
+        tipHeadline.textContent = match[1];
+        tipBody.textContent = match[2];
       } else {
-        const match = tip.match(/^(.*?[.!?])\s*(.*)$/);
-        if (match) {
-          tipHeadline.textContent = match[1];
-          tipBody.textContent = match[2];
-        } else {
-          tipHeadline.textContent = tip;
-          tipBody.textContent = '';
-        }
+        tipHeadline.textContent = tip;
+        tipBody.textContent = '';
       }
-      tooltip.classList.remove('idle');
-      tooltip.classList.add('visible');
-      drawConnector(spot);
-      connector.classList.add('visible');
+    }
+  }
+
+  function activate(spot) {
+    if (activeSpot === spot) { drawConnector(spot); return; }
+    activeSpot = spot;
+    setTooltipContent(spot);
+    tooltip.classList.remove('idle');
+    tooltip.classList.add('visible');
+    drawConnector(spot);
+    connector.classList.add('visible');
+  }
+
+  function deactivate() {
+    activeSpot = null;
+    tooltip.classList.remove('visible');
+    tooltip.classList.add('idle');
+    tipHeadline.textContent = idleHeadline;
+    tipBody.textContent = idleBody;
+    connector.classList.remove('visible');
+  }
+
+  // Hover activation
+  hotspots.forEach(spot => {
+    spot.addEventListener('mouseenter', () => {
+      hoverSpot = spot;
+      activate(spot);
     });
     spot.addEventListener('mouseleave', () => {
-      tooltip.classList.remove('visible');
-      tooltip.classList.add('idle');
-      tipHeadline.textContent = idleHeadline;
-      tipBody.textContent = idleBody;
-      connector.classList.remove('visible');
+      hoverSpot = null;
+      // Fall back to scroll-pick (or deactivate)
+      pickBestFromScroll();
     });
   });
+
+  // Scroll-driven activation — picks hotspot whose center is closest to
+  // the phone viewport center. Hover takes priority when active.
+  function pickBestFromScroll() {
+    if (hoverSpot) return; // hover wins
+    if (!screen) return;
+    const screenRect = screen.getBoundingClientRect();
+    const viewportCenter = screenRect.top + screenRect.height / 2;
+    let closest = null;
+    let closestDist = Infinity;
+    hotspots.forEach(spot => {
+      const rect = spot.getBoundingClientRect();
+      const center = rect.top + rect.height / 2;
+      // Only consider hotspots whose center sits inside the phone viewport
+      if (center < screenRect.top || center > screenRect.bottom) return;
+      const dist = Math.abs(center - viewportCenter);
+      if (dist < closestDist) {
+        closestDist = dist;
+        closest = spot;
+      }
+    });
+    if (closest) activate(closest); else deactivate();
+  }
+
+  if (screen) {
+    screen.addEventListener('scroll', pickBestFromScroll, { passive: true });
+    // Initial pick on load
+    setTimeout(pickBestFromScroll, 50);
+  }
 }
 initAnnotations();
 
