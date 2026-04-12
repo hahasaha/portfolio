@@ -408,7 +408,6 @@
     align-items: flex-start;
     justify-content: center;
     padding: 80px 96px;
-    border-left: 5px solid var(--green-accent);
   }
   .slide-statement .st-eyebrow { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--green-accent); margin-bottom: 28px; }
   .slide-statement blockquote { font-family: 'DM Serif Display', serif; font-size: 52px; line-height: 1.1; color: var(--cream); font-weight: 400; max-width: 900px; }
@@ -513,23 +512,23 @@
     gap: 16px;
   }
   .slide-void.active .void-content {
-    animation: voidIn 0.8s ease 0.3s both;
+    animation: voidIn 0.6s ease both;
   }
   @keyframes voidIn {
-    from { opacity: 0; transform: translateY(10px); }
+    from { opacity: 0; transform: translateY(8px); }
     to   { opacity: 1; transform: translateY(0); }
   }
   .void-label {
     font-family: 'DM Mono', monospace;
-    font-size: 10px;
+    font-size: 11px;
     letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: rgba(196,175,240,0.4);
+    color: rgba(196,175,240,0.7);
   }
   .void-line {
-    width: 48px;
+    width: 64px;
     height: 1px;
-    background: rgba(196,175,240,0.25);
+    background: rgba(196,175,240,0.4);
   }
 
   /* ─────────────────────────────────────
@@ -1146,7 +1145,7 @@
 <!-- ═══════════════════════════════════════
      14 — THE SITUATION
 ═══════════════════════════════════════ -->
-<div class="slide slide-statement" data-section="inkwell" data-type="The Situation" data-toc-group="Inkwell" style="border-left-color:var(--lavender);">
+<div class="slide slide-statement" data-section="inkwell" data-type="The Situation" data-toc-group="Inkwell">
   <span class="st-eyebrow" style="color:var(--lavender)">The situation</span>
   <blockquote>Joined mid-flight.<br>No design handoff.<br><em style="color:var(--lavender)">One designer.</em></blockquote>
   <p class="st-sub">A due diligence platform for a major entertainment company. Complex GIS mapping, scenario comparison, flag annotation, AI assistant — all in flight. My job: assess fast, earn trust, ship meaningful work before the deadline.</p>
@@ -1293,7 +1292,7 @@
 <!-- ═══════════════════════════════════════
      20 — REFLECTION
 ═══════════════════════════════════════ -->
-<div class="slide slide-statement" data-section="inkwell" data-type="Reflection" data-toc-group="Inkwell" style="border-left: 5px solid var(--lavender);">
+<div class="slide slide-statement" data-section="inkwell" data-type="Reflection" data-toc-group="Inkwell">
   <span class="st-eyebrow" style="color:var(--lavender)">Reflection</span>
   <blockquote>Shipped meaningful work<br>in a system I<br><em style="color:var(--lavender)">didn't build.</em></blockquote>
   <p class="st-sub">Joined with no design handoff, no component library, no runway. Left with a specced, shipped, cohesive product that a Fortune 500 client relies on. That's the job.</p>
@@ -1547,15 +1546,22 @@ function goTo(n) {
 
   // Cinematic transition when landing on a chapter slide:
   // Fade out current (300ms), brief pause (150ms), then show chapter.
-  // Chrome (progress bar, counter, section label) updates at the START
-  // of the fade so its own animations run in parallel — no post-pause jump.
+  // Chrome is snapped instantly (no CSS transition) at the start so the
+  // progress bar doesn't visibly slide during or after the fade.
   const isChapterTarget = slides[targetIndex].classList.contains('slide-chapter');
   if (isChapterTarget && current !== targetIndex) {
     transitioning = true;
     const outgoing = slides[current];
+
+    // Temporarily disable progress bar transition so it snaps, not slides
+    const prevTransition = progressBar.style.transition;
+    progressBar.style.transition = 'none';
+    _updateChrome(targetIndex);
+    progressBar.offsetHeight; // force reflow
+    progressBar.style.transition = prevTransition;
+
     outgoing.style.transition = 'opacity 0.3s ease';
     outgoing.style.opacity = '0';
-    _updateChrome(targetIndex); // animate progress bar & label while outgoing fades
     setTimeout(() => {
       outgoing.classList.remove('active');
       outgoing.style.transition = '';
