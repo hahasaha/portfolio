@@ -3,6 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <title>Sahand Hajizadeh — Portfolio Deck</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
@@ -406,6 +409,13 @@
      NAV CHROME
   ───────────────────────────────────── */
   #progress-bar { position: fixed; top: 0; left: 0; height: 3px; background: var(--lavender-dark); transition: width 0.3s ease, background 0.5s ease; z-index: 100; }
+  #section-label { position: fixed; top: 16px; left: 24px; font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.35); z-index: 100; transition: color 0.5s ease; display: flex; align-items: center; gap: 10px; }
+  #section-label .sl-num { color: rgba(255,255,255,0.2); }
+  #section-label .sl-dot { width: 3px; height: 3px; border-radius: 50%; background: rgba(255,255,255,0.15); }
+  body.atmo-golf    #section-label { color: rgba(74,158,106,0.75); }
+  body.atmo-inkwell #section-label { color: rgba(196,175,240,0.75); }
+  body.atmo-evernote #section-label { color: rgba(196,175,240,0.75); }
+  body.atmo-close   #section-label { color: rgba(196,175,240,0.65); }
   #nav { position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 14px; background: rgba(17,17,17,0.88); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.08); padding: 9px 20px; border-radius: 100px; z-index: 100; transition: border-color 0.5s ease; }
   #nav button { background: none; border: none; color: rgba(255,255,255,0.5); font-size: 18px; cursor: pointer; padding: 4px 6px; transition: color 0.15s; line-height: 1; font-family: inherit; }
   #nav button:hover { color: #fff; }
@@ -1019,6 +1029,7 @@
 
 <!-- ── CHROME ── -->
 <div id="progress-bar"></div>
+<div id="section-label"></div>
 <div id="nav">
   <button id="prev-btn" disabled>←</button>
   <span id="slide-counter"></span>
@@ -1055,6 +1066,7 @@ const prevBtn     = document.getElementById('prev-btn');
 const nextBtn     = document.getElementById('next-btn');
 const counter     = document.getElementById('slide-counter');
 const progressBar = document.getElementById('progress-bar');
+const sectionLabel = document.getElementById('section-label');
 const slideType   = document.getElementById('slide-type');
 const tocOverlay  = document.getElementById('toc-overlay');
 const tocBtn      = document.getElementById('toc-btn');
@@ -1085,19 +1097,38 @@ const tocColumnMap = {
 };
 
 const tocLabelMap = {
-  'Opening': 'Opening',
-  'Golf Ranch': 'Case Study 01',
-  'Inkwell': 'Case Study 02',
+  'Opening': '01 Background',
+  'Golf Ranch': '02 Case Study',
+  'Inkwell': '03 Case Study',
   'Close': 'Close'
 };
 
 // Display name override for main chapter items (so "Case Study" becomes "Golf Ranch", etc.)
 const tocMainTitleMap = {
-  'Opening': 'Start',
+  'Opening': 'Background',
   'Golf Ranch': 'Golf Ranch',
   'Inkwell': 'Inkwell',
   'Close': "Let's build"
 };
+
+// ── Section bounds for per-section progress bar ──
+// Build a map: slide index → { sectionStart, sectionEnd }
+const sectionBounds = [];
+{
+  const groupStarts = {};
+  slides.forEach((s, i) => {
+    const g = s.dataset.tocGroup;
+    if (!g) return;
+    if (groupStarts[g] === undefined) groupStarts[g] = i;
+  });
+  const groupEntries = Object.entries(groupStarts).sort((a, b) => a[1] - b[1]);
+  groupEntries.forEach(([group, start], idx) => {
+    const end = idx + 1 < groupEntries.length ? groupEntries[idx + 1][1] - 1 : total - 1;
+    for (let i = start; i <= end; i++) {
+      sectionBounds[i] = { start, end };
+    }
+  });
+}
 
 function buildTOC() {
   const colLeft = document.getElementById('toc-col-left');
@@ -1168,10 +1199,33 @@ function goTo(n) {
   prevBtn.disabled = current === 0;
   nextBtn.disabled = current === total - 1;
 
-  progressBar.style.width = `${((current+1)/total)*100}%`;
+  // Per-section progress bar — resets at each section boundary
+  const b = sectionBounds[current];
+  if (b) {
+    const sectionLen = b.end - b.start + 1;
+    const posInSection = current - b.start + 1;
+    progressBar.style.width = `${(posInSection / sectionLen) * 100}%`;
+  } else {
+    progressBar.style.width = `${((current+1)/total)*100}%`;
+  }
 
   slideType.textContent = slides[current].dataset.type || '';
   document.body.className = atmoMap[slides[current].dataset.section] || 'atmo-intro';
+
+  // Section label (top-left) — pulls from tocLabelMap
+  const currentGroup = slides[current].dataset.tocGroup;
+  if (currentGroup && tocLabelMap[currentGroup]) {
+    const label = tocLabelMap[currentGroup];
+    const parts = label.split(' ');
+    // If label starts with a number like "01 Background", split it for styling
+    if (/^\d+$/.test(parts[0])) {
+      sectionLabel.innerHTML = '<span class="sl-num">' + parts[0] + '</span><span class="sl-dot"></span><span>' + parts.slice(1).join(' ') + '</span>';
+    } else {
+      sectionLabel.textContent = label;
+    }
+  } else {
+    sectionLabel.textContent = '';
+  }
 }
 
 prevBtn.addEventListener('click', () => goTo(current - 1));
