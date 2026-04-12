@@ -1531,48 +1531,6 @@
 
 </div>
 
-<!-- Floating hotspot editor panel — toggled with E on annotated slides -->
-<div id="hs-panel">
-  <div class="hs-head" id="hs-head">
-    <span class="hs-title">Hotspot <em>editor.</em></span>
-    <button class="hs-close" id="hs-close" title="Exit edit mode (E)">×</button>
-  </div>
-  <section>
-    <span class="hs-label" id="hs-selected"><span class="hs-none">Click a hotspot</span></span>
-    <input type="text" class="hs-input hs-input-headline" id="hs-headline" placeholder="Headline (first bold line)" disabled />
-  </section>
-  <section style="display:none">
-    <div class="hs-grid">
-      <div class="hs-field"><span class="hs-key">T</span><input type="number" id="hs-top" step="0.1" disabled /><span class="hs-key">%</span></div>
-      <div class="hs-field"><span class="hs-key">L</span><input type="number" id="hs-left" step="0.1" disabled /><span class="hs-key">%</span></div>
-      <div class="hs-field"><span class="hs-key">W</span><input type="number" id="hs-width" step="0.1" disabled /><span class="hs-key">%</span></div>
-      <div class="hs-field"><span class="hs-key">H</span><input type="number" id="hs-height" step="0.1" disabled /><span class="hs-key">%</span></div>
-    </div>
-  </section>
-  <section>
-    <span class="hs-label">Body text</span>
-    <textarea class="hs-textarea" id="hs-tip" placeholder="Supporting copy below the headline" disabled></textarea>
-  </section>
-  <section>
-    <div class="hs-actions">
-      <button class="hs-btn" id="hs-new">+ New</button>
-      <button class="hs-btn" id="hs-dup" disabled>Duplicate</button>
-      <button class="hs-btn danger" id="hs-del" disabled>Delete</button>
-    </div>
-  </section>
-  <section>
-    <span class="hs-label">Shortcuts</span>
-    <div class="hs-shortcuts">
-      <div><kbd>1-9</kbd>select &nbsp; <kbd>N</kbd>new &nbsp; <kbd>Del</kbd>remove</div>
-      <div><kbd>drag</kbd>move &nbsp; <kbd>alt+drag</kbd>duplicate</div>
-      <div><kbd>↑↓←→</kbd>nudge &nbsp; <kbd>shift</kbd>fine</div>
-      <div><kbd>− +</kbd>height &nbsp; <kbd>, .</kbd>width</div>
-      <div><kbd>⌘Z</kbd>undo &nbsp; <kbd>H</kbd>hide frames</div>
-      <div><kbd>R</kbd>reset &nbsp; <kbd>E</kbd>exit</div>
-    </div>
-  </section>
-</div>
-
 <!-- ═══════════════════════════════════════
      08 — OFFERS + SOCIAL PROOF
 ═══════════════════════════════════════ -->
@@ -1897,6 +1855,50 @@
 </div>
 
 </div><!-- /slide-stage -->
+
+<!-- Floating hotspot editor panel — toggled with E on annotated slides.
+     Lives OUTSIDE #slide-stage so position:fixed is viewport-relative
+     instead of being affected by the stage's transform: scale(). -->
+<div id="hs-panel">
+  <div class="hs-head" id="hs-head">
+    <span class="hs-title">Hotspot <em>editor.</em></span>
+    <button class="hs-close" id="hs-close" title="Exit edit mode (E)">×</button>
+  </div>
+  <section>
+    <span class="hs-label" id="hs-selected"><span class="hs-none">Click a hotspot</span></span>
+    <input type="text" class="hs-input hs-input-headline" id="hs-headline" placeholder="Headline (first bold line)" disabled />
+  </section>
+  <section style="display:none">
+    <div class="hs-grid">
+      <div class="hs-field"><span class="hs-key">T</span><input type="number" id="hs-top" step="0.1" disabled /><span class="hs-key">%</span></div>
+      <div class="hs-field"><span class="hs-key">L</span><input type="number" id="hs-left" step="0.1" disabled /><span class="hs-key">%</span></div>
+      <div class="hs-field"><span class="hs-key">W</span><input type="number" id="hs-width" step="0.1" disabled /><span class="hs-key">%</span></div>
+      <div class="hs-field"><span class="hs-key">H</span><input type="number" id="hs-height" step="0.1" disabled /><span class="hs-key">%</span></div>
+    </div>
+  </section>
+  <section>
+    <span class="hs-label">Body text</span>
+    <textarea class="hs-textarea" id="hs-tip" placeholder="Supporting copy below the headline" disabled></textarea>
+  </section>
+  <section>
+    <div class="hs-actions">
+      <button class="hs-btn" id="hs-new">+ New</button>
+      <button class="hs-btn" id="hs-dup" disabled>Duplicate</button>
+      <button class="hs-btn danger" id="hs-del" disabled>Delete</button>
+    </div>
+  </section>
+  <section>
+    <span class="hs-label">Shortcuts</span>
+    <div class="hs-shortcuts">
+      <div><kbd>1-9</kbd>select &nbsp; <kbd>N</kbd>new &nbsp; <kbd>Del</kbd>remove</div>
+      <div><kbd>drag</kbd>move &nbsp; <kbd>alt+drag</kbd>duplicate</div>
+      <div><kbd>↑↓←→</kbd>nudge &nbsp; <kbd>shift</kbd>fine</div>
+      <div><kbd>− +</kbd>height &nbsp; <kbd>, .</kbd>width</div>
+      <div><kbd>⌘Z</kbd>undo &nbsp; <kbd>H</kbd>hide frames</div>
+      <div><kbd>R</kbd>reset &nbsp; <kbd>E</kbd>exit</div>
+    </div>
+  </section>
+</div>
 
 <!-- ── SPEAKER NOTES (press N to toggle) ── -->
 <div id="notes-overlay">
