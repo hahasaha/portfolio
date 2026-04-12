@@ -408,8 +408,20 @@
   /* ─────────────────────────────────────
      NAV CHROME
   ───────────────────────────────────── */
-  #progress-bar { position: fixed; top: 0; left: 0; height: 3px; background: var(--lavender-dark); transition: width 0.3s ease, background 0.5s ease; z-index: 100; }
-  #section-label { position: fixed; top: 16px; left: 24px; font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.35); z-index: 100; transition: color 0.5s ease; display: flex; align-items: center; gap: 10px; }
+  /* Slide-chrome container — overlays the slide's top-left so progress bar
+     and section label move with the slide instead of sitting at viewport top.
+     Keeps the slide visually centered and lets Chrome hide its toolbar in
+     fullscreen mode (no fixed content at the viewport's literal top). */
+  #slide-chrome {
+    position: fixed;
+    top: calc(50% - var(--slide-h) / 2);
+    left: calc(50% - var(--slide-w) / 2);
+    width: var(--slide-w);
+    z-index: 100;
+    pointer-events: none;
+  }
+  #progress-bar { position: absolute; top: 0; left: 0; height: 3px; background: var(--lavender-dark); transition: width 0.3s ease, background 0.5s ease; }
+  #section-label { position: absolute; top: 16px; left: 24px; font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.35); transition: color 0.5s ease; display: flex; align-items: center; gap: 10px; }
   #section-label .sl-num { color: rgba(255,255,255,0.2); }
   #section-label .sl-dot { width: 3px; height: 3px; border-radius: 50%; background: rgba(255,255,255,0.15); }
   body.atmo-golf    #section-label { color: rgba(74,158,106,0.75); }
@@ -513,46 +525,6 @@
 </div>
 
 <!-- ═══════════════════════════════════════
-     WHO I AM
-═══════════════════════════════════════ -->
-<div class="slide slide-twocol" data-section="intro" data-type="Who I Am" data-toc-group="Opening">
-  <div class="sidebar">
-    <div>
-      <span class="s-eyebrow">Designer + builder</span>
-      <h3>I move fast,<br>jam hard, and<br>care about the<br>last 20%.</h3>
-      <p>10+ years designing products people actually use. Mobile-first by default. AI-native by choice. I do the first 10%, let AI handle the middle 80, and own the last 10% — because that's where the craft lives.</p>
-    </div>
-    <div class="pill-row">
-      <span class="pill">Mobile-first</span>
-      <span class="pill">AI-native</span>
-      <span class="pill">Interaction design</span>
-      <span class="pill">Design systems</span>
-      <span class="pill">0→1</span>
-    </div>
-  </div>
-  <div class="main">
-    <div class="insight-grid">
-      <div class="insight-cell accent-green">
-        <span class="ic-num">10+</span>
-        <span class="ic-label">years of product design</span>
-      </div>
-      <div class="insight-cell">
-        <span class="ic-num">8M+</span>
-        <span class="ic-label">users on redesigned Evernote</span>
-      </div>
-      <div class="insight-cell">
-        <span class="ic-num">4×</span>
-        <span class="ic-label">membership growth, Golf Ranch</span>
-      </div>
-      <div class="insight-cell accent-lavender">
-        <span class="ic-num">$1M</span>
-        <span class="ic-label">revenue at launch, Flo Recruit</span>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ═══════════════════════════════════════
      WHAT I BELIEVE
 ═══════════════════════════════════════ -->
 <div class="slide slide-statement" data-section="intro" data-type="What I Believe" data-toc-group="Opening" style="border-left: 5px solid var(--lavender-dark);">
@@ -595,7 +567,7 @@
 <div class="slide slide-fullimg" data-section="evernote" data-type="Design System" data-toc-group="Opening">
   <div class="fullimg-text" style="background:#0f0f0f; border-right-color:rgba(255,255,255,0.05);">
     <div>
-      <span class="f-eyebrow" style="color:var(--lavender)">Design system</span>
+      <span class="f-eyebrow" style="color:var(--lavender)">Background</span>
       <h3 style="color:var(--cream);">240+ components.<br>Every platform.<br><em style="color:var(--lavender)">One language.</em></h3>
       <p style="color:rgba(245,240,226,0.45);">Built the Evernote design system from scratch — iOS, Android, iPad, Apple Watch, widgets. Not just a component library. A shared visual language that scaled across platforms and teams for years.</p>
     </div>
@@ -1028,8 +1000,10 @@
 </div>
 
 <!-- ── CHROME ── -->
-<div id="progress-bar"></div>
-<div id="section-label"></div>
+<div id="slide-chrome">
+  <div id="progress-bar"></div>
+  <div id="section-label"></div>
+</div>
 <div id="nav">
   <button id="prev-btn" disabled>←</button>
   <span id="slide-counter"></span>
