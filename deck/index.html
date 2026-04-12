@@ -1353,7 +1353,7 @@
     <circle id="ann-dot-end"   cx="0" cy="0" r="3.5" />
   </svg>
   <div id="edit-hud">
-    <span><span class="hud-label">EDIT MODE</span> · click/drag, ↑↓←→ shift=fine, − + height, , . width, C copy, R reset, esc deselect, E exit</span>
+    <span><span class="hud-label">EDIT MODE</span> · drag / 1-9 select / N new / Del remove / alt+drag dup / ↑↓←→ nudge / − + , . resize / C copy / R reset / E exit</span>
     <span id="edit-hud-readout"><span class="hud-label">selected:</span> <span class="hud-val">—</span></span>
   </div>
 </div>
@@ -2134,7 +2134,10 @@ function initAnnotations() {
   const dotStart  = document.getElementById('ann-dot-start');
   const dotEnd    = document.getElementById('ann-dot-end');
   const screen    = document.querySelector('.ann-screen');
-  const hotspots  = Array.from(document.querySelectorAll('.hotspot'));
+  const imgWrap   = document.querySelector('.ann-image-wrap');
+  // hotspots is dynamic — refetched via getHotspots() so add/delete work
+  function getHotspots() { return Array.from(document.querySelectorAll('.hotspot')); }
+  let hotspots = getHotspots();
 
   let activeSpot = null;
   let hoverSpot  = null; // explicit hover takes priority over scroll-pick
@@ -2197,11 +2200,10 @@ function initAnnotations() {
     connector.classList.remove('visible');
   }
 
-  // Hover activation only — no scroll-based auto-pick
-  hotspots.forEach(spot => {
+  function attachHoverListeners(spot) {
     spot.addEventListener('mouseenter', () => activate(spot));
     spot.addEventListener('mouseleave', () => deactivate());
-  });
+  }
 
   // ── Edit mode ──
   const slideAnn = document.querySelector('.slide-annotated');
@@ -2209,18 +2211,29 @@ function initAnnotations() {
   let editMode = false;
   let editSelected = null;
 
-  hotspots.forEach((spot, i) => {
-    spot.setAttribute('data-num', i + 1);
-    // Cache original positions so we can reset later
-    spot.dataset.originalStyle = spot.getAttribute('style') || '';
-    // Add 4 corner resize handles
-    ['nw','ne','sw','se'].forEach(dir => {
-      const h = document.createElement('div');
-      h.className = 'resize-handle ' + dir;
-      h.dataset.dir = dir;
-      spot.appendChild(h);
-    });
-  });
+  function decorateHotspot(spot, idx) {
+    spot.setAttribute('data-num', idx + 1);
+    if (!spot.dataset.originalStyle) {
+      spot.dataset.originalStyle = spot.getAttribute('style') || '';
+    }
+    // Add 4 corner resize handles if not already present
+    if (!spot.querySelector('.resize-handle')) {
+      ['nw','ne','sw','se'].forEach(dir => {
+        const h = document.createElement('div');
+        h.className = 'resize-handle ' + dir;
+        h.dataset.dir = dir;
+        spot.appendChild(h);
+      });
+    }
+    attachHotspotListeners(spot);
+  }
+
+  function refreshHotspots() {
+    hotspots = getHotspots();
+    hotspots.forEach((spot, i) => spot.setAttribute('data-num', i + 1));
+  }
+
+  hotspots.forEach((spot, i) => decorateHotspot(spot, i));
 
   // ── Persistence ──
   // Save hotspot positions to localStorage so edits survive reloads.
@@ -2352,17 +2365,29 @@ function initAnnotations() {
     };
   }
 
-  hotspots.forEach(spot => {
+  function attachDragListener(spot) {
     spot.addEventListener('mousedown', e => {
       if (!editMode) return;
       e.preventDefault();
       e.stopPropagation();
+      // Alt+mousedown duplicates the hotspot before dragging
+      if (e.altKey) {
+        const clone = spot.cloneNode(false); // shallow (no children/handles)
+        // Preserve tip/headline data
+        if (spot.dataset.tip) clone.dataset.tip = spot.dataset.tip;
+        if (spot.dataset.headline) clone.dataset.headline = spot.dataset.headline;
+        clone.className = 'hotspot';
+        spot.parentElement.appendChild(clone);
+        refreshHotspots();
+        decorateHotspot(clone, hotspots.indexOf(clone));
+        spot = clone;
+      }
       // Select on mousedown
       if (editSelected) editSelected.classList.remove('selected');
       editSelected = spot;
       spot.classList.add('selected');
       updateReadout();
-      // If the click was on a corner handle, start a resize drag instead
+      // Corner handle? Start resize, else move
       const handle = e.target.classList && e.target.classList.contains('resize-handle');
       if (handle) {
         beginDrag(spot, e, e.target.dataset.dir);
@@ -2370,7 +2395,63 @@ function initAnnotations() {
         beginDrag(spot, e, 'move');
       }
     });
-  });
+  }
+
+  function attachHotspotListeners(spot) {
+    attachHoverListeners(spot);
+    attachDragListener(spot);
+  }
+
+  // Track mouse position over the image wrap (in % coords) so N can
+  // create a new hotspot at the current cursor location
+  let lastCursorPct = { left: 10, top: 10 };
+  if (imgWrap) {
+    imgWrap.addEventListener('mousemove', e => {
+      const slideEl = imgWrap.closest('.slide');
+      const slideRect = slideEl.getBoundingClientRect();
+      const scale = slideRect.width / 1200;
+      const wrapRect = imgWrap.getBoundingClientRect();
+      const wrapW = wrapRect.width / scale;
+      const wrapH = wrapRect.height / scale;
+      const xPx = (e.clientX - wrapRect.left) / scale;
+      const yPx = (e.clientY - wrapRect.top) / scale;
+      lastCursorPct = {
+        left: (xPx / wrapW) * 100,
+        top:  (yPx / wrapH) * 100
+      };
+    });
+  }
+
+  function createHotspotAtCursor() {
+    if (!imgWrap) return;
+    const spot = document.createElement('div');
+    spot.className = 'hotspot';
+    const w = 10, h = 4; // default size in %
+    spot.style.top    = Math.max(0, lastCursorPct.top  - h / 2).toFixed(2) + '%';
+    spot.style.left   = Math.max(0, lastCursorPct.left - w / 2).toFixed(2) + '%';
+    spot.style.width  = w + '%';
+    spot.style.height = h + '%';
+    spot.dataset.tip  = 'New hotspot. Edit the data-tip attribute.';
+    imgWrap.appendChild(spot);
+    refreshHotspots();
+    decorateHotspot(spot, hotspots.indexOf(spot));
+    if (editSelected) editSelected.classList.remove('selected');
+    editSelected = spot;
+    spot.classList.add('selected');
+    updateReadout();
+    saveHotspots();
+  }
+
+  function deleteSelectedHotspot() {
+    if (!editSelected) return;
+    const spot = editSelected;
+    editSelected = null;
+    spot.remove();
+    refreshHotspots();
+    updateReadout();
+    saveHotspots();
+    deactivate();
+  }
 
   document.addEventListener('mousemove', e => {
     if (!dragging) return;
@@ -2440,6 +2521,22 @@ function initAnnotations() {
     // Copy / Reset
     if (e.key === 'c' || e.key === 'C') { e.preventDefault(); e.stopImmediatePropagation(); copyHotspotsToClipboard(); }
     if (e.key === 'r' || e.key === 'R') { e.preventDefault(); e.stopImmediatePropagation(); resetHotspots(); }
+    // Number keys 1-9 to select hotspot by index
+    if (/^[1-9]$/.test(e.key)) {
+      const idx = parseInt(e.key, 10) - 1;
+      if (hotspots[idx]) {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        if (editSelected) editSelected.classList.remove('selected');
+        editSelected = hotspots[idx];
+        editSelected.classList.add('selected');
+        updateReadout();
+      }
+    }
+    // N to create new hotspot at cursor
+    if (e.key === 'n' || e.key === 'N') { e.preventDefault(); e.stopImmediatePropagation(); createHotspotAtCursor(); }
+    // Delete / Backspace to remove selected
+    if (e.key === 'Delete' || e.key === 'Backspace') { e.preventDefault(); e.stopImmediatePropagation(); deleteSelectedHotspot(); }
   }, true); // capture phase so it runs before the slide navigation handler
 }
 initAnnotations();
