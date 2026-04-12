@@ -665,28 +665,180 @@
     padding: 1px 5px;
     border-radius: 3px;
   }
-  #edit-hud {
+  /* Floating hotspot editor panel */
+  #hs-panel {
     display: none;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    background: rgba(0,0,0,0.85);
+    position: fixed;
+    top: 80px;
+    right: 28px;
+    width: 320px;
+    background: rgba(15,26,20,0.96);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(74,158,106,0.3);
+    border-radius: 10px;
+    box-shadow: 0 20px 56px rgba(0,0,0,0.6), 0 0 0 1px rgba(74,158,106,0.08);
+    color: var(--cream);
+    font-family: 'DM Sans', sans-serif;
+    z-index: 400;
+    overflow: hidden;
+    user-select: none;
+  }
+  .edit-mode-active #hs-panel { display: block; }
+  #hs-panel .hs-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    background: rgba(74,158,106,0.08);
+    border-bottom: 1px solid rgba(74,158,106,0.2);
+    cursor: grab;
+  }
+  #hs-panel .hs-head:active { cursor: grabbing; }
+  #hs-panel .hs-head .hs-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--green-accent);
+  }
+  #hs-panel .hs-head .hs-close {
+    font-family: 'DM Mono', monospace;
+    font-size: 14px;
+    color: rgba(245,240,226,0.5);
+    cursor: pointer;
+    padding: 0 4px;
+    background: none;
+    border: none;
+  }
+  #hs-panel .hs-head .hs-close:hover { color: var(--cream); }
+  #hs-panel section {
+    padding: 14px 16px;
+    border-bottom: 1px solid rgba(245,240,226,0.05);
+  }
+  #hs-panel section:last-child { border-bottom: none; }
+  #hs-panel .hs-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(245,240,226,0.4);
+    margin-bottom: 8px;
+    display: block;
+  }
+  #hs-panel .hs-selected {
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px;
+    color: var(--cream);
+  }
+  #hs-panel .hs-selected em {
+    font-style: italic;
+    color: var(--green-accent);
+  }
+  #hs-panel .hs-none { color: rgba(245,240,226,0.3); font-style: italic; font-family: 'DM Sans',sans-serif; font-size: 13px; }
+  #hs-panel .hs-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  #hs-panel .hs-field {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(0,0,0,0.3);
+    border: 1px solid rgba(245,240,226,0.08);
+    border-radius: 5px;
+    padding: 6px 8px;
+    transition: border-color 0.15s;
+  }
+  #hs-panel .hs-field:focus-within { border-color: var(--green-accent); }
+  #hs-panel .hs-field .hs-key {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    color: rgba(245,240,226,0.4);
+    text-transform: uppercase;
+  }
+  #hs-panel .hs-field input {
+    background: none;
+    border: none;
+    outline: none;
     color: var(--cream);
     font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    padding: 10px 16px;
-    z-index: 300;
-    letter-spacing: 0.02em;
-    border-bottom: 1px solid rgba(196,175,240,0.3);
+    font-size: 12px;
+    width: 100%;
+    text-align: right;
   }
-  .slide-annotated.edit-mode #edit-hud {
-    display: flex;
-    justify-content: space-between;
-    gap: 24px;
+  #hs-panel .hs-field input:disabled { color: rgba(245,240,226,0.3); }
+  #hs-panel .hs-textarea,
+  #hs-panel .hs-input {
+    width: 100%;
+    background: rgba(0,0,0,0.3);
+    border: 1px solid rgba(245,240,226,0.08);
+    border-radius: 5px;
+    padding: 8px 10px;
+    color: var(--cream);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    line-height: 1.5;
+    outline: none;
+    resize: none;
+    transition: border-color 0.15s;
   }
-  #edit-hud .hud-label { color: rgba(245,240,226,0.5); }
-  #edit-hud .hud-val { color: #ff8c28; }
+  #hs-panel .hs-textarea:focus,
+  #hs-panel .hs-input:focus { border-color: var(--green-accent); }
+  #hs-panel .hs-textarea { min-height: 72px; }
+  #hs-panel .hs-textarea:disabled,
+  #hs-panel .hs-input:disabled { opacity: 0.4; cursor: not-allowed; }
+  #hs-panel .hs-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 6px;
+  }
+  #hs-panel .hs-btn {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 8px 4px;
+    background: rgba(74,158,106,0.1);
+    border: 1px solid rgba(74,158,106,0.3);
+    color: var(--green-accent);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+  }
+  #hs-panel .hs-btn:hover {
+    background: rgba(74,158,106,0.2);
+    border-color: var(--green-accent);
+  }
+  #hs-panel .hs-btn.danger {
+    background: rgba(208,90,90,0.08);
+    border-color: rgba(208,90,90,0.3);
+    color: rgba(232,140,140,0.9);
+  }
+  #hs-panel .hs-btn.danger:hover {
+    background: rgba(208,90,90,0.18);
+    border-color: rgba(208,90,90,0.5);
+  }
+  #hs-panel .hs-btn:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+  }
+  #hs-panel .hs-shortcuts {
+    font-family: 'DM Mono', monospace;
+    font-size: 9.5px;
+    line-height: 1.85;
+    color: rgba(245,240,226,0.45);
+  }
+  #hs-panel .hs-shortcuts kbd {
+    background: rgba(245,240,226,0.08);
+    border: 1px solid rgba(245,240,226,0.1);
+    border-radius: 3px;
+    padding: 1px 5px;
+    font-family: inherit;
+    font-size: 9px;
+    color: var(--cream);
+    margin-right: 3px;
+  }
   /* Connector SVG overlay — draws a dashed line from the hovered
      hotspot to the tooltip. Lives in slide-local coords (0 0 1200 675). */
   .ann-connector {
@@ -1349,10 +1501,53 @@
     <circle id="ann-dot-start" cx="0" cy="0" r="3.5" />
     <circle id="ann-dot-end"   cx="0" cy="0" r="3.5" />
   </svg>
-  <div id="edit-hud">
-    <span><span class="hud-label">EDIT MODE</span> · drag / 1-9 select / N new / Del remove / alt+drag dup / ↑↓←→ nudge / − + , . resize / C copy / R reset / E exit</span>
-    <span id="edit-hud-readout"><span class="hud-label">selected:</span> <span class="hud-val">—</span></span>
+
+</div>
+
+<!-- Floating hotspot editor panel — toggled with E on annotated slides -->
+<div id="hs-panel">
+  <div class="hs-head" id="hs-head">
+    <span class="hs-title">Hotspot Editor</span>
+    <button class="hs-close" id="hs-close" title="Exit edit mode (E)">×</button>
   </div>
+  <section>
+    <span class="hs-label">Selected</span>
+    <div class="hs-selected" id="hs-selected"><span class="hs-none">Click a hotspot</span></div>
+  </section>
+  <section>
+    <span class="hs-label">Position</span>
+    <div class="hs-grid">
+      <div class="hs-field"><span class="hs-key">T</span><input type="number" id="hs-top" step="0.1" disabled /><span class="hs-key">%</span></div>
+      <div class="hs-field"><span class="hs-key">L</span><input type="number" id="hs-left" step="0.1" disabled /><span class="hs-key">%</span></div>
+      <div class="hs-field"><span class="hs-key">W</span><input type="number" id="hs-width" step="0.1" disabled /><span class="hs-key">%</span></div>
+      <div class="hs-field"><span class="hs-key">H</span><input type="number" id="hs-height" step="0.1" disabled /><span class="hs-key">%</span></div>
+    </div>
+  </section>
+  <section>
+    <span class="hs-label">Headline (optional)</span>
+    <input type="text" class="hs-input" id="hs-headline" placeholder="Auto-split first sentence" disabled />
+  </section>
+  <section>
+    <span class="hs-label">Tooltip text</span>
+    <textarea class="hs-textarea" id="hs-tip" placeholder="data-tip content" disabled></textarea>
+  </section>
+  <section>
+    <div class="hs-actions">
+      <button class="hs-btn" id="hs-new">+ New</button>
+      <button class="hs-btn" id="hs-dup" disabled>Duplicate</button>
+      <button class="hs-btn danger" id="hs-del" disabled>Delete</button>
+    </div>
+  </section>
+  <section>
+    <span class="hs-label">Shortcuts</span>
+    <div class="hs-shortcuts">
+      <kbd>1-9</kbd>select &nbsp; <kbd>N</kbd>new &nbsp; <kbd>Del</kbd>remove<br>
+      <kbd>drag</kbd>move &nbsp; <kbd>alt+drag</kbd>duplicate<br>
+      <kbd>↑↓←→</kbd>nudge &nbsp; <kbd>shift</kbd>fine<br>
+      <kbd>− +</kbd>height &nbsp; <kbd>, .</kbd>width<br>
+      <kbd>H</kbd>hide frames &nbsp; <kbd>R</kbd>reset &nbsp; <kbd>E</kbd>exit
+    </div>
+  </section>
 </div>
 
 <!-- ═══════════════════════════════════════
@@ -2202,9 +2397,29 @@ function initAnnotations() {
     spot.addEventListener('mouseleave', () => deactivate());
   }
 
+  // Hide the tooltip + connector as soon as the phone scrolls — otherwise
+  // the connector line points at the old hotspot position (stale)
+  if (screen) {
+    screen.addEventListener('scroll', () => {
+      if (activeSpot) deactivate();
+    }, { passive: true });
+  }
+
   // ── Edit mode ──
   const slideAnn = document.querySelector('.slide-annotated');
-  const hudReadout = document.getElementById('edit-hud-readout');
+  const panel       = document.getElementById('hs-panel');
+  const panelHead   = document.getElementById('hs-head');
+  const panelClose  = document.getElementById('hs-close');
+  const panelSelected = document.getElementById('hs-selected');
+  const inpTop    = document.getElementById('hs-top');
+  const inpLeft   = document.getElementById('hs-left');
+  const inpWidth  = document.getElementById('hs-width');
+  const inpHeight = document.getElementById('hs-height');
+  const inpHeadline = document.getElementById('hs-headline');
+  const inpTip    = document.getElementById('hs-tip');
+  const btnNew    = document.getElementById('hs-new');
+  const btnDup    = document.getElementById('hs-dup');
+  const btnDel    = document.getElementById('hs-del');
   let editMode = false;
   let editSelected = null;
 
@@ -2308,14 +2523,29 @@ function initAnnotations() {
     };
   }
   function updateReadout() {
-    if (!editSelected) {
-      hudReadout.innerHTML = '<span class="hud-label">selected:</span> <span class="hud-val">—</span>';
+    // Sync the panel with the current selection
+    const hasSel = !!editSelected;
+    [inpTop, inpLeft, inpWidth, inpHeight, inpHeadline, inpTip].forEach(el => el.disabled = !hasSel);
+    btnDup.disabled = !hasSel;
+    btnDel.disabled = !hasSel;
+    if (!hasSel) {
+      panelSelected.innerHTML = '<span class="hs-none">Click a hotspot</span>';
+      inpTop.value = inpLeft.value = inpWidth.value = inpHeight.value = '';
+      inpHeadline.value = '';
+      inpTip.value = '';
       return;
     }
     const i = hotspots.indexOf(editSelected) + 1;
     const st = getHotspotState(editSelected);
-    const str = `top:${st.top.toFixed(1)}%; left:${st.left}%; width:${st.width}%; height:${st.height.toFixed(1)}%`;
-    hudReadout.innerHTML = `<span class="hud-label">#${i}:</span> <span class="hud-val">${str}</span>`;
+    panelSelected.innerHTML = `Hotspot <em>#${i}</em>`;
+    // Don't clobber focused input — only set values for non-focused ones
+    const focused = document.activeElement;
+    if (focused !== inpTop)    inpTop.value    = st.top.toFixed(2);
+    if (focused !== inpLeft)   inpLeft.value   = st.left.toFixed(2);
+    if (focused !== inpWidth)  inpWidth.value  = st.width.toFixed(2);
+    if (focused !== inpHeight) inpHeight.value = st.height.toFixed(2);
+    if (focused !== inpHeadline) inpHeadline.value = editSelected.dataset.headline || '';
+    if (focused !== inpTip)    inpTip.value    = editSelected.dataset.tip || '';
   }
   function nudge(delta, which = 'top') {
     if (!editSelected) return;
@@ -2329,13 +2559,87 @@ function initAnnotations() {
   function enterEditMode() {
     editMode = true;
     slideAnn.classList.add('edit-mode');
+    document.body.classList.add('edit-mode-active');
     updateReadout();
   }
   function exitEditMode() {
     editMode = false;
     slideAnn.classList.remove('edit-mode');
+    document.body.classList.remove('edit-mode-active');
     if (editSelected) { editSelected.classList.remove('selected'); editSelected = null; }
+    updateReadout();
   }
+
+  // Panel → hotspot sync
+  function setSpotStyle(key, val) {
+    if (!editSelected) return;
+    const v = Math.max(0, Math.min(100, parseFloat(val) || 0));
+    editSelected.style[key] = v + '%';
+    saveHotspots();
+  }
+  inpTop.addEventListener('input',    () => setSpotStyle('top',    inpTop.value));
+  inpLeft.addEventListener('input',   () => setSpotStyle('left',   inpLeft.value));
+  inpWidth.addEventListener('input',  () => setSpotStyle('width',  inpWidth.value));
+  inpHeight.addEventListener('input', () => setSpotStyle('height', inpHeight.value));
+  inpHeadline.addEventListener('input', () => {
+    if (!editSelected) return;
+    if (inpHeadline.value) editSelected.dataset.headline = inpHeadline.value;
+    else delete editSelected.dataset.headline;
+  });
+  inpTip.addEventListener('input', () => {
+    if (!editSelected) return;
+    editSelected.dataset.tip = inpTip.value;
+  });
+
+  // Action buttons
+  btnNew.addEventListener('click', () => createHotspotAtCursor());
+  btnDel.addEventListener('click', () => deleteSelectedHotspot());
+  btnDup.addEventListener('click', () => {
+    if (!editSelected) return;
+    const src = editSelected;
+    const clone = src.cloneNode(false);
+    clone.className = 'hotspot';
+    if (src.dataset.tip) clone.dataset.tip = src.dataset.tip;
+    if (src.dataset.headline) clone.dataset.headline = src.dataset.headline;
+    // Offset the clone slightly so it's visible
+    const st = getHotspotState(src);
+    clone.style.top    = Math.min(100, st.top + 2) + '%';
+    clone.style.left   = st.left + '%';
+    clone.style.width  = st.width + '%';
+    clone.style.height = st.height + '%';
+    src.parentElement.appendChild(clone);
+    refreshHotspots();
+    decorateHotspot(clone, hotspots.indexOf(clone));
+    if (editSelected) editSelected.classList.remove('selected');
+    editSelected = clone;
+    clone.classList.add('selected');
+    updateReadout();
+    saveHotspots();
+  });
+  panelClose.addEventListener('click', () => exitEditMode());
+
+  // Prevent panel input keystrokes from triggering edit-mode shortcuts
+  ['keydown','keypress','keyup'].forEach(type => {
+    panel.addEventListener(type, e => e.stopPropagation());
+  });
+
+  // Draggable panel header
+  let panelDrag = null;
+  panelHead.addEventListener('mousedown', e => {
+    if (e.target === panelClose) return;
+    const rect = panel.getBoundingClientRect();
+    panelDrag = { offsetX: e.clientX - rect.left, offsetY: e.clientY - rect.top };
+    e.preventDefault();
+  });
+  document.addEventListener('mousemove', e => {
+    if (!panelDrag) return;
+    const x = Math.max(0, Math.min(window.innerWidth  - panel.offsetWidth,  e.clientX - panelDrag.offsetX));
+    const y = Math.max(0, Math.min(window.innerHeight - panel.offsetHeight, e.clientY - panelDrag.offsetY));
+    panel.style.left  = x + 'px';
+    panel.style.top   = y + 'px';
+    panel.style.right = 'auto';
+  });
+  document.addEventListener('mouseup', () => { panelDrag = null; });
 
   // Drag-to-move hotspots in edit mode + corner-handle resize
   let dragging = null;    // 'move' | 'nw' | 'ne' | 'sw' | 'se'
