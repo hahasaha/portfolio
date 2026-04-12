@@ -619,6 +619,40 @@
     background: rgba(255,140,40,0.28);
     outline: 2px solid #ff8c28;
   }
+  .resize-handle {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background: #ff8c28;
+    border: 2px solid #fff;
+    border-radius: 2px;
+    z-index: 20;
+    display: none;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+  }
+  .slide-annotated.edit-mode .hotspot.selected .resize-handle {
+    display: block;
+  }
+  .resize-handle.se {
+    bottom: -7px;
+    right: -7px;
+    cursor: nwse-resize;
+  }
+  .resize-handle.sw {
+    bottom: -7px;
+    left: -7px;
+    cursor: nesw-resize;
+  }
+  .resize-handle.ne {
+    top: -7px;
+    right: -7px;
+    cursor: nesw-resize;
+  }
+  .resize-handle.nw {
+    top: -7px;
+    left: -7px;
+    cursor: nwse-resize;
+  }
   .slide-annotated.edit-mode .hotspot::before {
     content: attr(data-num);
     position: absolute;
@@ -2175,7 +2209,16 @@ function initAnnotations() {
   let editMode = false;
   let editSelected = null;
 
-  hotspots.forEach((spot, i) => spot.setAttribute('data-num', i + 1));
+  hotspots.forEach((spot, i) => {
+    spot.setAttribute('data-num', i + 1);
+    // Add 4 corner resize handles
+    ['nw','ne','sw','se'].forEach(dir => {
+      const h = document.createElement('div');
+      h.className = 'resize-handle ' + dir;
+      h.dataset.dir = dir;
+      spot.appendChild(h);
+    });
+  });
 
   function parsePct(val) {
     const n = parseFloat(val);
@@ -2219,9 +2262,31 @@ function initAnnotations() {
     if (editSelected) { editSelected.classList.remove('selected'); editSelected = null; }
   }
 
-  // Drag-to-move hotspots in edit mode (mousedown selects + starts drag)
-  let dragging = null;
+  // Drag-to-move hotspots in edit mode + corner-handle resize
+  let dragging = null;    // 'move' | 'nw' | 'ne' | 'sw' | 'se'
   let dragStart = null;
+  let dragSpot  = null;
+
+  function beginDrag(spot, e, mode) {
+    const slideEl = spot.closest('.slide');
+    const slideRect = slideEl.getBoundingClientRect();
+    const scale = slideRect.width / 1200;
+    const wrapRect = spot.parentElement.getBoundingClientRect();
+    dragSpot = spot;
+    dragging = mode;
+    dragStart = {
+      mouseX: e.clientX,
+      mouseY: e.clientY,
+      top:    parsePct(spot.style.top),
+      left:   parsePct(spot.style.left),
+      width:  parsePct(spot.style.width),
+      height: parsePct(spot.style.height),
+      scale:  scale,
+      wrapW:  wrapRect.width / scale,
+      wrapH:  wrapRect.height / scale
+    };
+  }
+
   hotspots.forEach(spot => {
     spot.addEventListener('mousedown', e => {
       if (!editMode) return;
@@ -2232,36 +2297,52 @@ function initAnnotations() {
       editSelected = spot;
       spot.classList.add('selected');
       updateReadout();
-      // Prep drag state
-      const slideEl = spot.closest('.slide');
-      const slideRect = slideEl.getBoundingClientRect();
-      const scale = slideRect.width / 1200;
-      const wrapRect = spot.parentElement.getBoundingClientRect();
-      dragging = spot;
-      dragStart = {
-        mouseX: e.clientX,
-        mouseY: e.clientY,
-        startTop: parsePct(spot.style.top),
-        startLeft: parsePct(spot.style.left),
-        scale: scale,
-        wrapW: wrapRect.width / scale,
-        wrapH: wrapRect.height / scale
-      };
+      // If the click was on a corner handle, start a resize drag instead
+      const handle = e.target.classList && e.target.classList.contains('resize-handle');
+      if (handle) {
+        beginDrag(spot, e, e.target.dataset.dir);
+      } else {
+        beginDrag(spot, e, 'move');
+      }
     });
   });
+
   document.addEventListener('mousemove', e => {
     if (!dragging) return;
     const dxPx = (e.clientX - dragStart.mouseX) / dragStart.scale;
     const dyPx = (e.clientY - dragStart.mouseY) / dragStart.scale;
-    const dLeft = (dxPx / dragStart.wrapW) * 100;
-    const dTop  = (dyPx / dragStart.wrapH) * 100;
-    const newTop  = Math.max(0, Math.min(100, dragStart.startTop + dTop));
-    const newLeft = Math.max(0, Math.min(100, dragStart.startLeft + dLeft));
-    dragging.style.top  = newTop.toFixed(2) + '%';
-    dragging.style.left = newLeft.toFixed(2) + '%';
+    const dL = (dxPx / dragStart.wrapW) * 100; // % deltas
+    const dT = (dyPx / dragStart.wrapH) * 100;
+
+    let top    = dragStart.top;
+    let left   = dragStart.left;
+    let width  = dragStart.width;
+    let height = dragStart.height;
+
+    if (dragging === 'move') {
+      top  = dragStart.top  + dT;
+      left = dragStart.left + dL;
+    } else {
+      // Corner resize — adjust the corner opposite to the anchor
+      if (dragging.includes('n')) { top = dragStart.top + dT; height = dragStart.height - dT; }
+      if (dragging.includes('s')) { height = dragStart.height + dT; }
+      if (dragging.includes('w')) { left = dragStart.left + dL; width = dragStart.width - dL; }
+      if (dragging.includes('e')) { width = dragStart.width + dL; }
+    }
+
+    // Clamp
+    width  = Math.max(1, Math.min(100, width));
+    height = Math.max(1, Math.min(100, height));
+    top    = Math.max(0, Math.min(100, top));
+    left   = Math.max(0, Math.min(100, left));
+
+    dragSpot.style.top    = top.toFixed(2) + '%';
+    dragSpot.style.left   = left.toFixed(2) + '%';
+    dragSpot.style.width  = width.toFixed(2) + '%';
+    dragSpot.style.height = height.toFixed(2) + '%';
     updateReadout();
   });
-  document.addEventListener('mouseup', () => { dragging = null; });
+  document.addEventListener('mouseup', () => { dragging = null; dragSpot = null; });
 
   document.addEventListener('keydown', e => {
     // Only activate edit-mode key when the annotated slide is active
