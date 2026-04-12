@@ -26,11 +26,23 @@
 
   html, body {
     background: #111;
+    min-height: 100vh;
+    font-family: 'DM Sans', sans-serif;
+    overflow: hidden;
+  }
+  /* Responsive scaling — deck is designed at 1200x675 and auto-scales
+     to fit any viewport without scrollbars. JS sets the --scale var. */
+  body {
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 100vh;
-    font-family: 'DM Sans', sans-serif;
+  }
+  #slide-stage {
+    width: var(--slide-w);
+    height: var(--slide-h);
+    transform: scale(var(--scale, 1));
+    transform-origin: center center;
+    position: relative;
   }
 
   .slide {
@@ -408,14 +420,12 @@
   /* ─────────────────────────────────────
      NAV CHROME
   ───────────────────────────────────── */
-  /* Slide-chrome container — overlays the slide's top-left so progress bar
-     and section label move with the slide instead of sitting at viewport top.
-     Keeps the slide visually centered and lets Chrome hide its toolbar in
-     fullscreen mode (no fixed content at the viewport's literal top). */
+  /* Slide-chrome container — overlays the slide's top-left. Since it lives
+     inside #slide-stage it scales with the slide automatically. */
   #slide-chrome {
-    position: fixed;
-    top: calc(50% - var(--slide-h) / 2);
-    left: calc(50% - var(--slide-w) / 2);
+    position: absolute;
+    top: 0;
+    left: 0;
     width: var(--slide-w);
     z-index: 100;
     pointer-events: none;
@@ -491,14 +501,111 @@
   #lightbox img.lb-closing { transition: opacity 0.2s ease, transform 0.2s cubic-bezier(0.4,0,1,1); opacity: 0; transform: scale(0.12); }
   #lightbox-caption { position: relative; font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.25); text-align: center; opacity: 0; transform: translateY(8px); transition: opacity 0.3s ease 0.2s, transform 0.3s ease 0.2s; }
   #lightbox.open #lightbox-caption { opacity: 1; transform: translateY(0); }
+
+  /* ─────────────────────────────────────
+     SPEAKER NOTES OVERLAY (press N to toggle)
+  ───────────────────────────────────── */
+  #notes-overlay {
+    display: none;
+    position: fixed;
+    bottom: 80px;
+    right: 24px;
+    width: 360px;
+    max-height: 50vh;
+    background: rgba(10,10,10,0.94);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 8px;
+    padding: 20px 22px;
+    z-index: 200;
+    font-family: 'DM Sans', sans-serif;
+    overflow-y: auto;
+  }
+  #notes-overlay.open { display: block; }
+  #notes-overlay .notes-label { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 12px; display: block; }
+  #notes-overlay .notes-body { font-size: 13px; line-height: 1.6; color: rgba(255,255,255,0.75); }
+  #notes-overlay .notes-body:empty::before { content: 'No notes for this slide.'; color: rgba(255,255,255,0.3); font-style: italic; }
+  #notes-overlay .notes-hint { font-family: 'DM Mono', monospace; font-size: 9px; color: rgba(255,255,255,0.25); margin-top: 14px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.06); }
+
+  /* ─────────────────────────────────────
+     PASSWORD GATE
+  ───────────────────────────────────── */
+  #password-gate {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: var(--ink);
+    z-index: 500;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 24px;
+  }
+  #password-gate.open { display: flex; }
+  #password-gate .pg-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(245,240,226,0.4); }
+  #password-gate h2 { font-family: 'DM Serif Display', serif; font-size: 48px; color: var(--cream); font-weight: 400; }
+  #password-gate h2 em { font-style: italic; color: var(--lavender); }
+  #password-gate input {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(245,240,226,0.2);
+    padding: 8px 4px;
+    font-family: 'DM Mono', monospace;
+    font-size: 14px;
+    color: var(--cream);
+    width: 280px;
+    text-align: center;
+    outline: none;
+    letter-spacing: 0.08em;
+    transition: border-color 0.2s;
+  }
+  #password-gate input:focus { border-bottom-color: var(--lavender); }
+  #password-gate input.error { border-bottom-color: #d46a6a; animation: shake 0.35s; }
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-6px); }
+    75% { transform: translateX(6px); }
+  }
+  #password-gate .pg-hint { font-family: 'DM Mono', monospace; font-size: 9px; color: rgba(245,240,226,0.25); letter-spacing: 0.08em; }
+
+  /* ─────────────────────────────────────
+     INKWELL UTILITY CLASSES (consolidated inline styles)
+  ───────────────────────────────────── */
+  .lav-eyebrow { color: var(--lavender) !important; }
+  .cream-text { color: var(--cream) !important; }
+  .lav-em em { font-style: italic; color: var(--lavender); }
+  .inkwell-panel { background: #0e0e1a !important; border-right-color: rgba(255,255,255,0.05) !important; }
+
+  /* ─────────────────────────────────────
+     PRINT / PDF EXPORT
+     All slides stack vertically, one per page.
+  ───────────────────────────────────── */
+  @media print {
+    @page { size: 1200px 675px; margin: 0; }
+    html, body { background: var(--ink); overflow: visible !important; display: block !important; }
+    #slide-stage { transform: none !important; width: var(--slide-w) !important; height: auto !important; }
+    .slide { display: flex !important; page-break-after: always; break-after: page; margin: 0; }
+    .slide-twocol, .slide-compare, .slide-mobile, .slide-scroll, .slide-swing, .slide-title { display: grid !important; }
+    #slide-chrome, #nav, #toc-overlay, #notes-overlay, #password-gate, #lightbox { display: none !important; }
+  }
 </style>
 </head>
 <body class="atmo-intro">
 
+<!-- ── PASSWORD GATE ── -->
+<div id="password-gate">
+  <span class="pg-label">Protected</span>
+  <h2>Portfolio <em>deck.</em></h2>
+  <input id="pg-input" type="password" placeholder="Enter password" autocomplete="off" />
+  <span class="pg-hint">Enter to unlock</span>
+</div>
+
+<div id="slide-stage">
+
 <!-- ═══════════════════════════════════════
      00 — COVER
 ═══════════════════════════════════════ -->
-<div class="slide slide-cover" data-section="intro" data-type="Cover" data-toc-group="Opening" data-toc-main>
+<div class="slide slide-cover" data-section="intro" data-type="Cover" data-toc-group="Opening" data-toc-main data-notes="Open with a quick handshake — thank them for their time. Keep this slide up for 5–10 seconds before advancing.">
   <p class="cover-name">Sahand<br><em>Hajizadeh.</em></p>
   <div class="cover-divider"></div>
   <span class="cover-role">Senior Product Designer</span>
@@ -588,7 +695,7 @@
 <!-- ═══════════════════════════════════════
      GOLF RANCH CHAPTER
 ═══════════════════════════════════════ -->
-<div class="slide slide-chapter golf-bg" data-section="golf" data-type="Case Study" data-toc-group="Golf Ranch" data-toc-main>
+<div class="slide slide-chapter golf-bg" data-section="golf" data-type="Case Study" data-toc-group="Golf Ranch" data-toc-main data-notes="First case study. Frame the business context: 6-location Texas driving range, 90% mobile traffic, site wasn't converting. I was brought in to rebuild it end-to-end.">
   <span class="chapter-eyebrow">Case Study 01 of 02</span>
   <h2>Golf<br><em>Ranch.</em></h2>
   <p class="sub">Six premium driving range locations across the US. 90% mobile traffic. A site that wasn't keeping up. I rebuilt it from the ground up.</p>
@@ -819,7 +926,7 @@
 <!-- ═══════════════════════════════════════
      13 — INKWELL CHAPTER
 ═══════════════════════════════════════ -->
-<div class="slide slide-chapter inkwell-bg" data-section="inkwell" data-type="Case Study" data-toc-group="Inkwell" data-toc-main>
+<div class="slide slide-chapter inkwell-bg" data-section="inkwell" data-type="Case Study" data-toc-group="Inkwell" data-toc-main data-notes="Second case study. NDA client — frame as enterprise due diligence platform for a major entertainment company. Emphasize: joined mid-flight, no handoff, shipped meaningful work under deadline.">
   <span class="chapter-eyebrow" style="color:var(--lavender)">Case Study 02 of 02</span>
   <h2 style="color:var(--cream)">Inkwell<br><span style="font-style:italic;color:var(--lavender)">/ WDI.</span></h2>
   <p class="sub">Enterprise UX for a major entertainment client. Joined mid-flight, diagnosed fast, shipped meaningful interaction improvements under a tight deadline.</p>
@@ -844,7 +951,7 @@
      15 — THE THINKING
 ═══════════════════════════════════════ -->
 <div class="slide slide-fullimg" data-section="inkwell" data-type="The Thinking" data-toc-group="Inkwell">
-  <div class="fullimg-text" style="background:#0e0e1a; border-right-color:rgba(255,255,255,0.05);">
+  <div class="fullimg-text inkwell-panel">
     <div>
       <span class="f-eyebrow" style="color:var(--lavender)">Process</span>
       <h3 style="color:var(--cream);">Started with a<br>whiteboard.<br><em style="color:var(--lavender)">Then built it.</em></h3>
@@ -899,7 +1006,7 @@
      17 — VIOLATION MODAL
 ═══════════════════════════════════════ -->
 <div class="slide slide-fullimg" data-section="inkwell" data-type="Violation Modal" data-toc-group="Inkwell">
-  <div class="fullimg-text" style="background:#0e0e1a; border-right-color:rgba(255,255,255,0.05);">
+  <div class="fullimg-text inkwell-panel">
     <div>
       <span class="f-eyebrow" style="color:var(--lavender)">Interaction design</span>
       <h3 style="color:var(--cream);">One modal.<br>Three states.<br><em style="color:var(--lavender)">Full system.</em></h3>
@@ -954,7 +1061,7 @@
      19 — THE PRODUCT
 ═══════════════════════════════════════ -->
 <div class="slide slide-fullimg" data-section="inkwell" data-type="The Product" data-toc-group="Inkwell">
-  <div class="fullimg-text" style="background:#0e0e1a; border-right-color:rgba(255,255,255,0.05);">
+  <div class="fullimg-text inkwell-panel">
     <div>
       <span class="f-eyebrow" style="color:var(--lavender)">The product</span>
       <h3 style="color:var(--cream);">Dark. Dense.<br><em style="color:var(--lavender)">Deliberate.</em></h3>
@@ -999,11 +1106,21 @@
   </div>
 </div>
 
-<!-- ── CHROME ── -->
+<!-- ── CHROME (inside slide-stage so it scales with the slide) ── -->
 <div id="slide-chrome">
   <div id="progress-bar"></div>
   <div id="section-label"></div>
 </div>
+
+</div><!-- /slide-stage -->
+
+<!-- ── SPEAKER NOTES (press N to toggle) ── -->
+<div id="notes-overlay">
+  <span class="notes-label">Speaker notes</span>
+  <div class="notes-body" id="notes-body"></div>
+  <div class="notes-hint">Press N to hide · ↑↓ to navigate</div>
+</div>
+
 <div id="nav">
   <button id="prev-btn" disabled>←</button>
   <span id="slide-counter"></span>
@@ -1032,6 +1149,59 @@
 </div>
 
 <script>
+// ═══════════════════════════════════════
+// PASSWORD GATE
+// ═══════════════════════════════════════
+// Change this value to set the deck password.
+// The gate stores a hash in localStorage so you don't re-enter each visit.
+const DECK_PASSWORD = 'designsahand'; // ← change me
+const PASSWORD_KEY  = 'deck-unlocked-v1';
+
+async function sha256(str) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+async function initPasswordGate() {
+  const gate = document.getElementById('password-gate');
+  const input = document.getElementById('pg-input');
+  const expectedHash = await sha256(DECK_PASSWORD);
+  const storedHash = localStorage.getItem(PASSWORD_KEY);
+  if (storedHash === expectedHash) return; // already unlocked
+
+  gate.classList.add('open');
+  setTimeout(() => input.focus(), 50);
+  input.addEventListener('keydown', async (e) => {
+    if (e.key !== 'Enter') return;
+    const hash = await sha256(input.value);
+    if (hash === expectedHash) {
+      localStorage.setItem(PASSWORD_KEY, hash);
+      gate.classList.remove('open');
+    } else {
+      input.classList.add('error');
+      input.value = '';
+      setTimeout(() => input.classList.remove('error'), 400);
+    }
+  });
+}
+initPasswordGate();
+
+// ═══════════════════════════════════════
+// RESPONSIVE SCALING
+// Deck is designed at 1200x675. Scale the #slide-stage to fit any viewport
+// while preserving aspect ratio. Pads 40px so nav chrome doesn't clip.
+// ═══════════════════════════════════════
+const stage = document.getElementById('slide-stage');
+function fitStage() {
+  const vw = window.innerWidth;
+  const vh = window.innerHeight;
+  const sw = 1200, sh = 675;
+  const scale = Math.min(vw / sw, (vh - 80) / sh, 1);
+  stage.style.setProperty('--scale', scale);
+}
+fitStage();
+window.addEventListener('resize', fitStage);
+
 const slides     = document.querySelectorAll('.slide');
 const total      = slides.length;
 let current      = 0;
@@ -1048,6 +1218,8 @@ const tocClose    = document.getElementById('toc-close');
 const lightbox    = document.getElementById('lightbox');
 const lightboxImg = document.getElementById('lightbox-img');
 const lightboxCap = document.getElementById('lightbox-caption');
+const notesOverlay = document.getElementById('notes-overlay');
+const notesBody    = document.getElementById('notes-body');
 
 const atmoMap = { intro:'atmo-intro', golf:'atmo-golf', evernote:'atmo-evernote', inkwell:'atmo-inkwell', close:'atmo-close' };
 
@@ -1191,7 +1363,6 @@ function goTo(n) {
   if (currentGroup && tocLabelMap[currentGroup]) {
     const label = tocLabelMap[currentGroup];
     const parts = label.split(' ');
-    // If label starts with a number like "01 Background", split it for styling
     if (/^\d+$/.test(parts[0])) {
       sectionLabel.innerHTML = '<span class="sl-num">' + parts[0] + '</span><span class="sl-dot"></span><span>' + parts.slice(1).join(' ') + '</span>';
     } else {
@@ -1200,12 +1371,28 @@ function goTo(n) {
   } else {
     sectionLabel.textContent = '';
   }
+
+  // Deep linking — update URL hash without triggering scroll
+  history.replaceState(null, '', '#slide-' + (current + 1));
+
+  // Speaker notes — read from slide's data-notes attribute
+  notesBody.textContent = slides[current].dataset.notes || '';
+
+  // Image preloading — warm the next/prev slide's images so nav feels instant
+  [current - 1, current + 1].forEach(i => {
+    if (i < 0 || i >= total) return;
+    slides[i].querySelectorAll('img').forEach(img => {
+      if (img.src && !img.complete) { new Image().src = img.src; }
+    });
+  });
 }
 
 prevBtn.addEventListener('click', () => goTo(current - 1));
 nextBtn.addEventListener('click', () => goTo(current + 1));
 
 document.addEventListener('keydown', e => {
+  // Don't hijack keys while typing into the password gate
+  if (document.getElementById('password-gate').classList.contains('open')) return;
   if (lightbox.classList.contains('open') || lightbox.style.display==='flex') { if (e.key==='Escape') closeLightbox(); return; }
   if (tocOverlay.classList.contains('open')) { if (e.key==='Escape') tocOverlay.classList.remove('open'); return; }
   const active = document.activeElement;
@@ -1213,6 +1400,7 @@ document.addEventListener('keydown', e => {
   if (['ArrowRight','ArrowDown',' '].includes(e.key)) { e.preventDefault(); goTo(current+1); }
   if (['ArrowLeft','ArrowUp'].includes(e.key)) { e.preventDefault(); goTo(current-1); }
   if (e.key==='t'||e.key==='T') tocOverlay.classList.toggle('open');
+  if (e.key==='n'||e.key==='N') notesOverlay.classList.toggle('open');
 });
 
 tocBtn.addEventListener('click', () => tocOverlay.classList.toggle('open'));
@@ -1255,7 +1443,21 @@ document.querySelectorAll('img.zoomable').forEach(img => {
 
 buildTOC();
 allTocItems = document.querySelectorAll('.toc-item, .toc-sub-item');
-goTo(0);
+
+// Deep linking: parse #slide-N from URL hash on load
+function slideFromHash() {
+  const m = /^#slide-(\d+)$/.exec(window.location.hash);
+  if (!m) return 0;
+  const n = parseInt(m[1], 10) - 1;
+  return Math.max(0, Math.min(n, total - 1));
+}
+goTo(slideFromHash());
+
+// React to hash changes (e.g. user edits URL or uses browser back/forward)
+window.addEventListener('hashchange', () => {
+  const n = slideFromHash();
+  if (n !== current) goTo(n);
+});
 </script>
 </body>
 </html>
