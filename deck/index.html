@@ -543,6 +543,101 @@
   }
 
   /* ─────────────────────────────────────
+     SLIDE TYPE: ANNOTATED (phone mockup with hotspots)
+  ───────────────────────────────────── */
+  .slide-annotated {
+    background: var(--green-mid);
+    grid-template-columns: 380px 1fr;
+  }
+  .ann-left {
+    padding: 60px 52px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-right: 1px solid rgba(245,240,226,0.06);
+  }
+  .ann-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--green-accent);
+  }
+  .ann-left h3 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 48px;
+    line-height: 1.05;
+    color: var(--cream);
+    font-weight: 400;
+    margin-top: 16px;
+  }
+  .ann-left h3 em {
+    font-style: italic;
+    color: var(--green-accent);
+  }
+  .ann-left p {
+    font-size: 13px;
+    color: rgba(245,240,226,0.48);
+    line-height: 1.7;
+    font-weight: 300;
+    margin-top: 16px;
+    flex: 1;
+  }
+  .ann-hint {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(245,240,226,0.25);
+  }
+  .ann-right {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    position: relative;
+  }
+  .ann-phone-wrap {
+    position: relative;
+    display: inline-block;
+  }
+  .ann-phone {
+    width: 200px;
+    height: 520px;
+    position: relative;
+    z-index: 1;
+  }
+  .hotspot {
+    position: absolute;
+    border-radius: 4px;
+    cursor: crosshair;
+    z-index: 10;
+    transition: background 0.15s;
+  }
+  .hotspot:hover {
+    background: rgba(74,158,106,0.15);
+    outline: 1px solid rgba(74,158,106,0.4);
+  }
+  .ann-tooltip {
+    position: fixed;
+    max-width: 260px;
+    background: var(--ink);
+    border: 1px solid rgba(74,158,106,0.3);
+    border-radius: 6px;
+    padding: 10px 14px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    line-height: 1.6;
+    color: var(--cream);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.15s ease;
+    z-index: 200;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+  }
+  .ann-tooltip.visible { opacity: 1; }
+
+  /* ─────────────────────────────────────
      SLIDE TYPE: SWING APP
   ───────────────────────────────────── */
   .slide-swing { background: #0d2a1f; grid-template-columns: 420px 1fr; }
@@ -1030,24 +1125,44 @@
 </div>
 
 <!-- ═══════════════════════════════════════
-     RANCH PASS MOBILE (scroll preview, phone frame)
+     RANCH PASS MOBILE (annotated hotspots)
 ═══════════════════════════════════════ -->
-<div class="slide slide-scroll" data-section="golf" data-type="Ranch Pass Mobile" data-toc-group="Golf Ranch">
-  <div class="scroll-text">
+<div class="slide slide-annotated" data-section="golf" data-type="Ranch Pass Mobile" data-toc-group="Golf Ranch">
+  <div class="ann-left">
     <div>
-      <span class="sc-eyebrow">What's next for membership</span>
-      <h3>4× was<br>just the<br><em>beginning.</em></h3>
-      <p>The next version of the Ranch Pass page is built entirely for mobile — pricing table, member benefits, savings math, testimonials, FAQ. Designed to convert the 90% of visitors who never touch a desktop. We're not done yet.</p>
+      <span class="ann-eyebrow">Design decisions</span>
+      <h3>Every pixel<br>has a<br><em>reason.</em></h3>
+      <p>Hover over the screen to see the thinking behind each section. CMS-controlled pricing, JS-calculated savings, location-specific toggles. Built to convert the 90% who never touch a desktop.</p>
     </div>
-    <span class="sc-hint">↕ Scroll to explore</span>
+    <div class="ann-hint">
+      <span>↗ Hover to explore</span>
+    </div>
   </div>
-  <div class="scroll-preview" style="background:var(--green-mid); display:flex; align-items:center; justify-content:center; padding:28px 0;">
-    <div class="phone-frame">
-      <div class="phone-screen">
-        <img src="../images/golf-ranch-membership-mobile-no-frame.png" alt="Ranch Pass membership mobile" />
+  <div class="ann-right">
+    <div class="ann-phone-wrap">
+      <div class="phone-frame ann-phone">
+        <div class="phone-screen" style="overflow:hidden; cursor:default;">
+          <img src="../images/golf-ranch-membership-mobile.png" alt="Ranch Pass Richardson" style="width:100%; display:block;" />
+        </div>
       </div>
+
+      <div class="hotspot" style="top:8%; left:10%; width:80%; height:12%;"
+        data-tip="Annual price shown as monthly — apples to apples. Easier to compare, harder to dismiss."></div>
+
+      <div class="hotspot" style="top:20%; left:35%; width:55%; height:10%;"
+        data-tip="JS calculates savings automatically. Every location, every price point. No manual math ever."></div>
+
+      <div class="hotspot" style="top:30%; left:10%; width:80%; height:8%;"
+        data-tip="2 min signup. Friction killed here intentionally. Cancel anytime right in the copy."></div>
+
+      <div class="hotspot" style="top:40%; left:10%; width:80%; height:15%;"
+        data-tip="Benefits list customizable per location via CMS. Par 3, 9-hole, Putt Putt toggle on or off per location."></div>
+
+      <div class="hotspot" style="top:57%; left:10%; width:80%; height:18%;"
+        data-tip="Savings shown as dollar amounts, not percentages. People understand '$8 saved' more than '35% off'."></div>
+
+      <div class="ann-tooltip" id="ann-tooltip"></div>
     </div>
-    <div class="scroll-badge">↕ Scroll</div>
   </div>
 </div>
 
@@ -1802,6 +1917,26 @@ lightbox.addEventListener('click', () => closeLightbox());
 document.querySelectorAll('img.zoomable').forEach(img => {
   img.addEventListener('click', e => { e.stopPropagation(); openLightbox(img); });
 });
+
+// Annotated slide hotspots
+function initAnnotations() {
+  const tooltip = document.getElementById('ann-tooltip');
+  if (!tooltip) return;
+  document.querySelectorAll('.hotspot').forEach(spot => {
+    spot.addEventListener('mouseenter', () => {
+      tooltip.textContent = spot.dataset.tip;
+      tooltip.classList.add('visible');
+    });
+    spot.addEventListener('mousemove', e => {
+      tooltip.style.left = (e.clientX + 16) + 'px';
+      tooltip.style.top  = (e.clientY - 8)  + 'px';
+    });
+    spot.addEventListener('mouseleave', () => {
+      tooltip.classList.remove('visible');
+    });
+  });
+}
+initAnnotations();
 
 buildTOC();
 allTocItems = document.querySelectorAll('.toc-item, .toc-sub-item');
