@@ -670,7 +670,7 @@
     display: none;
     position: fixed;
     top: 80px;
-    right: 28px;
+    left: 28px;
     width: 320px;
     background: rgba(15,26,20,0.96);
     backdrop-filter: blur(16px);
@@ -695,10 +695,14 @@
   }
   #hs-panel .hs-head:active { cursor: grabbing; }
   #hs-panel .hs-head .hs-title {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
+    font-family: 'DM Serif Display', serif;
+    font-size: 18px;
+    letter-spacing: 0;
+    text-transform: none;
+    color: var(--cream);
+  }
+  #hs-panel .hs-head .hs-title em {
+    font-style: italic;
     color: var(--green-accent);
   }
   #hs-panel .hs-head .hs-close {
@@ -833,8 +837,12 @@
   #hs-panel .hs-shortcuts {
     font-family: 'DM Mono', monospace;
     font-size: 9.5px;
-    line-height: 1.85;
+    line-height: 2.4;
     color: rgba(245,240,226,0.45);
+  }
+  #hs-panel .hs-shortcuts > * {
+    display: block;
+    margin-bottom: 6px;
   }
   #hs-panel .hs-shortcuts kbd {
     background: rgba(245,240,226,0.08);
@@ -1524,15 +1532,14 @@
 <!-- Floating hotspot editor panel — toggled with E on annotated slides -->
 <div id="hs-panel">
   <div class="hs-head" id="hs-head">
-    <span class="hs-title">Hotspot Editor</span>
+    <span class="hs-title">Hotspot <em>editor.</em></span>
     <button class="hs-close" id="hs-close" title="Exit edit mode (E)">×</button>
   </div>
   <section>
     <span class="hs-label" id="hs-selected"><span class="hs-none">Click a hotspot</span></span>
     <input type="text" class="hs-input hs-input-headline" id="hs-headline" placeholder="Headline (first bold line)" disabled />
   </section>
-  <section>
-    <span class="hs-label">Position</span>
+  <section style="display:none">
     <div class="hs-grid">
       <div class="hs-field"><span class="hs-key">T</span><input type="number" id="hs-top" step="0.1" disabled /><span class="hs-key">%</span></div>
       <div class="hs-field"><span class="hs-key">L</span><input type="number" id="hs-left" step="0.1" disabled /><span class="hs-key">%</span></div>
@@ -1554,11 +1561,12 @@
   <section>
     <span class="hs-label">Shortcuts</span>
     <div class="hs-shortcuts">
-      <kbd>1-9</kbd>select &nbsp; <kbd>N</kbd>new &nbsp; <kbd>Del</kbd>remove<br>
-      <kbd>drag</kbd>move &nbsp; <kbd>alt+drag</kbd>duplicate<br>
-      <kbd>↑↓←→</kbd>nudge &nbsp; <kbd>shift</kbd>fine<br>
-      <kbd>− +</kbd>height &nbsp; <kbd>, .</kbd>width<br>
-      <kbd>H</kbd>hide frames &nbsp; <kbd>R</kbd>reset &nbsp; <kbd>E</kbd>exit
+      <div><kbd>1-9</kbd>select &nbsp; <kbd>N</kbd>new &nbsp; <kbd>Del</kbd>remove</div>
+      <div><kbd>drag</kbd>move &nbsp; <kbd>alt+drag</kbd>duplicate</div>
+      <div><kbd>↑↓←→</kbd>nudge &nbsp; <kbd>shift</kbd>fine</div>
+      <div><kbd>− +</kbd>height &nbsp; <kbd>, .</kbd>width</div>
+      <div><kbd>⌘Z</kbd>undo &nbsp; <kbd>H</kbd>hide frames</div>
+      <div><kbd>R</kbd>reset &nbsp; <kbd>E</kbd>exit</div>
     </div>
   </section>
 </div>
@@ -2240,7 +2248,16 @@ document.addEventListener('keydown', e => {
   if (lightbox.classList.contains('open') || lightbox.style.display==='flex') { if (e.key==='Escape') closeLightbox(); return; }
   if (tocOverlay.classList.contains('open')) { if (e.key==='Escape') tocOverlay.classList.remove('open'); return; }
   const active = document.activeElement;
-  if (active && (active.classList.contains('browser-content') || active.classList.contains('phone-screen'))) return;
+  const isTextInput = active && (
+    active.tagName === 'INPUT' ||
+    active.tagName === 'TEXTAREA' ||
+    active.isContentEditable
+  );
+  if (isTextInput) return;
+  if (active && active !== document.body &&
+      (active.classList.contains('browser-content') || active.classList.contains('phone-screen'))) {
+    active.blur();
+  }
   if (['ArrowRight','ArrowDown',' ','d','D'].includes(e.key)) { e.preventDefault(); goTo(current+1); }
   if (['ArrowLeft','ArrowUp','a','A'].includes(e.key)) { e.preventDefault(); goTo(current-1); }
   if (e.key==='s'||e.key==='S') {
@@ -2666,11 +2683,16 @@ function initAnnotations() {
     panel.addEventListener(type, e => e.stopPropagation());
   });
 
-  // Draggable panel header
+  // Draggable panel header — snap to left/top anchoring on mousedown so the
+  // panel doesn't visibly shift on the first mousemove
   let panelDrag = null;
   panelHead.addEventListener('mousedown', e => {
     if (e.target === panelClose) return;
     const rect = panel.getBoundingClientRect();
+    panel.style.left  = rect.left + 'px';
+    panel.style.top   = rect.top  + 'px';
+    panel.style.right = 'auto';
+    panel.style.bottom = 'auto';
     panelDrag = { offsetX: e.clientX - rect.left, offsetY: e.clientY - rect.top };
     e.preventDefault();
   });
@@ -2678,9 +2700,8 @@ function initAnnotations() {
     if (!panelDrag) return;
     const x = Math.max(0, Math.min(window.innerWidth  - panel.offsetWidth,  e.clientX - panelDrag.offsetX));
     const y = Math.max(0, Math.min(window.innerHeight - panel.offsetHeight, e.clientY - panelDrag.offsetY));
-    panel.style.left  = x + 'px';
-    panel.style.top   = y + 'px';
-    panel.style.right = 'auto';
+    panel.style.left = x + 'px';
+    panel.style.top  = y + 'px';
   });
   document.addEventListener('mouseup', () => { panelDrag = null; });
 
