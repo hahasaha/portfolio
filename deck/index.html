@@ -1311,7 +1311,7 @@
     <circle id="ann-dot-end"   cx="0" cy="0" r="3.5" />
   </svg>
   <div id="edit-hud">
-    <span><span class="hud-label">EDIT MODE</span> · click a hotspot, arrow keys to nudge top%, shift for 0.1%, [ / ] to change height, E to exit</span>
+    <span><span class="hud-label">EDIT MODE</span> · click, ↑↓←→ move, shift=fine, − + height, , . width, esc deselect, E exit</span>
     <span id="edit-hud-readout"><span class="hud-label">selected:</span> <span class="hud-val">—</span></span>
   </div>
 </div>
@@ -2270,8 +2270,12 @@ function initAnnotations() {
     if (e.key === 'ArrowDown')  { e.preventDefault(); e.stopImmediatePropagation(); nudge( step, 'top'); }
     if (e.key === 'ArrowLeft')  { e.preventDefault(); e.stopImmediatePropagation(); nudge(-step, 'left'); }
     if (e.key === 'ArrowRight') { e.preventDefault(); e.stopImmediatePropagation(); nudge( step, 'left'); }
-    if (e.key === '[')          { e.preventDefault(); nudge(-step, 'height'); }
-    if (e.key === ']')          { e.preventDefault(); nudge( step, 'height'); }
+    // Height resize: [ ] or - =  (both work; shift for fine 0.1% step)
+    if (e.key === '[' || e.key === '-' || e.key === '_') { e.preventDefault(); e.stopImmediatePropagation(); nudge(-step, 'height'); }
+    if (e.key === ']' || e.key === '=' || e.key === '+') { e.preventDefault(); e.stopImmediatePropagation(); nudge( step, 'height'); }
+    // Width resize: , .
+    if (e.key === ',')          { e.preventDefault(); e.stopImmediatePropagation(); nudge(-step, 'width'); }
+    if (e.key === '.')          { e.preventDefault(); e.stopImmediatePropagation(); nudge( step, 'width'); }
     if (e.key === 'Escape')     { if (editSelected) { editSelected.classList.remove('selected'); editSelected = null; updateReadout(); } }
   }, true); // capture phase so it runs before the slide navigation handler
 }
