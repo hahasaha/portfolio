@@ -464,12 +464,12 @@
   /* ─────────────────────────────────────
      TOC
   ───────────────────────────────────── */
-  #toc-overlay { display: none; position: fixed; inset: 0; background: rgba(10,10,10,0.93); backdrop-filter: blur(16px); z-index: 200; align-items: center; justify-content: center; flex-direction: column; }
+  #toc-overlay { display: none; position: fixed; inset: 0; background: rgba(10,10,10,0.93); backdrop-filter: blur(16px); z-index: 200; align-items: center; justify-content: center; flex-direction: column; padding: 48px 64px; overflow-y: auto; }
   #toc-overlay.open { display: flex; }
   #toc-header { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.25); margin-bottom: 36px; }
-  .toc-columns { display: flex; gap: 0; align-items: flex-start; }
-  .toc-col { min-width: 440px; max-width: 480px; }
-  .toc-col-divider { width: 1px; background: rgba(255,255,255,0.06); align-self: stretch; margin: 0 40px; }
+  .toc-columns { display: flex; gap: 0; align-items: flex-start; flex-wrap: wrap; justify-content: center; max-width: 100%; }
+  .toc-col { flex: 0 1 420px; min-width: 0; }
+  .toc-col-divider { width: 1px; background: rgba(255,255,255,0.06); align-self: stretch; margin: 0 32px; }
   .toc-section { margin-bottom: 4px; }
   .toc-section-label { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.18); padding-left: 16px; margin-top: 20px; margin-bottom: 4px; display: block; }
   .toc-item { display: flex; align-items: baseline; gap: 16px; cursor: pointer; padding: 9px 16px; border-radius: 4px; transition: background 0.15s; }
