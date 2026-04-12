@@ -688,18 +688,20 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 12px 16px;
-    background: rgba(74,158,106,0.08);
-    border-bottom: 1px solid rgba(74,158,106,0.2);
+    padding: 22px 24px 20px;
+    background: linear-gradient(180deg, rgba(74,158,106,0.12) 0%, rgba(74,158,106,0.04) 100%);
+    border-bottom: 1px solid rgba(74,158,106,0.25);
     cursor: grab;
   }
   #hs-panel .hs-head:active { cursor: grabbing; }
   #hs-panel .hs-head .hs-title {
     font-family: 'DM Serif Display', serif;
-    font-size: 18px;
-    letter-spacing: 0;
+    font-size: 30px;
+    line-height: 1;
+    letter-spacing: -0.01em;
     text-transform: none;
     color: var(--cream);
+    font-weight: 400;
   }
   #hs-panel .hs-head .hs-title em {
     font-style: italic;
@@ -2246,7 +2248,7 @@ document.addEventListener('keydown', e => {
   // Don't hijack keys while typing into the password gate
   if (document.getElementById('password-gate').classList.contains('open')) return;
   if (lightbox.classList.contains('open') || lightbox.style.display==='flex') { if (e.key==='Escape') closeLightbox(); return; }
-  if (tocOverlay.classList.contains('open')) { if (e.key==='Escape') tocOverlay.classList.remove('open'); return; }
+  if (tocOverlay.classList.contains('open')) { if (e.key==='Escape'||e.key==='c'||e.key==='C'||e.key==='t'||e.key==='T') tocOverlay.classList.remove('open'); return; }
   const active = document.activeElement;
   const isTextInput = active && (
     active.tagName === 'INPUT' ||
@@ -2284,6 +2286,7 @@ document.addEventListener('keydown', e => {
     }
   }
   if (e.key==='t'||e.key==='T') tocOverlay.classList.toggle('open');
+  if (e.key==='c'||e.key==='C') tocOverlay.classList.toggle('open');
   if (e.key==='n'||e.key==='N') notesOverlay.classList.toggle('open');
   if (e.key==='h'||e.key==='H') {
     // Toggle hotspot hover-frame visibility on the annotated slide
