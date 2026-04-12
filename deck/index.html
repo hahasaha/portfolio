@@ -610,7 +610,10 @@
   .slide-annotated.edit-mode .hotspot {
     background: rgba(196,175,240,0.18);
     outline: 1.5px dashed rgba(196,175,240,0.9);
-    cursor: pointer;
+    cursor: grab;
+  }
+  .slide-annotated.edit-mode .hotspot:active {
+    cursor: grabbing;
   }
   .slide-annotated.edit-mode .hotspot.selected {
     background: rgba(255,140,40,0.28);
@@ -2216,16 +2219,49 @@ function initAnnotations() {
     if (editSelected) { editSelected.classList.remove('selected'); editSelected = null; }
   }
 
+  // Drag-to-move hotspots in edit mode (mousedown selects + starts drag)
+  let dragging = null;
+  let dragStart = null;
   hotspots.forEach(spot => {
-    spot.addEventListener('click', e => {
+    spot.addEventListener('mousedown', e => {
       if (!editMode) return;
+      e.preventDefault();
       e.stopPropagation();
+      // Select on mousedown
       if (editSelected) editSelected.classList.remove('selected');
       editSelected = spot;
       spot.classList.add('selected');
       updateReadout();
+      // Prep drag state
+      const slideEl = spot.closest('.slide');
+      const slideRect = slideEl.getBoundingClientRect();
+      const scale = slideRect.width / 1200;
+      const wrapRect = spot.parentElement.getBoundingClientRect();
+      dragging = spot;
+      dragStart = {
+        mouseX: e.clientX,
+        mouseY: e.clientY,
+        startTop: parsePct(spot.style.top),
+        startLeft: parsePct(spot.style.left),
+        scale: scale,
+        wrapW: wrapRect.width / scale,
+        wrapH: wrapRect.height / scale
+      };
     });
   });
+  document.addEventListener('mousemove', e => {
+    if (!dragging) return;
+    const dxPx = (e.clientX - dragStart.mouseX) / dragStart.scale;
+    const dyPx = (e.clientY - dragStart.mouseY) / dragStart.scale;
+    const dLeft = (dxPx / dragStart.wrapW) * 100;
+    const dTop  = (dyPx / dragStart.wrapH) * 100;
+    const newTop  = Math.max(0, Math.min(100, dragStart.startTop + dTop));
+    const newLeft = Math.max(0, Math.min(100, dragStart.startLeft + dLeft));
+    dragging.style.top  = newTop.toFixed(2) + '%';
+    dragging.style.left = newLeft.toFixed(2) + '%';
+    updateReadout();
+  });
+  document.addEventListener('mouseup', () => { dragging = null; });
 
   document.addEventListener('keydown', e => {
     // Only activate edit-mode key when the annotated slide is active
