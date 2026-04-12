@@ -29,6 +29,44 @@
     min-height: 100vh;
     font-family: 'DM Sans', sans-serif;
     overflow: hidden;
+    cursor: none;
+  }
+  /* Custom cursor — dot + lerping ring, ported from the portfolio site */
+  .cursor {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--cream);
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: background 0.25s, transform 0.15s;
+    mix-blend-mode: difference;
+  }
+  .cursor-ring {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(245,240,226,0.35);
+    position: fixed;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: width 0.25s, height 0.25s, border-color 0.25s;
+  }
+  .cursor-ring.big {
+    width: 56px;
+    height: 56px;
+    border-color: var(--lavender);
+  }
+  body.atmo-golf .cursor-ring.big { border-color: var(--green-accent); }
+  body.atmo-inkwell .cursor-ring.big,
+  body.atmo-evernote .cursor-ring.big { border-color: var(--lavender); }
+  /* Hide on small screens / touch */
+  @media (max-width: 720px), (pointer: coarse) {
+    .cursor, .cursor-ring { display: none; }
+    html, body { cursor: auto; }
   }
   /* Responsive scaling — deck is designed at 1200x675 and auto-scales
      to fit any viewport without scrollbars. JS sets the --scale var. */
@@ -1180,6 +1218,10 @@
 </style>
 </head>
 <body class="atmo-intro">
+
+<!-- Custom cursor: dot + lerping ring -->
+<div class="cursor" id="cur"></div>
+<div class="cursor-ring" id="ring"></div>
 
 <!-- ── PASSWORD GATE ── -->
 <div id="password-gate">
@@ -2914,15 +2956,24 @@ function initAnnotations() {
     dragSpot = null;
   });
 
+  // E toggles edit mode — registered in capture phase so it fires even if a
+  // hovered hotspot or other element would otherwise swallow the key.
+  document.addEventListener('keydown', e => {
+    if (e.key !== 'e' && e.key !== 'E') return;
+    if (!slideAnn.classList.contains('active')) return;
+    if (document.getElementById('password-gate').classList.contains('open')) return;
+    const ae = document.activeElement;
+    if (ae && (ae.tagName === 'INPUT' || ae.tagName === 'TEXTAREA' || ae.isContentEditable)) return;
+    e.preventDefault();
+    e.stopImmediatePropagation();
+    editMode ? exitEditMode() : enterEditMode();
+  }, true);
+
   document.addEventListener('keydown', e => {
     // Only activate edit-mode key when the annotated slide is active
     const onAnnotated = slideAnn.classList.contains('active');
     if (e.key === 'e' || e.key === 'E') {
-      if (!onAnnotated) return;
-      if (document.getElementById('password-gate').classList.contains('open')) return;
-      e.preventDefault();
-      e.stopImmediatePropagation();
-      editMode ? exitEditMode() : enterEditMode();
+      // Handled above in capture phase
       return;
     }
     if (!editMode) return;
@@ -2985,6 +3036,47 @@ window.addEventListener('hashchange', () => {
   const n = slideFromHash();
   if (n !== current) goTo(n);
 });
+
+// ═══════════════════════════════════════
+// Custom cursor — dot + lerping ring
+// Ported from sahand-hajizadeh.vercel.app
+// ═══════════════════════════════════════
+(function() {
+  const cur = document.getElementById('cur');
+  const ring = document.getElementById('ring');
+  if (!cur || !ring) return;
+  let mx = 0, my = 0, rx = 0, ry = 0;
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX;
+    my = e.clientY;
+    cur.style.left = mx + 'px';
+    cur.style.top  = my + 'px';
+  });
+  (function raf() {
+    rx += (mx - rx) * 0.18;
+    ry += (my - ry) * 0.18;
+    ring.style.left = rx + 'px';
+    ring.style.top  = ry + 'px';
+    requestAnimationFrame(raf);
+  })();
+
+  // Grow ring on interactive elements (event delegation so it works on
+  // dynamically created elements like new hotspots)
+  const interactiveSelector = 'a, button, [role="button"], .toc-item, .toc-sub-item, .hotspot, .ann-screen, .browser-content, .phone-screen, .zoomable, input, textarea, .hs-btn, .hs-input, .hs-textarea, .hs-field, .hs-head, .resize-handle';
+  document.addEventListener('mouseover', e => {
+    if (e.target.closest && e.target.closest(interactiveSelector)) {
+      ring.classList.add('big');
+    }
+  });
+  document.addEventListener('mouseout', e => {
+    if (e.target.closest && e.target.closest(interactiveSelector)) {
+      const related = e.relatedTarget;
+      if (!related || !related.closest || !related.closest(interactiveSelector)) {
+        ring.classList.remove('big');
+      }
+    }
+  });
+})();
 </script>
 </body>
 </html>
