@@ -169,7 +169,7 @@ h2.display em{font-style:italic;color:var(--ink-60);}
 .proj-tag-small{font-size:11px;color:var(--on-dark-muted);background:rgba(255,255,255,0.06);padding:4px 10px;border-radius:20px;}
 .proj-tag-wrap{display:flex;flex-wrap:wrap;gap:6px;}
 .proj-img{width:100%;border-radius:6px;object-fit:cover;object-position:top;display:block;}
-.proj-right .proj-img{height:100%;min-height:200px;}
+.proj-right .proj-img{position:absolute;inset:0;height:100%;}
 .proj-img-wrap{display:flex;flex-direction:column;gap:12px;}
 .nda-overlay{position:relative;border-radius:12px;overflow:hidden;}
 .nda-overlay img{width:100%;display:block;border-radius:12px;}
@@ -248,7 +248,7 @@ h2.display em{font-style:italic;color:var(--ink-60);}
 .proj-cta.lavender:hover{background:var(--on-dark);color:var(--green);transform:translateY(-2px);box-shadow:0 4px 20px rgba(0,0,0,0.08);}
 
 /* Right panel inside project card */
-.proj-right{display:flex;flex-direction:column;gap:0;overflow:hidden;align-self:stretch;}
+.proj-right{position:relative;overflow:hidden;align-self:stretch;min-height:200px;}
 .proj-metric-row{
   display:flex;align-items:center;padding:14px 0;
   border-bottom:1px solid rgba(255,255,255,0.06);
