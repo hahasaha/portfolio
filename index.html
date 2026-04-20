@@ -122,6 +122,12 @@ nav{
 }
 .btn-outline:hover{border-color:var(--on-green);background:var(--on-green-faint);transform:translateY(-2px);}
 .hero-note{margin-top:0;font-size:14px;color:var(--on-green-muted);font-family:'DM Sans',sans-serif;}
+.hero-line2{
+  font-family:'DM Serif Display',serif;
+  font-size:clamp(20px,2.8vw,34px);
+  line-height:1.2;color:var(--on-green);
+  margin-top:8px;letter-spacing:-0.01em;
+}
 .mobile-break{display:none;}
 @media(max-width:720px){.mobile-break{display:inline;}br.mobile-break{display:block;}}
 
@@ -219,7 +225,8 @@ h2.display em{font-style:italic;color:var(--ink-60);}
   font-size:clamp(28px,4vw,40px);color:var(--on-dark);line-height:1.1;
   letter-spacing:-0.02em;margin-bottom:12px;
 }
-.proj-name em{font-style:italic;color:var(--lavender);}
+.proj-name em{font-style:italic;color:var(--lavender);text-decoration:underline;text-decoration-color:var(--lavender);text-decoration-thickness:2px;text-underline-offset:3px;}
+.proj-card-label{font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;color:var(--on-dark-faint);white-space:nowrap;}
 .proj-desc{font-size:14px;color:var(--on-dark-muted);line-height:1.7;margin-bottom:16px;}
 .proj-list{display:flex;flex-direction:column;gap:8px;margin-bottom:24px;}
 .proj-item{
@@ -478,8 +485,8 @@ h2.display em{font-style:italic;color:var(--ink-60);}
 <!-- HERO -->
 <section class="hero">
   <div class="container">
-    <h1 class="fade-up d2">Designer who <em>builds.</em> Ten years across mobile, enterprise, and growth.</h1>
-    <div class="hero-note fade-up d3">Open to senior IC roles · San Francisco Bay Area · Remote</div>
+    <h1 class="fade-up d2">Designer who <em>builds.</em></h1>
+    <p class="hero-line2 fade-up d3">Ten years across mobile, enterprise, and growth.</p>
   </div>
 </section>
 
@@ -508,9 +515,7 @@ h2.display em{font-style:italic;color:var(--ink-60);}
 <!-- WORK -->
 <section class="work-section" id="work">
   <div class="container">
-    <div class="section-eyebrow">Selected work</div>
-    <h2 class="display">Things I've helped <em style="color:var(--lavender-dark);font-style:italic;">build.</em></h2>
-    <p class="section-sub">End-to-end product design across mobile, desktop, enterprise, and consumer.</p>
+    <div class="section-eyebrow" style="margin-bottom:24px;">Selected work</div>
 
     <!-- ORIGINAL Golf Ranch card (hidden) -->
     <!--
@@ -568,10 +573,11 @@ h2.display em{font-style:italic;color:var(--ink-60);}
           <span class="proj-num">01 / 06</span>
           <span class="proj-tag-pill">0→1 · Design System · Web App</span>
         </div>
+        <span class="proj-card-label">Calibrate</span>
       </div>
       <div class="proj-body">
         <div>
-          <div class="proj-name">Cali<em>brate.</em></div>
+          <div class="proj-name"><em>Analytics</em> software for multi-location operators.</div>
           <p class="proj-desc">Feed-based analytics for multi-location operators. Designed and built end-to-end with Claude Code.</p>
           <div class="proj-disabled-btn">Coming soon</div>
         </div>
@@ -588,10 +594,11 @@ h2.display em{font-style:italic;color:var(--ink-60);}
           <span class="proj-num">02 / 06</span>
           <span class="proj-tag-pill">Web · Webflow</span>
         </div>
+        <span class="proj-card-label">Golf Ranch — Redesign</span>
       </div>
       <div class="proj-body">
         <div>
-          <div class="proj-name">Golf Ranch — <em>Redesign.</em></div>
+          <div class="proj-name">Full <em>website</em> redesign for a 6-location franchise.</div>
           <p class="proj-desc">Full redesign of a 6-location Texas franchise. 25% organic traffic growth since launch.</p>
           <a href="golf-ranch.html" class="proj-cta lavender">View case study →</a>
         </div>
@@ -608,10 +615,11 @@ h2.display em{font-style:italic;color:var(--ink-60);}
           <span class="proj-num">03 / 06</span>
           <span class="proj-tag-pill">Growth · Conversion · A/B Testing</span>
         </div>
+        <span class="proj-card-label">Golf Ranch — Growth</span>
       </div>
       <div class="proj-body">
         <div>
-          <div class="proj-name">Golf Ranch — <em>Growth.</em></div>
+          <div class="proj-name">Conversion optimization and lead-gen on <em>web.</em></div>
           <p class="proj-desc">Free bucket funnel, sticky CTAs, and GA4 analysis. 10K+ leads/month. 4× membership signups.</p>
           <div class="proj-disabled-btn">Coming soon</div>
         </div>
@@ -628,10 +636,11 @@ h2.display em{font-style:italic;color:var(--ink-60);}
           <span class="proj-num">04 / 06</span>
           <span class="proj-tag-pill">Mobile · iOS</span>
         </div>
+        <span class="proj-card-label">Golf Ranch — App</span>
       </div>
       <div class="proj-body">
         <div>
-          <div class="proj-name">Golf Ranch — <em>App.</em></div>
+          <div class="proj-name"><em>Mobile</em> app for a walk-in golf franchise.</div>
           <p class="proj-desc">Mobile app for a walk-in golf franchise. Key screens, UX flows, and interaction design.</p>
           <a href="golf-ranch-app.html" class="proj-cta lavender">View case study →</a>
         </div>
@@ -688,10 +697,11 @@ h2.display em{font-style:italic;color:var(--ink-60);}
           <span class="proj-num">05 / 06</span>
           <span class="proj-tag-pill">Mobile · Design System · Scale</span>
         </div>
+        <span class="proj-card-label">Evernote</span>
       </div>
       <div class="proj-body">
         <div>
-          <div class="proj-name">Ever<em>note.</em></div>
+          <div class="proj-name">Redesigned Evernote for <em>mobile.</em></div>
           <p class="proj-desc">Five years as Senior Product Designer. Led mobile redesign across iOS, Android, iPad. 250M+ users.</p>
           <a href="evernote.html" class="proj-cta lavender">View case study →</a>
         </div>
@@ -705,12 +715,13 @@ h2.display em{font-style:italic;color:var(--ink-60);}
       <div class="proj-card-header">
         <div class="proj-header-left">
           <span class="proj-num">06 / 06</span>
-          <span class="proj-tag-pill">Enterprise SaaS · 0→1</span>
+          <span class="proj-tag-pill">Enterprise · 0→1</span>
         </div>
+        <span class="proj-card-label">Flo Recruit</span>
       </div>
       <div class="proj-body">
         <div>
-          <div class="proj-name">Flo <em>Recruit.</em></div>
+          <div class="proj-name">Dashboard design for legal <em>recruiting.</em></div>
           <p class="proj-desc">Designed the candidate portal from scratch. Shipped to top U.S. law firms. $1M in new revenue.</p>
           <a href="flo-recruit.html" class="proj-cta lavender">View case study →</a>
         </div>
