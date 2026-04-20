@@ -91,30 +91,18 @@ nav{
 .nav-cta:hover{background:var(--lavender-bg)!important;}
 
 /* ── HERO ── */
-.hero{padding:100px 40px 48px;text-align:center;background:var(--green);color:var(--on-green);transition:background 0.4s ease, color 0.4s ease;}
-.hero-pre{
-  display:inline-block;font-size:12px;font-weight:600;
-  letter-spacing:0.08em;text-transform:uppercase;
-  color:var(--on-green);opacity:0.7;margin-bottom:24px;
-  border:1px solid var(--on-green-muted);padding:6px 14px;border-radius:var(--radius-btn);
-}
+.hero{padding:120px 40px 48px;text-align:left;background:var(--green);color:var(--on-green);transition:background 0.4s ease, color 0.4s ease;}
+.hero .container{max-width:900px;}
+.hero-pre{display:none;}
 .hero h1{
   font-family:'DM Serif Display',serif;
-  font-size:clamp(38px,7.25vw,80px);
-  line-height:1.06;letter-spacing:-0.02em;
-  color:var(--on-green);margin-bottom:20px;
+  font-size:clamp(32px,4.5vw,52px);
+  line-height:1.15;letter-spacing:-0.02em;
+  color:var(--on-green);margin-bottom:16px;
 }
-.hero h1 em{font-style:italic;color:var(--lavender);}
-.hero-sub{
-  font-size:19px;
-  color:var(--on-green-muted);
-  color:color-mix(in srgb,var(--on-green) 88%,transparent);
-  max-width:520px;margin:0 auto 36px;
-  line-height:1.65;font-weight:500;
-  letter-spacing:0.01em;
-}
-.hero-sub strong{color:var(--on-green);font-weight:600;}
-.btn-pair{display:flex;justify-content:center;align-items:center;gap:12px;flex-wrap:wrap;}
+.hero h1 em{font-style:italic;color:var(--lavender);text-decoration:underline;text-decoration-color:var(--lavender);text-decoration-thickness:2.5px;text-underline-offset:4px;}
+.hero-sub{display:none;}
+.btn-pair{display:none;}
 .btn-filled{
   display:inline-flex;align-items:center;gap:8px;
   background:var(--lavender-bg);color:var(--text, var(--ink));
@@ -133,7 +121,7 @@ nav{
   transition:all 0.25s cubic-bezier(0.16,1,0.3,1);letter-spacing:-0.01em;
 }
 .btn-outline:hover{border-color:var(--on-green);background:var(--on-green-faint);transform:translateY(-2px);}
-.hero-note{margin-top:16px;font-size:12px;color:var(--on-green-muted);}
+.hero-note{margin-top:0;font-size:14px;color:var(--on-green-muted);font-family:'DM Sans',sans-serif;}
 .mobile-break{display:none;}
 @media(max-width:720px){.mobile-break{display:inline;}br.mobile-break{display:block;}}
 
@@ -174,7 +162,7 @@ h2.display em{font-style:italic;color:var(--ink-60);}
 /* ── SHARED CARD COMPONENTS ── */
 .proj-tag-small{font-size:11px;color:var(--on-dark-muted);background:rgba(255,255,255,0.06);padding:4px 10px;border-radius:20px;}
 .proj-tag-wrap{display:flex;flex-wrap:wrap;gap:6px;}
-.proj-img{width:100%;border-radius:12px;object-fit:cover;object-position:top;}
+.proj-img{width:100%;max-height:240px;border-radius:12px;object-fit:cover;object-position:top;}
 .proj-img-wrap{display:flex;flex-direction:column;gap:12px;}
 .nda-overlay{position:relative;border-radius:12px;overflow:hidden;}
 .nda-overlay img{width:100%;display:block;border-radius:12px;}
@@ -198,7 +186,7 @@ h2.display em{font-style:italic;color:var(--ink-60);}
   overflow:hidden;margin-bottom:12px;
 }
 .proj-card-header{
-  padding:20px 32px;border-bottom:1px solid rgba(255,255,255,0.06);
+  padding:14px 28px;border-bottom:1px solid rgba(255,255,255,0.06);
   display:flex;align-items:center;justify-content:space-between;gap:12px;
 }
 .proj-header-left{display:flex;align-items:center;gap:10px;}
@@ -215,8 +203,8 @@ h2.display em{font-style:italic;color:var(--ink-60);}
 .proj-card:hover .proj-arrow{color:var(--lavender);transform:translate(4px,-4px);}
 
 .proj-body{
-  padding:32px;
-  display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:start;
+  padding:24px 28px;
+  display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:center;
 }
 .proj-body.single{grid-template-columns:1fr;}
 
@@ -232,7 +220,7 @@ h2.display em{font-style:italic;color:var(--ink-60);}
   letter-spacing:-0.02em;margin-bottom:12px;
 }
 .proj-name em{font-style:italic;color:var(--lavender);}
-.proj-desc{font-size:14px;color:var(--on-dark-muted);line-height:1.7;margin-bottom:24px;}
+.proj-desc{font-size:14px;color:var(--on-dark-muted);line-height:1.7;margin-bottom:16px;}
 .proj-list{display:flex;flex-direction:column;gap:8px;margin-bottom:24px;}
 .proj-item{
   font-size:13px;color:var(--on-dark-muted);
@@ -426,8 +414,7 @@ h2.display em{font-style:italic;color:var(--ink-60);}
   #theme-bar{order:3;width:100%;justify-content:center;padding:12px 0 8px;border-top:1px solid var(--on-green-faint);gap:12px;}
   #theme-bar span{font-size:11px;}
   .theme-dot{width:28px;height:28px;}
-  .hero{padding:140px 20px 40px;}
-  .hero-pre{font-size:10px;padding:5px 10px;}
+  .hero{padding:100px 20px 32px;}
   .btn-pair{flex-direction:column;align-items:stretch;}
   .btn-pair .btn-filled,.btn-pair .btn-outline{justify-content:center;width:100%;}
   .cta-footer .btn-dark-filled,.cta-footer .btn-dark-outline{width:100%;justify-content:center;}
@@ -491,23 +478,8 @@ h2.display em{font-style:italic;color:var(--ink-60);}
 <!-- HERO -->
 <section class="hero">
   <div class="container">
-    <div class="hero-pre fade-up d1">Senior Product Designer · 10+ Years</div>
-    <h1 class="fade-up d2">I focus on <em>impact.</em></h1>
-    <p class="hero-sub fade-up d3">Mobile apps. Enterprise tools. Websites that convert.</p>
-    <div class="btn-pair fade-up d4">
-      <a href="#work" class="btn-filled">View my work</a>
-    </div>
-    <div class="fade-up d4" style="animation-delay:0.58s;display:none;flex-direction:column;align-items:center;gap:10px;margin-top:16px;">
-      <div style="font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-35);">Hiring for something specific?</div>
-      <a href="project-matcher.html" style="display:flex;align-items:center;justify-content:space-between;gap:24px;padding:14px 24px;border-radius:14px;border:1.5px solid rgba(139,112,208,0.35);background:rgba(139,112,208,0.04);text-decoration:none;transition:all 0.25s cubic-bezier(0.16,1,0.3,1);" onmouseenter="this.style.background='white';this.style.borderColor='rgba(26,26,20,0.15)';this.style.transform='translateY(-2px)';this.style.boxShadow='0 4px 20px rgba(0,0,0,0.08)'" onmouseleave="this.style.background='rgba(139,112,208,0.04)';this.style.borderColor='rgba(139,112,208,0.35)';this.style.transform='translateY(0)';this.style.boxShadow='none'">
-        <div style="display:flex;flex-direction:column;gap:2px;text-align:left;">
-          <span style="font-size:14px;font-weight:600;color:var(--lavender-dark);">Find your case study</span>
-          <span style="font-size:11px;color:var(--lavender-dark);opacity:0.6;font-weight:400;">4 quick questions to help you pick the right project</span>
-        </div>
-        <span style="font-size:18px;color:rgba(139,112,208,0.5);">→</span>
-      </a>
-    </div>
-    <div class="hero-note fade-up d4" style="animation-delay:0.7s">· Open to senior IC roles ·<br>San Francisco Bay Area · Remote</div>
+    <h1 class="fade-up d2">Designer who <em>builds.</em> Ten years across mobile, enterprise, and growth.</h1>
+    <div class="hero-note fade-up d3">Open to senior IC roles · San Francisco Bay Area · Remote</div>
   </div>
 </section>
 
@@ -567,7 +539,7 @@ h2.display em{font-style:italic;color:var(--ink-60);}
               <div class="browser-dot" style="background:#28c840;"></div>
               <div class="browser-url"><span>golfranch.com</span></div>
             </div>
-            <img src="images/golf-ranch-hero.webp" alt="Golf Ranch homepage" class="proj-img" style="max-height:200px;">
+            <img src="images/golf-ranch-hero.webp" alt="Golf Ranch homepage" class="proj-img">
           </div>
           <div class="proj-metric-row">
             <span class="proj-metric-label">Membership signups</span>
@@ -594,20 +566,17 @@ h2.display em{font-style:italic;color:var(--ink-60);}
       <div class="proj-card-header">
         <div class="proj-header-left">
           <span class="proj-num">01 / 06</span>
-          <span class="proj-tag-pill">UX · Product · AI · Analytics</span>
+          <span class="proj-tag-pill">0→1 · Design System · Web App</span>
         </div>
       </div>
       <div class="proj-body">
         <div>
           <div class="proj-name">Cali<em>brate.</em></div>
-          <p class="proj-desc">Feed-based analytics product for multi-location operators. AI characters surface insights in editorial voice. Designed and built end-to-end.</p>
-          <div class="proj-list">
-            <div class="proj-item">Fully functional software — designed and built end-to-end with Claude Code.</div>
-          </div>
+          <p class="proj-desc">Feed-based analytics for multi-location operators. Designed and built end-to-end with Claude Code.</p>
           <div class="proj-disabled-btn">Coming soon</div>
         </div>
         <div class="proj-right">
-          <img src="images/calibrate-home-hero.png" alt="Calibrate analytics feed" class="proj-img" style="max-height:360px;">
+          <img src="images/calibrate-home-hero.png" alt="Calibrate analytics feed" class="proj-img">
         </div>
       </div>
     </div>
@@ -617,20 +586,17 @@ h2.display em{font-style:italic;color:var(--ink-60);}
       <div class="proj-card-header">
         <div class="proj-header-left">
           <span class="proj-num">02 / 06</span>
-          <span class="proj-tag-pill">UX · Web · Webflow</span>
+          <span class="proj-tag-pill">Web · Webflow</span>
         </div>
       </div>
       <div class="proj-body">
         <div>
           <div class="proj-name">Golf Ranch — <em>Redesign.</em></div>
-          <p class="proj-desc">Full redesign of a 6-location Texas franchise — audit, Webflow build, six location pages, careers, and a blog CMS built from scratch.</p>
-          <div class="proj-list">
-            <div class="proj-item">6 locations · Webflow · Figma</div>
-          </div>
+          <p class="proj-desc">Full redesign of a 6-location Texas franchise. 25% organic traffic growth since launch.</p>
           <a href="golf-ranch.html" class="proj-cta lavender">View case study →</a>
         </div>
         <div class="proj-right">
-          <img src="images/golf-ranch-hero.webp" alt="Golf Ranch homepage" class="proj-img" style="max-height:360px;">
+          <img src="images/golf-ranch-hero.webp" alt="Golf Ranch homepage" class="proj-img">
         </div>
       </div>
     </div>
@@ -640,20 +606,17 @@ h2.display em{font-style:italic;color:var(--ink-60);}
       <div class="proj-card-header">
         <div class="proj-header-left">
           <span class="proj-num">03 / 06</span>
-          <span class="proj-tag-pill">Conversion · Funnels · A/B Testing</span>
+          <span class="proj-tag-pill">Growth · Conversion · A/B Testing</span>
         </div>
       </div>
       <div class="proj-body">
         <div>
           <div class="proj-name">Golf Ranch — <em>Growth.</em></div>
-          <p class="proj-desc">Free bucket funnel, sticky CTAs, exit intent, and GA4 funnel analysis. Turned a brochure site into a lead-gen machine.</p>
-          <div class="proj-list">
-            <div class="proj-item">4× membership growth · 10K+ leads/mo</div>
-          </div>
+          <p class="proj-desc">Free bucket funnel, sticky CTAs, and GA4 analysis. 10K+ leads/month. 4× membership signups.</p>
           <div class="proj-disabled-btn">Coming soon</div>
         </div>
         <div class="proj-right">
-          <img src="images/golf-ranch-free-bucket.png" alt="Golf Ranch free bucket funnel" class="proj-img" style="max-height:360px;">
+          <img src="images/golf-ranch-free-bucket.png" alt="Golf Ranch free bucket funnel" class="proj-img">
         </div>
       </div>
     </div>
@@ -663,17 +626,17 @@ h2.display em{font-style:italic;color:var(--ink-60);}
       <div class="proj-card-header">
         <div class="proj-header-left">
           <span class="proj-num">04 / 06</span>
-          <span class="proj-tag-pill">Mobile · UX · App Design</span>
+          <span class="proj-tag-pill">Mobile · iOS</span>
         </div>
       </div>
       <div class="proj-body">
         <div>
           <div class="proj-name">Golf Ranch — <em>App.</em></div>
-          <p class="proj-desc">Designed the Golf Ranch mobile app — key screens, UX flows, and interaction design for a walk-in golf franchise.</p>
+          <p class="proj-desc">Mobile app for a walk-in golf franchise. Key screens, UX flows, and interaction design.</p>
           <a href="golf-ranch-app.html" class="proj-cta lavender">View case study →</a>
         </div>
         <div class="proj-right">
-          <img src="images/golf-ranch-app-key-screens.png" alt="Golf Ranch mobile app screens" class="proj-img" style="max-height:200px;">
+          <img src="images/golf-ranch-app-key-screens.png" alt="Golf Ranch mobile app screens" class="proj-img">
         </div>
       </div>
     </div>
@@ -723,17 +686,13 @@ h2.display em{font-style:italic;color:var(--ink-60);}
       <div class="proj-card-header">
         <div class="proj-header-left">
           <span class="proj-num">05 / 06</span>
-          <span class="proj-tag-pill">Mobile · Design Systems · iOS & Android</span>
+          <span class="proj-tag-pill">Mobile · Design System · Scale</span>
         </div>
       </div>
       <div class="proj-body">
         <div>
           <div class="proj-name">Ever<em>note.</em></div>
-          <p class="proj-desc">5 years as Senior Product Designer. Built the mobile design system from scratch and led the full mobile redesign across iOS, Android, and iPad.</p>
-          <div class="proj-list">
-            <div class="proj-item">Full mobile app redesign — iOS and Android</div>
-            <div class="proj-item">Built a new mobile design system from scratch</div>
-          </div>
+          <p class="proj-desc">Five years as Senior Product Designer. Led mobile redesign across iOS, Android, iPad. 250M+ users.</p>
           <a href="evernote.html" class="proj-cta lavender">View case study →</a>
         </div>
         <div>
@@ -746,26 +705,17 @@ h2.display em{font-style:italic;color:var(--ink-60);}
       <div class="proj-card-header">
         <div class="proj-header-left">
           <span class="proj-num">06 / 06</span>
-          <span class="proj-tag-pill">B2B SaaS · Legal Tech · Dashboard Design</span>
+          <span class="proj-tag-pill">Enterprise SaaS · 0→1</span>
         </div>
       </div>
       <div class="proj-body">
         <div>
           <div class="proj-name">Flo <em>Recruit.</em></div>
-          <p class="proj-desc">Designed the candidate portal from scratch — dashboard, onboarding flow, and UI system that launched across top U.S. law firms and contributed to $1M in new revenue.</p>
-          <div class="proj-list">
-            <div class="proj-item">0→1 candidate product — no prior design, shipped in 4 months</div>
-            <div class="proj-item">Unified interview timeline across all firms — reduced candidate drop-off</div>
-          </div>
+          <p class="proj-desc">Designed the candidate portal from scratch. Shipped to top U.S. law firms. $1M in new revenue.</p>
           <a href="flo-recruit.html" class="proj-cta lavender">View case study →</a>
         </div>
         <div>
           <img src="images/flo-hub.webp" alt="Flo Recruit candidate portal" class="proj-img">
-          <div class="proj-tag-wrap" style="margin-top:12px;">
-            <span class="proj-tag-small">Onboarding</span>
-            <span class="proj-tag-small">Dashboards</span>
-            <span class="proj-tag-small">Interaction design</span>
-          </div>
         </div>
       </div>
     </div>
