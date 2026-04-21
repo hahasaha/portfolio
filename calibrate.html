@@ -486,7 +486,7 @@
   <section class="hero">
     <div class="hero-label">Case Study — Calibrate</div>
     <h1>Replacing the dashboard with something operators actually <em>trust.</em></h1>
-    <p class="hero-sub">Calibrate is a feed-based analytics product for marketing teams, designed and built end-to-end with Claude Code.</p>
+    <p class="hero-sub">Calibrate is a feed-based analytics product for small multi-location operators.</p>
     <div class="hero-tags">
       <span class="hero-tag">UX Design</span>
       <span class="hero-tag">Product</span>
@@ -512,9 +512,9 @@
   <!-- THE PROBLEM -->
   <div class="section reveal">
     <div class="section-label">The Problem</div>
-    <h2>Operators have analytics tools. They just can't <em>trust</em> them.</h2>
-    <p>Small multi-location operators have analytics tools. They just can't trust them. Events misfire. Funnels are incomplete. Conversions get lumped. Most tools show numbers and assume the data is clean — they never tell you when it isn't. Operators make decisions on data they can't verify, and they don't know they can't verify it.</p>
-    <div class="pull-quote">"Other tools show you your numbers. Calibrate shows you whether to <em>trust</em> them."</div>
+    <h2>Operators don't need more data. They need someone to <em>ask</em> the right questions.</h2>
+    <p>Small multi-location operators — driving ranges, coffee shops, gyms — have analytics tools. Most have dashboards. A few have Looker. None have an analyst. So the data flows in, the charts update, and the GM is left staring at a funnel chart trying to remember if 2.33% is good. When Brookfield's conversion event stops firing, nobody catches it. When the Free Bucket form drops 34% because form_submit fires before validation, nobody catches that either. The numbers are there. The questions aren't.</p>
+    <div class="pull-quote">Dashboards assume you know what to look for. Most operators don't.</div>
   </div>
 
   <div class="section-divider"></div>
@@ -523,7 +523,7 @@
   <div class="section reveal">
     <div class="section-label">The Insight</div>
     <h2>The problem isn't the charts. It's the <em>posture.</em></h2>
-    <p>Dashboards put raw data in front of people and make them figure it out. I flipped it — built a feed-based product where AI personalities surface the right signal at the right time, in editorial voice. Characters like @SEO, @Conversions, and @Social each author content from their domain. Closer to a smart financial publication than a BI tool.</p>
+    <p>Dashboards put raw data in front of you and wait for you to interrogate it. Calibrate flips the posture — AI characters interrogate the data for you and bring back what matters. @Conversions watches funnels. @Tracking watches events. @SEO watches search. They form the questions an analyst would form, then answer them in plain English, in a feed. The dashboard still exists — but as a fallback for when you want to dig. The feed is the product.</p>
     <div class="full-bleed" style="margin-top:48px;">
       <img src="images/calibrate-home-hero.png" alt="Calibrate home feed">
     </div>
@@ -536,8 +536,8 @@
     <div class="callout-inner">
       <div class="section-label" style="color: rgba(245,240,226,0.4);">The Workflow Audit</div>
       <h2>The audit contradicted my own <em>assumptions.</em></h2>
-      <p>Midway through, I audited the app against real operator tasks — Monday morning triage, initiative progress check, funnel diagnosis across locations. The audit contradicted my own assumptions. The architecture needed a flip: Dashboard becomes the raw-data explorer; @Analytics becomes a domain character whose Summary tab surfaces the scored audit view.</p>
-      <p>That's the real case study. Not a beautiful design system — identifying what the user actually needed and rebuilding for that.</p>
+      <p>Midway through, I audited the app against real operator tasks — Monday morning triage, initiative progress check, funnel diagnosis across locations. The architecture needed a flip. Dashboard became the raw-data explorer. The feed became the default view.</p>
+      <p>That's the real case study. Not a beautiful design system — identifying what the user actually needed and rebuilding for it.</p>
     </div>
   </div>
 
@@ -553,7 +553,7 @@
   <div class="section reveal">
     <div class="section-label">What I Built</div>
     <h2>Four destinations. Thirteen characters. One <em>system.</em></h2>
-    <p>Four top-level destinations: Home (consumption feed), Dashboard (raw data), Calibrate (approvals + decisions), Reports (shareable editorial summaries). A personality system of 13 AI characters. An initiative tracking system where each campaign gets a full profile — stats, posts, tasks, timeline. An 18-component data viz library built from scratch.</p>
+    <p>Four top-level destinations — Home as feed, Dashboard as explorer, Reports as shareable editorial summaries, Calibrate as approvals and decisions. A personality system of 13 AI characters, each watching a domain. Initiative tracking with stats, posts, tasks, and timeline. An 18-component data UI library, built from scratch.</p>
     <div class="full-bleed" style="margin-top:48px;">
       <img src="images/calibrate-profile-conversions.png" alt="Calibrate profile page — initiative tracking">
     </div>
@@ -572,6 +572,15 @@
     <div class="full-bleed" style="margin-top:32px;">
       <img src="images/calibrate-design-system-2.png" alt="Calibrate design system components">
     </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- DESIGNED AND BUILT -->
+  <div class="section reveal">
+    <div class="section-label">End to End</div>
+    <h2>Designed <em>and</em> built.</h2>
+    <p>Calibrate isn't a Figma deliverable. I designed the product, built it in Claude Code, and shipped it to production on Vercel. Every component in the UI library, every character profile, every feed card, every chart — designed and coded by one person. The pilot is running on Golf Ranch data right now.</p>
   </div>
 
   <!-- NOTE -->
